@@ -1,0 +1,491 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Meet the Crew · Travelomania</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,700;1,400&family=Inter:wght@300;400;500;600&display=swap" rel="stylesheet">
+<style>
+  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+  :root {
+    --river:#1a6b8a; --river-lt:#d6eef5; --river-dk:#0d3f52;
+    --sand:#e8dcc8; --stone:#6b7c88; --ink:#1c2b33;
+    --mist:#f0f4f6; --gold:#c4882a; --gold-lt:#fdf3e0; --white:#ffffff;
+    --serif:'Playfair Display',Georgia,serif;
+    --sans:'Inter',system-ui,sans-serif;
+    --radius:14px; --shadow:0 4px 20px rgba(26,107,138,.10);
+  }
+  html { scroll-behavior:smooth; }
+  body { font-family:var(--sans); color:var(--ink); background:var(--mist); -webkit-font-smoothing:antialiased; }
+
+  /* Nav */
+  nav { background:rgba(255,255,255,.93); backdrop-filter:blur(12px); border-bottom:1px solid rgba(26,107,138,.12); display:flex; align-items:center; justify-content:space-between; padding:0 2rem; height:56px; position:sticky; top:0; z-index:100; }
+  .nav-brand { font-family:var(--serif); font-size:1rem; color:var(--river-dk); text-decoration:none; }
+  .nav-links { display:flex; gap:1.5rem; }
+  .nav-links a { font-size:.82rem; color:var(--stone); text-decoration:none; font-weight:500; transition:color .15s; }
+  .nav-links a:hover, .nav-links a.active { color:var(--river); }
+
+  /* Hero */
+  .hero {
+    background: linear-gradient(135deg, var(--river-dk) 0%, #1a5a7a 50%, #0d4a5e 100%);
+    padding: 5rem 2rem 4rem;
+    text-align: center;
+    position: relative;
+    overflow: hidden;
+  }
+  .hero::before {
+    content:'';
+    position:absolute; inset:0;
+    background: radial-gradient(ellipse at 20% 50%, rgba(26,107,138,.4) 0%, transparent 60%),
+                radial-gradient(ellipse at 80% 20%, rgba(168,216,232,.15) 0%, transparent 50%);
+  }
+  .hero-inner { position:relative; z-index:1; }
+  .hero-eyebrow { font-size:.72rem; font-weight:600; letter-spacing:.18em; text-transform:uppercase; color:rgba(214,238,245,.7); margin-bottom:.8rem; }
+  .hero-title { font-family:var(--serif); font-size:clamp(2.2rem,5vw,3.8rem); color:#fff; font-weight:400; line-height:1.1; margin-bottom:1rem; }
+  .hero-title em { font-style:italic; color:#a8d8e8; }
+  .hero-sub { color:rgba(255,255,255,.65); font-size:.95rem; max-width:520px; margin:0 auto 2rem; line-height:1.65; }
+  .hero-stats { display:inline-flex; gap:0; background:rgba(255,255,255,.1); border:1px solid rgba(255,255,255,.15); border-radius:40px; overflow:hidden; backdrop-filter:blur(8px); }
+  .hero-stat { padding:.6rem 1.6rem; text-align:center; border-right:1px solid rgba(255,255,255,.12); }
+  .hero-stat:last-child { border-right:none; }
+  .hero-stat .sv { font-size:1.3rem; font-family:var(--serif); font-weight:700; color:#fff; line-height:1; }
+  .hero-stat .sl { font-size:.62rem; letter-spacing:.1em; text-transform:uppercase; color:rgba(255,255,255,.55); margin-top:.2rem; }
+  .hero-wave { display:block; width:100%; margin-bottom:-2px; }
+
+  /* Trip teaser strip */
+  .trip-strip { background:var(--white); border-bottom:1px solid rgba(26,107,138,.1); }
+  .trip-strip-inner { max-width:900px; margin:0 auto; padding:.9rem 1.5rem; display:flex; align-items:center; justify-content:space-between; flex-wrap:wrap; gap:.8rem; }
+  .trip-strip .ts-label { font-size:.8rem; color:var(--stone); }
+  .trip-strip strong { color:var(--river-dk); }
+  .trip-strip a { background:var(--river); color:#fff; text-decoration:none; font-size:.8rem; font-weight:500; padding:.45rem 1rem; border-radius:6px; transition:background .15s; }
+  .trip-strip a:hover { background:var(--river-dk); }
+
+  /* Main grid */
+  main { max-width:1020px; margin:0 auto; padding:3rem 1.5rem 4rem; }
+  .section-label { font-size:.72rem; font-weight:600; letter-spacing:.14em; text-transform:uppercase; color:var(--river); margin-bottom:.5rem; }
+  .section-title { font-family:var(--serif); font-size:1.8rem; font-weight:400; color:var(--river-dk); margin-bottom:.5rem; }
+  .section-sub { color:var(--stone); font-size:.9rem; margin-bottom:2.2rem; line-height:1.6; }
+
+  /* Crew grid */
+  .crew-grid { display:grid; grid-template-columns:repeat(auto-fill, minmax(240px, 1fr)); gap:1.5rem; }
+
+  .crew-card {
+    background:var(--white);
+    border-radius:var(--radius);
+    overflow:hidden;
+    box-shadow:var(--shadow);
+    border:1px solid rgba(26,107,138,.08);
+    transition:transform .2s, box-shadow .2s;
+    cursor:default;
+  }
+  .crew-card:hover { transform:translateY(-4px); box-shadow:0 12px 36px rgba(26,107,138,.15); }
+
+  .crew-photo {
+    position:relative; width:100%; aspect-ratio:1/1; overflow:hidden;
+    background:var(--mist);
+  }
+  .crew-photo img { width:100%; height:100%; object-fit:cover; object-position:top center; display:block; transition:transform .4s ease; }
+  .crew-card:hover .crew-photo img { transform:scale(1.06); }
+
+  .crew-badge {
+    position:absolute; top:.7rem; right:.7rem;
+    background:rgba(13,63,82,.75); color:#fff;
+    font-size:.62rem; font-weight:600; letter-spacing:.08em; text-transform:uppercase;
+    padding:3px 8px; border-radius:20px; backdrop-filter:blur(6px);
+  }
+  .crew-badge.kid { background:rgba(196,136,42,.85); }
+  .crew-badge.organizer { background:rgba(26,107,138,.9); }
+
+  .crew-body { padding:1.1rem 1.2rem 1.3rem; }
+  .crew-name { font-family:var(--serif); font-size:1.2rem; color:var(--ink); font-weight:400; margin-bottom:.1rem; }
+  .crew-role { font-size:.75rem; font-weight:600; letter-spacing:.07em; text-transform:uppercase; color:var(--river); margin-bottom:.75rem; }
+
+  .crew-facts { display:flex; flex-direction:column; gap:.45rem; margin-bottom:.9rem; }
+  .crew-fact { display:flex; align-items:flex-start; gap:.55rem; font-size:.82rem; color:var(--stone); line-height:1.4; }
+  .crew-fact .cf-icon { font-size:.95rem; flex-shrink:0; margin-top:.05rem; }
+
+  .crew-tags { display:flex; flex-wrap:wrap; gap:.35rem; }
+  .crew-tag { font-size:.68rem; font-weight:500; background:var(--river-lt); color:var(--river-dk); padding:3px 9px; border-radius:20px; }
+  .crew-tag.gold { background:var(--gold-lt); color:var(--gold); }
+  .crew-tag.green { background:#d8f0e2; color:#1a6040; }
+
+  /* Kids section */
+  .kids-note { background:var(--gold-lt); border:1px solid rgba(196,136,42,.2); border-radius:10px; padding:1rem 1.3rem; margin-bottom:1.8rem; font-size:.88rem; color:#7a5820; display:flex; align-items:center; gap:.6rem; }
+
+  /* Footer */
+  footer { background:var(--river-dk); color:rgba(255,255,255,.55); text-align:center; padding:2rem 1.5rem; font-size:.8rem; }
+  footer a { color:rgba(168,216,232,.8); text-decoration:none; }
+
+  /* Lightbox */
+  .lightbox { display:none; position:fixed; inset:0; background:rgba(13,63,82,.92); z-index:200; align-items:center; justify-content:center; }
+  .lightbox.open { display:flex; }
+  .lb-img { max-width:88vw; max-height:88vh; object-fit:contain; border-radius:8px; object-position:top; }
+  .lb-close { position:absolute; top:1.2rem; right:1.5rem; background:none; border:none; color:#fff; font-size:2rem; cursor:pointer; opacity:.7; }
+  .lb-close:hover { opacity:1; }
+  .lb-name { position:absolute; bottom:1.8rem; color:rgba(255,255,255,.8); font-family:var(--serif); font-size:1.1rem; }
+
+  @media (max-width:600px) {
+    nav { padding:0 1rem; }
+    .hero { padding:3.5rem 1.2rem 3rem; }
+    .hero-stats { flex-wrap:wrap; border-radius:12px; }
+    .hero-stat { border-right:none; border-bottom:1px solid rgba(255,255,255,.12); width:50%; }
+    main { padding:2rem 1rem 3rem; }
+    .crew-grid { grid-template-columns:repeat(auto-fill,minmax(160px,1fr)); gap:1rem; }
+  }
+</style>
+</head>
+<body>
+
+<nav>
+  <a class="nav-brand" href="index.html">✦ Travelomania</a>
+  <div class="nav-links">
+    <a href="index.html">All Trips</a>
+    <a href="thousand-islands/index.html">Thousand Islands</a>
+    <a href="crew.html" class="active">The Crew</a>
+  </div>
+</nav>
+
+<div class="hero">
+  <div class="hero-inner">
+    <p class="hero-eyebrow">Travelomania · 2026</p>
+    <h1 class="hero-title">Meet the <em>Crew</em></h1>
+    <p class="hero-sub">11 adults, 4 children — one big family of adventurers. From early risers to midnight philosophers, every trip is richer for having each of them along.</p>
+    <div class="hero-stats">
+      <div class="hero-stat"><div class="sv">15</div><div class="sl">Travellers</div></div>
+      <div class="hero-stat"><div class="sv">11</div><div class="sl">Adults</div></div>
+      <div class="hero-stat"><div class="sv">4</div><div class="sl">Kids</div></div>
+      <div class="hero-stat"><div class="sv">∞</div><div class="sl">Memories</div></div>
+    </div>
+  </div>
+  <svg class="hero-wave" viewBox="0 0 1440 52" xmlns="http://www.w3.org/2000/svg" preserveAspectRatio="none">
+    <path d="M0 52 C360 10 720 42 1080 18 C1260 6 1380 30 1440 20 L1440 52 Z" fill="#f0f4f6"/>
+  </svg>
+</div>
+
+<div class="trip-strip">
+  <div class="trip-strip-inner">
+    <span class="ts-label">Next up: <strong>Thousand Islands, NY</strong> · Jun 29 – Jul 2, 2026 · 40537 NY-12, Clayton</span>
+    <a href="thousand-islands/index.html">View Trip Plan →</a>
+  </div>
+</div>
+
+<main>
+
+  <p class="section-label">The Adults</p>
+  <h2 class="section-title">The Gang</h2>
+  <p class="section-sub">The organizers, the photographers, the ones who always find the best food spots — and the ones who get everyone lost. You know who you are.</p>
+
+  <div class="crew-grid" id="adults-grid">
+
+    <div class="crew-card" onclick="openLb('crew-photos/Dipankar.jpg','Dipankar')">
+      <div class="crew-photo">
+        <img src="crew-photos/Dipankar.jpg" alt="Dipankar">
+        <span class="crew-badge organizer">Organizer</span>
+      </div>
+      <div class="crew-body">
+        <div class="crew-name">Dipankar</div>
+        <div class="crew-role">Chief Planner & Navigator</div>
+        <div class="crew-facts">
+          <div class="crew-fact"><span class="cf-icon">📍</span><span>Always has a backup route</span></div>
+          <div class="crew-fact"><span class="cf-icon">📸</span><span>The one with the camera at golden hour</span></div>
+          <div class="crew-fact"><span class="cf-icon">☕</span><span>First up, coffee in hand, itinerary ready</span></div>
+        </div>
+        <div class="crew-tags">
+          <span class="crew-tag gold">Trip Architect</span>
+          <span class="crew-tag">Adventure Seeker</span>
+        </div>
+      </div>
+    </div>
+
+    <div class="crew-card" onclick="openLb('crew-photos/Payel.jpg','Payel')">
+      <div class="crew-photo">
+        <img src="crew-photos/Payel.jpg" alt="Payel">
+        <span class="crew-badge">Adult</span>
+      </div>
+      <div class="crew-body">
+        <div class="crew-name">Payel</div>
+        <div class="crew-role">The Glamour Traveller</div>
+        <div class="crew-facts">
+          <div class="crew-fact"><span class="cf-icon">🌺</span><span>Turns any backdrop into a photoshoot</span></div>
+          <div class="crew-fact"><span class="cf-icon">🍽️</span><span>First to find the best restaurant in town</span></div>
+          <div class="crew-fact"><span class="cf-icon">✨</span><span>Always dressed for the occasion</span></div>
+        </div>
+        <div class="crew-tags">
+          <span class="crew-tag green">Style Icon</span>
+          <span class="crew-tag">Foodie</span>
+        </div>
+      </div>
+    </div>
+
+    <div class="crew-card" onclick="openLb('crew-photos/Deba_Prasad.jpg','Deba Prasad')">
+      <div class="crew-photo">
+        <img src="crew-photos/Deba_Prasad.jpg" alt="Deba Prasad">
+        <span class="crew-badge">Adult</span>
+      </div>
+      <div class="crew-body">
+        <div class="crew-name">Deba Prasad</div>
+        <div class="crew-role">The Wise Wanderer</div>
+        <div class="crew-facts">
+          <div class="crew-fact"><span class="cf-icon">🌿</span><span>Knows a little history about everywhere</span></div>
+          <div class="crew-fact"><span class="cf-icon">🎣</span><span>Will try fishing at every water body</span></div>
+          <div class="crew-fact"><span class="cf-icon">🌅</span><span>Never misses a sunrise</span></div>
+        </div>
+        <div class="crew-tags">
+          <span class="crew-tag">History Buff</span>
+          <span class="crew-tag gold">Nature Lover</span>
+        </div>
+      </div>
+    </div>
+
+    <div class="crew-card" onclick="openLb('crew-photos/Monalisa.jpg','Monalisa')">
+      <div class="crew-photo">
+        <img src="crew-photos/Monalisa.jpg" alt="Monalisa">
+        <span class="crew-badge">Adult</span>
+      </div>
+      <div class="crew-body">
+        <div class="crew-name">Monalisa</div>
+        <div class="crew-role">The Calm in the Storm</div>
+        <div class="crew-facts">
+          <div class="crew-fact"><span class="cf-icon">🧘</span><span>Keeps everyone grounded when plans go sideways</span></div>
+          <div class="crew-fact"><span class="cf-icon">🌸</span><span>Finds beauty in quiet corners</span></div>
+          <div class="crew-fact"><span class="cf-icon">📚</span><span>Always has a book for long drives</span></div>
+        </div>
+        <div class="crew-tags">
+          <span class="crew-tag green">Peacekeeper</span>
+          <span class="crew-tag">Explorer</span>
+        </div>
+      </div>
+    </div>
+
+    <div class="crew-card" onclick="openLb('crew-photos/Tanmay.jpg','Tanmay')">
+      <div class="crew-photo">
+        <img src="crew-photos/Tanmay.jpg" alt="Tanmay">
+        <span class="crew-badge">Adult</span>
+      </div>
+      <div class="crew-body">
+        <div class="crew-name">Tanmay</div>
+        <div class="crew-role">The Waterfront Guy</div>
+        <div class="crew-facts">
+          <div class="crew-fact"><span class="cf-icon">🚤</span><span>Happiest on the water or near it</span></div>
+          <div class="crew-fact"><span class="cf-icon">🎵</span><span>Sets the road trip playlist</span></div>
+          <div class="crew-fact"><span class="cf-icon">🍺</span><span>Knows which local brewery to hit</span></div>
+        </div>
+        <div class="crew-tags">
+          <span class="crew-tag">Water Baby</span>
+          <span class="crew-tag gold">DJ of the Trip</span>
+        </div>
+      </div>
+    </div>
+
+    <div class="crew-card" onclick="openLb('crew-photos/Goutam.jpg','Goutam')">
+      <div class="crew-photo">
+        <img src="crew-photos/Goutam.jpg" alt="Goutam">
+        <span class="crew-badge">Adult</span>
+      </div>
+      <div class="crew-body">
+        <div class="crew-name">Goutam</div>
+        <div class="crew-role">The Rock Hopper</div>
+        <div class="crew-facts">
+          <div class="crew-fact"><span class="cf-icon">🪨</span><span>Finds the best cliff to sit on</span></div>
+          <div class="crew-fact"><span class="cf-icon">🌊</span><span>Always closest to the waves</span></div>
+          <div class="crew-fact"><span class="cf-icon">😎</span><span>Coolest sunglasses in the group</span></div>
+        </div>
+        <div class="crew-tags">
+          <span class="crew-tag green">Outdoorsy</span>
+          <span class="crew-tag">Chill Vibes</span>
+        </div>
+      </div>
+    </div>
+
+    <div class="crew-card" onclick="openLb('crew-photos/Ruma.jpg','Ruma')">
+      <div class="crew-photo">
+        <img src="crew-photos/Ruma.jpg" alt="Ruma">
+        <span class="crew-badge">Adult</span>
+      </div>
+      <div class="crew-body">
+        <div class="crew-name">Ruma</div>
+        <div class="crew-role">The Heart of the Group</div>
+        <div class="crew-facts">
+          <div class="crew-fact"><span class="cf-icon">🎈</span><span>Brings joy to every single moment</span></div>
+          <div class="crew-fact"><span class="cf-icon">🛍️</span><span>Finds the best local souvenirs</span></div>
+          <div class="crew-fact"><span class="cf-icon">🍿</span><span>Never without snacks for the group</span></div>
+        </div>
+        <div class="crew-tags">
+          <span class="crew-tag gold">Social Glue</span>
+          <span class="crew-tag">Snack Provider</span>
+        </div>
+      </div>
+    </div>
+
+    <div class="crew-card" onclick="openLb('crew-photos/Tanu.jpg','Tanu')">
+      <div class="crew-photo">
+        <img src="crew-photos/Tanu.jpg" alt="Tanu">
+        <span class="crew-badge">Adult</span>
+      </div>
+      <div class="crew-body">
+        <div class="crew-name">Tanu</div>
+        <div class="crew-role">The Beach Wanderer</div>
+        <div class="crew-facts">
+          <div class="crew-fact"><span class="cf-icon">🌊</span><span>Walks the shoreline at every beach</span></div>
+          <div class="crew-fact"><span class="cf-icon">👒</span><span>Iconic hat — you'll know her by it</span></div>
+          <div class="crew-fact"><span class="cf-icon">🌤️</span><span>Makes even overcast days look beautiful</span></div>
+        </div>
+        <div class="crew-tags">
+          <span class="crew-tag green">Beach Lover</span>
+          <span class="crew-tag">Wanderer</span>
+        </div>
+      </div>
+    </div>
+
+    <div class="crew-card" onclick="openLb('crew-photos/Shikha.jpg','Shikha')">
+      <div class="crew-photo">
+        <img src="crew-photos/Shikha.jpg" alt="Shikha">
+        <span class="crew-badge">Adult</span>
+      </div>
+      <div class="crew-body">
+        <div class="crew-name">Shikha</div>
+        <div class="crew-role">The Free Spirit</div>
+        <div class="crew-facts">
+          <div class="crew-fact"><span class="cf-icon">🌻</span><span>Up for any spontaneous detour</span></div>
+          <div class="crew-fact"><span class="cf-icon">🎶</span><span>Hums while packing, hums on the drive</span></div>
+          <div class="crew-fact"><span class="cf-icon">💬</span><span>Makes friends with strangers everywhere</span></div>
+        </div>
+        <div class="crew-tags">
+          <span class="crew-tag">Spontaneous</span>
+          <span class="crew-tag gold">Social Butterfly</span>
+        </div>
+      </div>
+    </div>
+
+  </div><!-- /adults -->
+
+  <div style="margin-top:3rem">
+    <p class="section-label">The Little Explorers</p>
+    <h2 class="section-title">The Kids</h2>
+    <p class="section-sub">The real reason every trip is unforgettable. They find horseshoe crabs, demand ice cream at 10 AM, and somehow have more energy at midnight than anyone else.</p>
+
+    <div class="kids-note">
+      <span>🌟</span>
+      <span>Fun fact: the kids collectively have more travel stamps than most adults they know.</span>
+    </div>
+
+    <div class="crew-grid">
+
+      <div class="crew-card" onclick="openLb('crew-photos/Deeparjo.jpg','Deeparjo')">
+        <div class="crew-photo">
+          <img src="crew-photos/Deeparjo.jpg" alt="Deeparjo">
+          <span class="crew-badge kid">Junior Crew</span>
+        </div>
+        <div class="crew-body">
+          <div class="crew-name">Deeparjo</div>
+          <div class="crew-role">The Performer</div>
+          <div class="crew-facts">
+            <div class="crew-fact"><span class="cf-icon">🎤</span><span>Always ready to put on a show</span></div>
+            <div class="crew-fact"><span class="cf-icon">📖</span><span>Reads the historic plaques at every site</span></div>
+            <div class="crew-fact"><span class="cf-icon">🎭</span><span>Gives everyone nicknames by Day 1</span></div>
+          </div>
+          <div class="crew-tags">
+            <span class="crew-tag gold">Star of the Show</span>
+            <span class="crew-tag green">Curious Mind</span>
+          </div>
+        </div>
+      </div>
+
+      <div class="crew-card" onclick="openLb('crew-photos/Tiya.jpg','Tiya')">
+        <div class="crew-photo">
+          <img src="crew-photos/Tiya.jpg" alt="Tiya">
+          <span class="crew-badge kid">Junior Crew</span>
+        </div>
+        <div class="crew-body">
+          <div class="crew-name">Tiya</div>
+          <div class="crew-role">The Beach Queen</div>
+          <div class="crew-facts">
+            <div class="crew-fact"><span class="cf-icon">🏖️</span><span>Born for the water — literally</span></div>
+            <div class="crew-fact"><span class="cf-icon">🌸</span><span>Flower in her hair, peace sign ready</span></div>
+            <div class="crew-fact"><span class="cf-icon">✌️</span><span>Waves at every passing boat</span></div>
+          </div>
+          <div class="crew-tags">
+            <span class="crew-tag green">Water Kid</span>
+            <span class="crew-tag">Sunshine Vibes</span>
+          </div>
+        </div>
+      </div>
+
+      <div class="crew-card" onclick="openLb('crew-photos/Tojo.jpg','Tojo')">
+        <div class="crew-photo">
+          <img src="crew-photos/Tojo.jpg" alt="Tojo">
+          <span class="crew-badge kid">Junior Crew</span>
+        </div>
+        <div class="crew-body">
+          <div class="crew-name">Tojo</div>
+          <div class="crew-role">The Entertainer</div>
+          <div class="crew-facts">
+            <div class="crew-fact"><span class="cf-icon">😄</span><span>Smile that lights up every photo</span></div>
+            <div class="crew-fact"><span class="cf-icon">🏃</span><span>Fastest sprinter to the ice cream cart</span></div>
+            <div class="crew-fact"><span class="cf-icon">🎮</span><span>Challenges every adult to a rematch</span></div>
+          </div>
+          <div class="crew-tags">
+            <span class="crew-tag gold">Energy ∞</span>
+            <span class="crew-tag">Comic Relief</span>
+          </div>
+        </div>
+      </div>
+
+      <div class="crew-card" onclick="openLb('crew-photos/Dravin.jpg','Dravin')">
+        <div class="crew-photo">
+          <img src="crew-photos/Dravin.jpg" alt="Dravin">
+          <span class="crew-badge kid">Junior Crew</span>
+        </div>
+        <div class="crew-body">
+          <div class="crew-name">Dravin</div>
+          <div class="crew-role">The Young Naturalist</div>
+          <div class="crew-facts">
+            <div class="crew-fact"><span class="cf-icon">🦀</span><span>Will pick up every creature on the beach</span></div>
+            <div class="crew-fact"><span class="cf-icon">🔍</span><span>Spots wildlife before any adult does</span></div>
+            <div class="crew-fact"><span class="cf-icon">🧢</span><span>Collects a cap from every trip</span></div>
+          </div>
+          <div class="crew-tags">
+            <span class="crew-tag green">Nature Nerd</span>
+            <span class="crew-tag">Brave Explorer</span>
+          </div>
+        </div>
+      </div>
+
+    </div>
+  </div>
+
+  <!-- Trip CTA -->
+  <div style="margin-top:3.5rem;background:linear-gradient(135deg,var(--river-dk),var(--river));border-radius:16px;padding:2.5rem;text-align:center;color:#fff;">
+    <p style="font-size:.72rem;font-weight:600;letter-spacing:.14em;text-transform:uppercase;opacity:.7;margin-bottom:.5rem">Next Adventure</p>
+    <h3 style="font-family:var(--serif);font-size:1.8rem;font-weight:400;margin-bottom:.5rem">Thousand Islands · Jun 29, 2026</h3>
+    <p style="opacity:.7;font-size:.88rem;margin-bottom:1.4rem">40537 NY-12, Clayton · VRBO · 3 nights on the St. Lawrence River</p>
+    <a href="thousand-islands/index.html" style="display:inline-block;background:#fff;color:var(--river-dk);text-decoration:none;font-weight:600;font-size:.88rem;padding:.7rem 1.6rem;border-radius:8px;transition:opacity .15s;">View Full Itinerary →</a>
+  </div>
+
+</main>
+
+<div class="lightbox" id="lightbox" onclick="closeLb()">
+  <button class="lb-close">×</button>
+  <img class="lb-img" id="lb-img" src="" alt="">
+  <div class="lb-name" id="lb-name"></div>
+</div>
+
+<footer>
+  <p>Travelomania · The Ganguli crew &amp; friends &nbsp;·&nbsp; <a href="index.html">All Trips</a> &nbsp;·&nbsp; <a href="thousand-islands/index.html">Thousand Islands 2026</a></p>
+</footer>
+
+<script>
+function openLb(src, name) {
+  document.getElementById('lb-img').src = src;
+  document.getElementById('lb-name').textContent = name;
+  document.getElementById('lightbox').classList.add('open');
+  document.body.style.overflow = 'hidden';
+}
+function closeLb() {
+  document.getElementById('lightbox').classList.remove('open');
+  document.body.style.overflow = '';
+}
+document.addEventListener('keydown', e => { if(e.key==='Escape') closeLb(); });
+</script>
+</body>
+</html>
