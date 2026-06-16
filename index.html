@@ -7,162 +7,380 @@
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,700;1,400&family=Inter:wght@300;400;500;600&display=swap" rel="stylesheet">
 <style>
-  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+  *, *::before, *::after { box-sizing:border-box; margin:0; padding:0; }
   :root {
     --river:#1a6b8a; --river-lt:#d6eef5; --river-dk:#0d3f52;
-    --stone:#6b7c88; --ink:#1c2b33; --mist:#f0f4f6; --white:#fff;
+    --sand:#e8dcc8; --stone:#6b7c88; --ink:#1c2b33;
+    --mist:#f0f4f6; --gold:#c4882a; --gold-lt:#fdf3e0; --white:#fff;
+    --green:#2a7a4a; --green-lt:#d8f0e2;
     --serif:'Playfair Display',Georgia,serif;
     --sans:'Inter',system-ui,sans-serif;
+    --radius:12px; --shadow:0 2px 16px rgba(26,107,138,.09);
   }
+  html { scroll-behavior:smooth; }
   body { font-family:var(--sans); color:var(--ink); background:var(--mist); -webkit-font-smoothing:antialiased; }
 
-  nav { background:rgba(255,255,255,.93); backdrop-filter:blur(12px); border-bottom:1px solid rgba(26,107,138,.12); display:flex; align-items:center; justify-content:space-between; padding:0 2rem; height:56px; position:sticky; top:0; z-index:100; }
-  .nav-brand { font-family:var(--serif); font-size:1rem; color:var(--river-dk); text-decoration:none; }
-  .nav-links { display:flex; gap:1.5rem; }
-  .nav-links a { font-size:.82rem; color:var(--stone); text-decoration:none; font-weight:500; }
-  .nav-links a:hover { color:var(--river); }
-
-  header {
-    background:linear-gradient(135deg, var(--river-dk), #1a5a7a);
-    padding:4rem 2rem 3.5rem; text-align:center; position:relative; overflow:hidden;
+  /* ── Nav ─────────────────────────────────────────────── */
+  nav {
+    background:rgba(255,255,255,.93); backdrop-filter:blur(12px);
+    border-bottom:1px solid rgba(26,107,138,.12);
+    display:flex; align-items:center; justify-content:space-between;
+    padding:0 2rem; height:58px; position:sticky; top:0; z-index:100;
   }
-  header::before { content:''; position:absolute; inset:0; background:radial-gradient(ellipse at 30% 60%, rgba(26,107,138,.4), transparent 60%); }
-  header > * { position:relative; }
-  header .eyebrow { font-size:.72rem; font-weight:600; letter-spacing:.18em; text-transform:uppercase; color:rgba(214,238,245,.7); margin-bottom:.7rem; }
-  header h1 { font-family:var(--serif); font-size:clamp(2rem,5vw,3.4rem); color:#fff; font-weight:400; margin-bottom:.8rem; }
-  header h1 em { font-style:italic; color:#a8d8e8; }
-  header p { color:rgba(255,255,255,.62); font-size:.9rem; max-width:480px; margin:0 auto 1.8rem; line-height:1.65; }
-  .header-chips { display:flex; gap:.6rem; justify-content:center; flex-wrap:wrap; }
-  .header-chip { background:rgba(255,255,255,.12); color:rgba(255,255,255,.8); border:1px solid rgba(255,255,255,.18); border-radius:20px; padding:.35rem 1rem; font-size:.78rem; backdrop-filter:blur(4px); text-decoration:none; transition:background .15s; }
-  .header-chip:hover { background:rgba(255,255,255,.22); }
-  .header-wave { display:block; width:100%; margin-bottom:-2px; }
+  .nav-brand { font-family:var(--serif); font-size:1.1rem; color:var(--river-dk); text-decoration:none; display:flex; align-items:center; gap:.5rem; }
+  .nav-brand span { font-style:italic; color:var(--river); }
+  .nav-links { display:flex; gap:1.5rem; align-items:center; }
+  .nav-links a { font-size:.82rem; color:var(--stone); text-decoration:none; font-weight:500; transition:color .15s; }
+  .nav-links a:hover { color:var(--river); }
+  .nav-pill { background:var(--river); color:#fff !important; padding:.32rem .9rem; border-radius:20px; font-size:.78rem !important; }
+  .nav-pill:hover { background:var(--river-dk) !important; color:#fff !important; }
 
-  main { max-width:900px; margin:0 auto; padding:3rem 1.5rem 4rem; }
-  .section-header { display:flex; align-items:baseline; justify-content:space-between; margin-bottom:1.4rem; flex-wrap:wrap; gap:.5rem; }
-  .section-label { font-size:.72rem; font-weight:600; letter-spacing:.14em; text-transform:uppercase; color:var(--river); }
-  .section-title { font-family:var(--serif); font-size:1.5rem; font-weight:400; color:var(--river-dk); }
-  .trips { display:grid; grid-template-columns:repeat(auto-fit,minmax(280px,1fr)); gap:1.3rem; }
-  .trip-card { background:#fff; border-radius:12px; border:1px solid rgba(26,107,138,.1); overflow:hidden; text-decoration:none; color:inherit; box-shadow:0 2px 14px rgba(26,107,138,.07); transition:box-shadow .2s, transform .15s; display:block; }
-  .trip-card:hover { box-shadow:0 8px 30px rgba(26,107,138,.15); transform:translateY(-3px); }
-  .trip-img { height:170px; position:relative; display:flex; align-items:flex-end; padding:.9rem; }
-  .trip-img .badge { font-size:.65rem; font-weight:600; letter-spacing:.08em; text-transform:uppercase; background:rgba(255,255,255,.22); color:#fff; padding:3px 10px; border-radius:20px; backdrop-filter:blur(4px); border:1px solid rgba(255,255,255,.18); }
-  .trip-body { padding:1.2rem 1.4rem; }
-  .trip-date { font-size:.75rem; color:var(--stone); margin-bottom:.3rem; }
-  .trip-name { font-family:var(--serif); font-size:1.25rem; margin-bottom:.6rem; }
-  .trip-detail { font-size:.8rem; color:var(--stone); margin-bottom:.7rem; line-height:1.5; }
-  .trip-tags { display:flex; flex-wrap:wrap; gap:.4rem; }
-  .trip-tag { font-size:.68rem; background:var(--mist); color:var(--stone); padding:2px 9px; border-radius:20px; }
-  .trip-tag.live { background:var(--river-lt); color:var(--river-dk); font-weight:600; }
+  /* ── Hero ────────────────────────────────────────────── */
+  .hero {
+    background:linear-gradient(150deg, var(--river-dk) 0%, #1a6b8a 55%, #1e8099 100%);
+    padding:5.5rem 2rem 0; text-align:center; position:relative; overflow:hidden;
+  }
+  .hero::before {
+    content:''; position:absolute; inset:0;
+    background:
+      radial-gradient(ellipse 60% 50% at 20% 80%, rgba(255,255,255,.04), transparent),
+      radial-gradient(ellipse 40% 60% at 80% 20%, rgba(255,255,255,.05), transparent);
+  }
+  .hero-inner { position:relative; z-index:1; }
+  .hero-eyebrow { font-size:.7rem; font-weight:700; letter-spacing:.2em; text-transform:uppercase; color:rgba(214,238,245,.65); margin-bottom:1rem; }
+  .hero-title { font-family:var(--serif); font-size:clamp(3rem,7vw,5.5rem); color:#fff; font-weight:400; line-height:1; margin-bottom:.5rem; }
+  .hero-title em { font-style:italic; color:#8fd4ea; }
+  .hero-tagline { font-size:1.05rem; color:rgba(255,255,255,.65); max-width:500px; margin:.9rem auto 2rem; line-height:1.7; font-weight:300; }
 
-  /* Crew teaser */
-  .crew-teaser { margin-top:3rem; background:var(--white); border-radius:14px; border:1px solid rgba(26,107,138,.1); padding:1.8rem 2rem; display:flex; align-items:center; justify-content:space-between; gap:1.5rem; flex-wrap:wrap; box-shadow:0 2px 14px rgba(26,107,138,.07); }
-  .ct-avatars { display:flex; }
-  .ct-avatar { width:44px; height:44px; border-radius:50%; border:2.5px solid #fff; overflow:hidden; margin-left:-12px; box-shadow:0 2px 6px rgba(0,0,0,.15); }
-  .ct-avatar:first-child { margin-left:0; }
-  .ct-avatar img { width:100%; height:100%; object-fit:cover; object-position:top; }
-  .ct-text h3 { font-family:var(--serif); font-size:1.15rem; color:var(--ink); margin-bottom:.3rem; }
-  .ct-text p { font-size:.85rem; color:var(--stone); }
-  .ct-btn { background:var(--river); color:#fff; text-decoration:none; font-size:.85rem; font-weight:500; padding:.6rem 1.3rem; border-radius:7px; white-space:nowrap; transition:background .15s; }
-  .ct-btn:hover { background:var(--river-dk); }
+  /* Stats bar */
+  .hero-stats { display:inline-flex; gap:0; background:rgba(255,255,255,.08); border:1px solid rgba(255,255,255,.14); border-radius:12px; overflow:hidden; margin-bottom:3rem; }
+  .hs { padding:.9rem 2rem; text-align:center; border-right:1px solid rgba(255,255,255,.1); }
+  .hs:last-child { border-right:none; }
+  .hs-num { font-family:var(--serif); font-size:1.8rem; color:#fff; line-height:1; }
+  .hs-lbl { font-size:.62rem; letter-spacing:.12em; text-transform:uppercase; color:rgba(255,255,255,.5); margin-top:.25rem; }
 
-  footer { text-align:center; padding:2rem; font-size:.8rem; color:var(--stone); border-top:1px solid rgba(26,107,138,.1); }
+  /* Wave */
+  .hero-wave { display:block; width:100%; }
+
+  /* ── Main ────────────────────────────────────────────── */
+  main { max-width:960px; margin:0 auto; padding:3.5rem 1.5rem 5rem; }
+
+  .section-eyebrow { font-size:.7rem; font-weight:700; letter-spacing:.16em; text-transform:uppercase; color:var(--river); margin-bottom:.4rem; }
+  .section-title { font-family:var(--serif); font-size:1.7rem; font-weight:400; color:var(--river-dk); margin-bottom:1.6rem; }
+
+  /* ── Trip Cards Grid ─────────────────────────────────── */
+  .trips-grid { display:grid; grid-template-columns:repeat(auto-fill, minmax(280px,1fr)); gap:1.4rem; }
+
+  .trip-card {
+    background:var(--white); border-radius:var(--radius);
+    border:1px solid rgba(26,107,138,.1); overflow:hidden;
+    text-decoration:none; color:inherit;
+    box-shadow:var(--shadow);
+    transition:transform .22s, box-shadow .22s;
+    display:flex; flex-direction:column;
+  }
+  .trip-card:hover { transform:translateY(-4px); box-shadow:0 10px 36px rgba(26,107,138,.15); }
+  .trip-card.future { cursor:default; }
+  .trip-card.future:hover { transform:none; box-shadow:var(--shadow); }
+
+  /* Card image strip */
+  .card-img {
+    height:180px; position:relative;
+    display:flex; align-items:flex-end; padding:.9rem;
+    flex-shrink:0;
+  }
+  .card-img-overlay { position:absolute; inset:0; }
+  .card-status {
+    position:relative; z-index:1;
+    font-size:.62rem; font-weight:700; letter-spacing:.1em; text-transform:uppercase;
+    padding:3px 11px; border-radius:20px;
+    backdrop-filter:blur(6px); border:1px solid rgba(255,255,255,.2);
+  }
+  .status-active { background:rgba(26,107,138,.85); color:#fff; }
+  .status-idea   { background:rgba(255,255,255,.18); color:rgba(255,255,255,.9); }
+  .status-past   { background:rgba(0,0,0,.35); color:rgba(255,255,255,.8); }
+
+  /* Card body */
+  .card-body { padding:1.2rem 1.4rem 1.4rem; flex:1; display:flex; flex-direction:column; gap:.5rem; }
+  .card-date { font-size:.73rem; color:var(--stone); font-weight:500; }
+  .card-name { font-family:var(--serif); font-size:1.3rem; line-height:1.2; }
+  .card-desc { font-size:.82rem; color:var(--stone); line-height:1.55; flex:1; }
+  .card-tags { display:flex; flex-wrap:wrap; gap:.35rem; margin-top:.2rem; }
+  .ctag { font-size:.67rem; padding:2px 9px; border-radius:10px; font-weight:500; }
+  .ctag-blue { background:var(--river-lt); color:var(--river-dk); }
+  .ctag-mist { background:var(--mist); color:var(--stone); }
+  .ctag-gold { background:var(--gold-lt); color:var(--gold); }
+  .ctag-green { background:var(--green-lt); color:var(--green); }
+
+  /* Divider */
+  .section-divider { border:none; height:1px; background:linear-gradient(to right,transparent,rgba(26,107,138,.15),transparent); margin:3rem 0; }
+
+  /* ── Future trips placeholder grid ──────────────────── */
+  .future-grid { display:grid; grid-template-columns:repeat(auto-fill,minmax(260px,1fr)); gap:1.2rem; }
+  .future-card {
+    border:2px dashed rgba(26,107,138,.2); border-radius:var(--radius);
+    padding:1.6rem 1.4rem; background:rgba(255,255,255,.6);
+    display:flex; flex-direction:column; gap:.7rem;
+  }
+  .future-card .fc-icon { font-size:1.8rem; }
+  .future-card .fc-title { font-family:var(--serif); font-size:1.1rem; color:var(--ink); }
+  .future-card .fc-desc { font-size:.8rem; color:var(--stone); line-height:1.55; }
+  .future-card .fc-tags { display:flex; flex-wrap:wrap; gap:.3rem; }
+  .future-card .fc-tag { font-size:.66rem; padding:2px 8px; border-radius:8px; background:var(--mist); color:var(--stone); }
+  .future-card .fc-hint { font-size:.72rem; color:rgba(26,107,138,.5); font-style:italic; margin-top:.3rem; }
+
+  /* ── Crew teaser ─────────────────────────────────────── */
+  .crew-teaser {
+    margin-top:3.5rem;
+    background:linear-gradient(135deg, var(--river-dk), #1a6b8a);
+    border-radius:var(--radius); padding:2rem 2.2rem;
+    display:flex; align-items:center; justify-content:space-between;
+    gap:2rem; flex-wrap:wrap;
+    box-shadow:0 6px 30px rgba(13,63,82,.2);
+  }
+  .crew-left { display:flex; align-items:center; gap:1.4rem; flex-wrap:wrap; }
+  .crew-avatars { display:flex; }
+  .crew-av {
+    width:46px; height:46px; border-radius:50%;
+    border:2.5px solid rgba(255,255,255,.7);
+    overflow:hidden; margin-left:-14px;
+    box-shadow:0 2px 8px rgba(0,0,0,.2);
+    flex-shrink:0;
+  }
+  .crew-av:first-child { margin-left:0; }
+  .crew-av img { width:100%; height:100%; object-fit:cover; object-position:top; }
+  .crew-av.more {
+    background:rgba(255,255,255,.15); backdrop-filter:blur(4px);
+    display:flex; align-items:center; justify-content:center;
+    font-size:.7rem; font-weight:700; color:#fff;
+  }
+  .crew-text h3 { font-family:var(--serif); font-size:1.3rem; color:#fff; margin-bottom:.3rem; }
+  .crew-text p { font-size:.84rem; color:rgba(255,255,255,.65); line-height:1.5; }
+  .crew-btn {
+    background:#fff; color:var(--river-dk);
+    text-decoration:none; font-size:.85rem; font-weight:600;
+    padding:.65rem 1.5rem; border-radius:8px; white-space:nowrap;
+    transition:all .15s; flex-shrink:0;
+  }
+  .crew-btn:hover { background:var(--river-lt); }
+
+  /* ── PPT teaser ──────────────────────────────────────── */
+  .ppt-teaser {
+    margin-top:1.4rem;
+    background:var(--white); border-radius:var(--radius);
+    border:1px solid rgba(26,107,138,.12); padding:1.4rem 1.6rem;
+    display:flex; align-items:center; gap:1.4rem;
+    box-shadow:var(--shadow); text-decoration:none; color:inherit;
+    transition:box-shadow .2s, transform .2s;
+  }
+  .ppt-teaser:hover { box-shadow:0 8px 32px rgba(26,107,138,.14); transform:translateY(-2px); }
+  .ppt-thumb { width:90px; height:54px; border-radius:6px; overflow:hidden; flex-shrink:0; position:relative; box-shadow:0 3px 10px rgba(0,0,0,.12); }
+  .ppt-thumb img { width:100%; height:100%; object-fit:cover; }
+  .ppt-thumb-play { position:absolute; inset:0; background:rgba(13,63,82,.4); display:flex; align-items:center; justify-content:center; }
+  .ppt-thumb-play svg { width:22px; height:22px; }
+  .ppt-meta { flex:1; }
+  .ppt-meta .pm-label { font-size:.67rem; font-weight:700; letter-spacing:.1em; text-transform:uppercase; color:var(--river); margin-bottom:.3rem; }
+  .ppt-meta .pm-title { font-size:.95rem; font-weight:600; color:var(--ink); margin-bottom:.2rem; }
+  .ppt-meta .pm-sub { font-size:.78rem; color:var(--stone); }
+  .ppt-arrow { color:var(--river); font-size:1.2rem; flex-shrink:0; }
+
+  footer { text-align:center; padding:2.5rem 1.5rem; font-size:.8rem; color:var(--stone); border-top:1px solid rgba(26,107,138,.1); background:var(--white); line-height:1.8; }
   footer a { color:var(--river); text-decoration:none; }
-  @media (max-width:600px) { nav { padding:0 1rem; } main { padding:2rem 1rem 3rem; } }
+  footer a:hover { text-decoration:underline; }
+  .footer-heart { color:#e05a5a; }
+
+  @media(max-width:640px) {
+    nav { padding:0 1rem; }
+    .hero { padding:3.5rem 1.25rem 0; }
+    .hero-stats { flex-wrap:wrap; }
+    .hs { padding:.7rem 1.2rem; }
+    main { padding:2.5rem 1rem 4rem; }
+    .crew-teaser { padding:1.4rem; }
+    .crew-text h3 { font-size:1.1rem; }
+    .ppt-teaser { flex-wrap:wrap; }
+  }
 </style>
 </head>
 <body>
+
+<!-- Nav -->
 <nav>
-  <a class="nav-brand" href="index.html">✦ Travelomania</a>
+  <a class="nav-brand" href="index.html">✦ Travel<span>omania</span></a>
   <div class="nav-links">
     <a href="index.html">Trips</a>
-    <a href="crew.html">The Crew</a>
+    <a href="crew/index.html">The Crew</a>
+    <a href="thousand-islands/index.html" class="nav-pill">🏝️ Plan Active</a>
   </div>
 </nav>
 
-<header>
-  <p class="eyebrow">Ganguli & Friends</p>
-  <h1>Trave<em>lomania</em></h1>
-  <p>Where every road leads somewhere worth remembering. Trip plans, memories, and a crew that makes every destination home.</p>
-  <div class="header-chips">
-    <a class="header-chip" href="thousand-islands/index.html">🏝️ Thousand Islands 2026</a>
-    <a class="header-chip" href="crew.html">👥 Meet the Crew</a>
+<!-- Hero -->
+<div class="hero">
+  <div class="hero-inner">
+    <p class="hero-eyebrow">Ganguli & Friends · Since forever</p>
+    <h1 class="hero-title">Travel<em>omania</em></h1>
+    <p class="hero-tagline">Where every road leads somewhere worth remembering. Trip plans, memories, and a crew that makes every destination feel like home.</p>
+    <div class="hero-stats">
+      <div class="hs"><div class="hs-num">1</div><div class="hs-lbl">Active Trip</div></div>
+      <div class="hs"><div class="hs-num">15</div><div class="hs-lbl">Travelers</div></div>
+      <div class="hs"><div class="hs-num">∞</div><div class="hs-lbl">Adventures Ahead</div></div>
+    </div>
   </div>
-  <svg class="header-wave" viewBox="0 0 1440 40" xmlns="http://www.w3.org/2000/svg" preserveAspectRatio="none">
-    <path d="M0 40 C480 5 960 35 1440 10 L1440 40 Z" fill="#f0f4f6"/>
+  <svg class="hero-wave" viewBox="0 0 1440 52" xmlns="http://www.w3.org/2000/svg" preserveAspectRatio="none">
+    <path d="M0 52 C360 8 720 44 1080 18 C1260 6 1380 38 1440 22 L1440 52 Z" fill="#f0f4f6"/>
   </svg>
-</header>
+</div>
 
 <main>
-  <div style="margin-bottom:2.5rem">
-    <div class="section-header">
-      <div>
-        <p class="section-label">Coming Up</p>
-        <h2 class="section-title">Upcoming Trips</h2>
-      </div>
-    </div>
-    <div class="trips">
+
+  <!-- ── Upcoming Trips ─────────────────────────────────── -->
+  <div>
+    <p class="section-eyebrow">Coming Up</p>
+    <h2 class="section-title">Upcoming Trips</h2>
+    <div class="trips-grid">
+
+      <!-- Thousand Islands — LIVE -->
       <a class="trip-card" href="thousand-islands/index.html">
-        <div class="trip-img" style="background:linear-gradient(135deg,#0d3f52,#1a6b8a)">
-          <span class="badge">🗓️ Planning in progress</span>
+        <div class="card-img" style="background:linear-gradient(145deg,#0d3f52 0%,#1a6b8a 60%,#2896b0 100%);">
+          <div class="card-img-overlay" style="background:linear-gradient(to top,rgba(13,63,82,.6),transparent 60%)"></div>
+          <span class="card-status status-active">🗓️ Planning in progress</span>
         </div>
-        <div class="trip-body">
-          <div class="trip-date">Jun 29 – Jul 2, 2026</div>
-          <div class="trip-name">Thousand Islands, NY</div>
-          <div class="trip-detail">40537 NY-12, Clayton · VRBO · Host: Allison Elliott · 15 travellers</div>
-          <div class="trip-tags">
-            <span class="trip-tag live">Active Plan</span>
-            <span class="trip-tag">Clayton</span>
-            <span class="trip-tag">Boldt Castle</span>
-            <span class="trip-tag">St. Lawrence River</span>
+        <div class="card-body">
+          <div class="card-date">Jun 29 – Jul 2, 2026 · 4 days</div>
+          <div class="card-name">Thousand Islands, NY</div>
+          <div class="card-desc">Clayton VRBO on the St. Lawrence · Boldt Castle · Two Nation Tour · Cedar Point State Park. 15 travelers, one unforgettable long weekend.</div>
+          <div class="card-tags">
+            <span class="ctag ctag-blue">Active Plan</span>
+            <span class="ctag ctag-mist">Clayton</span>
+            <span class="ctag ctag-mist">Boldt Castle</span>
+            <span class="ctag ctag-mist">River</span>
           </div>
         </div>
       </a>
+
     </div>
+
+    <!-- PPT teaser -->
+    <a class="ppt-teaser" href="https://docs.google.com/presentation/d/1Xp7qFNgQFTErdYbdoFbxGFetJ2Fx6vYjdQ3kHzxn1BQ/edit?usp=sharing" target="_blank" style="margin-top:1rem;">
+      <div class="ppt-thumb">
+        <img src="https://lh7-us.googleusercontent.com/docs/AHkbwyIU0XWn5Fs8BumFiL5-841hcgV_se5K4AZ4vm2qA6T-gZg5YBaUBZ1qyb9szGqRk4omhWwSxoXk9eB0POaGBcN6l6KV6KnP5lNX7aoW8DsNJ-GyNP8=w1200-h630-p" alt="Presentation thumbnail">
+        <div class="ppt-thumb-play">
+          <svg viewBox="0 0 32 32" fill="none" xmlns="http://www.w3.org/2000/svg">
+            <circle cx="16" cy="16" r="15" fill="rgba(255,255,255,0.9)"/>
+            <path d="M13 10L22 16L13 22V10Z" fill="#1a6b8a"/>
+          </svg>
+        </div>
+      </div>
+      <div class="ppt-meta">
+        <div class="pm-label">Trip Presentation</div>
+        <div class="pm-title">Thousand Islands — Full Plan Deck</div>
+        <div class="pm-sub">Itinerary · Stay details · Restaurants · Attractions · All 4 days</div>
+      </div>
+      <div class="ppt-arrow">↗</div>
+    </a>
   </div>
 
+  <hr class="section-divider">
+
+  <!-- ── Future Trips ───────────────────────────────────── -->
   <div>
-    <div class="section-header">
-      <div>
-        <p class="section-label">The Archive</p>
-        <h2 class="section-title">Past Trips</h2>
-      </div>
-    </div>
-    <div class="trips">
-      <div class="trip-card" style="opacity:.55;cursor:default;pointer-events:none;">
-        <div class="trip-img" style="background:linear-gradient(135deg,#6b7c88,#9aacb4);">
-          <span class="badge">Memories coming soon</span>
+    <p class="section-eyebrow">On the Wishlist</p>
+    <h2 class="section-title">Future Adventures</h2>
+    <p style="font-size:.88rem;color:var(--stone);margin-bottom:1.6rem;line-height:1.6;">These are ideas on the crew's radar — no dates set yet. When a trip gets planned, it moves up to Upcoming and gets its own full page.</p>
+    <div class="future-grid">
+
+      <div class="future-card">
+        <div class="fc-icon">🍁</div>
+        <div class="fc-title">Adirondacks, NY</div>
+        <div class="fc-desc">Fall foliage, mountain hikes, lakeside cabins. Peak color usually mid-October — could be a perfect autumn escape for the crew.</div>
+        <div class="fc-tags">
+          <span class="fc-tag">Hiking</span><span class="fc-tag">Fall foliage</span><span class="fc-tag">Cabins</span><span class="fc-tag">~4 hrs drive</span>
         </div>
-        <div class="trip-body">
-          <div class="trip-date">Your past trips will live here</div>
-          <div class="trip-name">More adventures await</div>
-          <div class="trip-tags"><span class="trip-tag">example</span></div>
+        <div class="fc-hint">Replace with your next planned trip ↑</div>
+      </div>
+
+      <div class="future-card">
+        <div class="fc-icon">🏙️</div>
+        <div class="fc-title">Niagara Falls, NY/ON</div>
+        <div class="fc-desc">The classic — both the US and Canadian sides. Maid of the Mist, Clifton Hill, fireworks over the falls on summer evenings.</div>
+        <div class="fc-tags">
+          <span class="fc-tag">Waterfall</span><span class="fc-tag">Canada cross-over</span><span class="fc-tag">Family-friendly</span>
+        </div>
+        <div class="fc-hint">A crew favourite waiting to happen ↑</div>
+      </div>
+
+      <div class="future-card">
+        <div class="fc-icon">⛵</div>
+        <div class="fc-title">Cape Cod, MA</div>
+        <div class="fc-desc">Sandy beaches, lobster rolls, lighthouses, and whale watching. A long-weekend beach trip that works beautifully for a big group.</div>
+        <div class="fc-tags">
+          <span class="fc-tag">Beach</span><span class="fc-tag">Seafood</span><span class="fc-tag">Whale watching</span>
+        </div>
+        <div class="fc-hint">Summers only — needs early VRBO booking ↑</div>
+      </div>
+
+      <div class="future-card">
+        <div class="fc-icon">🗽</div>
+        <div class="fc-title">Washington D.C.</div>
+        <div class="fc-desc">The Smithsonian, monuments, the National Mall. A culturally rich trip the kids will actually remember — and it's mostly free.</div>
+        <div class="fc-tags">
+          <span class="fc-tag">History</span><span class="fc-tag">Museums</span><span class="fc-tag">Kid-friendly</span>
+        </div>
+        <div class="fc-hint">Ideal for spring · cherry blossoms in April ↑</div>
+      </div>
+
+    </div>
+  </div>
+
+  <hr class="section-divider">
+
+  <!-- ── Past Trips ─────────────────────────────────────── -->
+  <div>
+    <p class="section-eyebrow">The Archive</p>
+    <h2 class="section-title">Past Trips</h2>
+    <div class="trips-grid">
+      <div class="trip-card future" style="opacity:.5;">
+        <div class="card-img" style="background:linear-gradient(135deg,#8a9ba5,#b4c2c8);">
+          <span class="card-status status-past">Coming after Jun 2026</span>
+        </div>
+        <div class="card-body">
+          <div class="card-date">After the trip happens</div>
+          <div class="card-name">Thousand Islands recap</div>
+          <div class="card-desc">After July 2, the trip page switches to Published mode — photos, stories, and comments from the crew all live here.</div>
+          <div class="card-tags"><span class="ctag ctag-mist">Coming soon</span></div>
         </div>
       </div>
     </div>
   </div>
 
-  <!-- Crew teaser -->
+  <!-- ── Crew Teaser ────────────────────────────────────── -->
   <div class="crew-teaser">
-    <div style="display:flex;align-items:center;gap:1.2rem;flex-wrap:wrap;">
-      <div class="ct-avatars">
-        <div class="ct-avatar"><img src="crew-photos/Dipankar.jpg" alt="Dipankar"></div>
-        <div class="ct-avatar"><img src="crew-photos/Payel.jpg" alt="Payel"></div>
-        <div class="ct-avatar"><img src="crew-photos/Monalisa.jpg" alt="Monalisa"></div>
-        <div class="ct-avatar"><img src="crew-photos/Tanmay.jpg" alt="Tanmay"></div>
-        <div class="ct-avatar"><img src="crew-photos/Tiya.jpg" alt="Tiya"></div>
-        <div class="ct-avatar" style="background:var(--river-lt);display:flex;align-items:center;justify-content:center;font-size:.7rem;font-weight:600;color:var(--river-dk);">+10</div>
+    <div class="crew-left">
+      <div class="crew-avatars">
+        <div class="crew-av"><img src="crew/Dipankar.jpg" alt="Dipankar" onerror="this.parentElement.style.background='rgba(255,255,255,.2)'"></div>
+        <div class="crew-av"><img src="crew/Monalisa.jpg" alt="Monalisa" onerror="this.parentElement.style.background='rgba(255,255,255,.2)'"></div>
+        <div class="crew-av"><img src="crew/Tanmay.jpg" alt="Tanmay" onerror="this.parentElement.style.background='rgba(255,255,255,.2)'"></div>
+        <div class="crew-av"><img src="crew/Tiya.jpg" alt="Tiya" onerror="this.parentElement.style.background='rgba(255,255,255,.2)'"></div>
+        <div class="crew-av"><img src="crew/Goutam.jpg" alt="Goutam" onerror="this.parentElement.style.background='rgba(255,255,255,.2)'"></div>
+        <div class="crew-av more">+10</div>
       </div>
-      <div class="ct-text">
+      <div class="crew-text">
         <h3>Meet the Crew</h3>
-        <p>11 adults · 4 kids · one big adventure family</p>
+        <p>15 travelers · 11 adults · 4 kids · one big adventure family<br>From the master planner to the official photographer to the kid who picked up a horseshoe crab.</p>
       </div>
     </div>
-    <a class="ct-btn" href="crew.html">View All →</a>
+    <a class="crew-btn" href="crew/index.html">View the Crew →</a>
   </div>
+
 </main>
 
 <footer>
-  <p>Travelomania &nbsp;·&nbsp; Made with ❤️ by Dipankar &nbsp;·&nbsp; <a href="crew.html">The Crew</a> &nbsp;·&nbsp; Hosted on GitHub Pages</p>
+  <p>
+    Travelomania &nbsp;·&nbsp; Made with <span class="footer-heart">♥</span> by Dipankar
+    &nbsp;·&nbsp; <a href="crew/index.html">The Crew</a>
+    &nbsp;·&nbsp; <a href="thousand-islands/index.html">Thousand Islands</a>
+    &nbsp;·&nbsp; Hosted on GitHub Pages
+  </p>
 </footer>
+
 </body>
 </html>
