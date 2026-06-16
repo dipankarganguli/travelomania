@@ -3,96 +3,166 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Our Trips</title>
+<title>Travelomania · Our Trips</title>
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,700;1,400&family=Inter:wght@300;400;500;600&display=swap" rel="stylesheet">
 <style>
   *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
   :root {
-    --river: #1a6b8a; --river-dk: #0d3f52; --river-lt: #d6eef5;
-    --stone: #6b7c88; --ink: #1c2b33; --mist: #f0f4f6;
-    --serif: 'Playfair Display', Georgia, serif;
-    --sans: 'Inter', system-ui, sans-serif;
+    --river:#1a6b8a; --river-lt:#d6eef5; --river-dk:#0d3f52;
+    --stone:#6b7c88; --ink:#1c2b33; --mist:#f0f4f6; --white:#fff;
+    --serif:'Playfair Display',Georgia,serif;
+    --sans:'Inter',system-ui,sans-serif;
   }
-  body { font-family: var(--sans); color: var(--ink); background: var(--mist); -webkit-font-smoothing: antialiased; }
+  body { font-family:var(--sans); color:var(--ink); background:var(--mist); -webkit-font-smoothing:antialiased; }
+
+  nav { background:rgba(255,255,255,.93); backdrop-filter:blur(12px); border-bottom:1px solid rgba(26,107,138,.12); display:flex; align-items:center; justify-content:space-between; padding:0 2rem; height:56px; position:sticky; top:0; z-index:100; }
+  .nav-brand { font-family:var(--serif); font-size:1rem; color:var(--river-dk); text-decoration:none; }
+  .nav-links { display:flex; gap:1.5rem; }
+  .nav-links a { font-size:.82rem; color:var(--stone); text-decoration:none; font-weight:500; }
+  .nav-links a:hover { color:var(--river); }
+
   header {
-    background: var(--river-dk); color: #fff;
-    padding: 3.5rem 2rem 3rem;
-    text-align: center;
+    background:linear-gradient(135deg, var(--river-dk), #1a5a7a);
+    padding:4rem 2rem 3.5rem; text-align:center; position:relative; overflow:hidden;
   }
-  header h1 { font-family: var(--serif); font-size: 2.8rem; font-weight: 400; }
-  header p { margin-top: .6rem; color: rgba(255,255,255,.65); font-size: .9rem; }
-  main { max-width: 820px; margin: 0 auto; padding: 3rem 1.5rem; }
-  h2 { font-family: var(--serif); font-size: 1.1rem; color: var(--stone); font-weight: 400; margin-bottom: 1.2rem; }
-  .trips { display: grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); gap: 1.2rem; }
-  .trip-card {
-    background: #fff; border-radius: 10px;
-    border: 1px solid rgba(26,107,138,.12);
-    overflow: hidden; text-decoration: none; color: inherit;
-    box-shadow: 0 2px 12px rgba(26,107,138,.08);
-    transition: box-shadow .2s, transform .15s;
-    display: block;
-  }
-  .trip-card:hover { box-shadow: 0 6px 28px rgba(26,107,138,.16); transform: translateY(-2px); }
-  .trip-img {
-    height: 160px;
-    background: linear-gradient(135deg, var(--river-dk), var(--river));
-    display: flex; align-items: flex-end;
-    padding: 1rem;
-    position: relative; overflow: hidden;
-  }
-  .trip-img .badge {
-    font-size: .68rem; font-weight: 600; letter-spacing: .1em; text-transform: uppercase;
-    background: rgba(255,255,255,.2); color: #fff;
-    padding: 3px 10px; border-radius: 20px; backdrop-filter: blur(4px);
-  }
-  .trip-body { padding: 1.2rem 1.4rem; }
-  .trip-date { font-size: .75rem; color: var(--stone); margin-bottom: .3rem; }
-  .trip-name { font-family: var(--serif); font-size: 1.3rem; margin-bottom: .5rem; }
-  .trip-tags { display: flex; flex-wrap: wrap; gap: .4rem; }
-  .tag { font-size: .7rem; background: var(--mist); color: var(--stone); padding: 2px 9px; border-radius: 20px; }
-  footer { text-align: center; padding: 2rem; font-size: .8rem; color: var(--stone); }
+  header::before { content:''; position:absolute; inset:0; background:radial-gradient(ellipse at 30% 60%, rgba(26,107,138,.4), transparent 60%); }
+  header > * { position:relative; }
+  header .eyebrow { font-size:.72rem; font-weight:600; letter-spacing:.18em; text-transform:uppercase; color:rgba(214,238,245,.7); margin-bottom:.7rem; }
+  header h1 { font-family:var(--serif); font-size:clamp(2rem,5vw,3.4rem); color:#fff; font-weight:400; margin-bottom:.8rem; }
+  header h1 em { font-style:italic; color:#a8d8e8; }
+  header p { color:rgba(255,255,255,.62); font-size:.9rem; max-width:480px; margin:0 auto 1.8rem; line-height:1.65; }
+  .header-chips { display:flex; gap:.6rem; justify-content:center; flex-wrap:wrap; }
+  .header-chip { background:rgba(255,255,255,.12); color:rgba(255,255,255,.8); border:1px solid rgba(255,255,255,.18); border-radius:20px; padding:.35rem 1rem; font-size:.78rem; backdrop-filter:blur(4px); text-decoration:none; transition:background .15s; }
+  .header-chip:hover { background:rgba(255,255,255,.22); }
+  .header-wave { display:block; width:100%; margin-bottom:-2px; }
+
+  main { max-width:900px; margin:0 auto; padding:3rem 1.5rem 4rem; }
+  .section-header { display:flex; align-items:baseline; justify-content:space-between; margin-bottom:1.4rem; flex-wrap:wrap; gap:.5rem; }
+  .section-label { font-size:.72rem; font-weight:600; letter-spacing:.14em; text-transform:uppercase; color:var(--river); }
+  .section-title { font-family:var(--serif); font-size:1.5rem; font-weight:400; color:var(--river-dk); }
+  .trips { display:grid; grid-template-columns:repeat(auto-fit,minmax(280px,1fr)); gap:1.3rem; }
+  .trip-card { background:#fff; border-radius:12px; border:1px solid rgba(26,107,138,.1); overflow:hidden; text-decoration:none; color:inherit; box-shadow:0 2px 14px rgba(26,107,138,.07); transition:box-shadow .2s, transform .15s; display:block; }
+  .trip-card:hover { box-shadow:0 8px 30px rgba(26,107,138,.15); transform:translateY(-3px); }
+  .trip-img { height:170px; position:relative; display:flex; align-items:flex-end; padding:.9rem; }
+  .trip-img .badge { font-size:.65rem; font-weight:600; letter-spacing:.08em; text-transform:uppercase; background:rgba(255,255,255,.22); color:#fff; padding:3px 10px; border-radius:20px; backdrop-filter:blur(4px); border:1px solid rgba(255,255,255,.18); }
+  .trip-body { padding:1.2rem 1.4rem; }
+  .trip-date { font-size:.75rem; color:var(--stone); margin-bottom:.3rem; }
+  .trip-name { font-family:var(--serif); font-size:1.25rem; margin-bottom:.6rem; }
+  .trip-detail { font-size:.8rem; color:var(--stone); margin-bottom:.7rem; line-height:1.5; }
+  .trip-tags { display:flex; flex-wrap:wrap; gap:.4rem; }
+  .trip-tag { font-size:.68rem; background:var(--mist); color:var(--stone); padding:2px 9px; border-radius:20px; }
+  .trip-tag.live { background:var(--river-lt); color:var(--river-dk); font-weight:600; }
+
+  /* Crew teaser */
+  .crew-teaser { margin-top:3rem; background:var(--white); border-radius:14px; border:1px solid rgba(26,107,138,.1); padding:1.8rem 2rem; display:flex; align-items:center; justify-content:space-between; gap:1.5rem; flex-wrap:wrap; box-shadow:0 2px 14px rgba(26,107,138,.07); }
+  .ct-avatars { display:flex; }
+  .ct-avatar { width:44px; height:44px; border-radius:50%; border:2.5px solid #fff; overflow:hidden; margin-left:-12px; box-shadow:0 2px 6px rgba(0,0,0,.15); }
+  .ct-avatar:first-child { margin-left:0; }
+  .ct-avatar img { width:100%; height:100%; object-fit:cover; object-position:top; }
+  .ct-text h3 { font-family:var(--serif); font-size:1.15rem; color:var(--ink); margin-bottom:.3rem; }
+  .ct-text p { font-size:.85rem; color:var(--stone); }
+  .ct-btn { background:var(--river); color:#fff; text-decoration:none; font-size:.85rem; font-weight:500; padding:.6rem 1.3rem; border-radius:7px; white-space:nowrap; transition:background .15s; }
+  .ct-btn:hover { background:var(--river-dk); }
+
+  footer { text-align:center; padding:2rem; font-size:.8rem; color:var(--stone); border-top:1px solid rgba(26,107,138,.1); }
+  footer a { color:var(--river); text-decoration:none; }
+  @media (max-width:600px) { nav { padding:0 1rem; } main { padding:2rem 1rem 3rem; } }
 </style>
 </head>
 <body>
+<nav>
+  <a class="nav-brand" href="index.html">✦ Travelomania</a>
+  <div class="nav-links">
+    <a href="index.html">Trips</a>
+    <a href="crew.html">The Crew</a>
+  </div>
+</nav>
+
 <header>
-  <h1>Our Trips ✦</h1>
-  <p>Adventures with the crew — planning, memories & more</p>
+  <p class="eyebrow">Ganguli & Friends</p>
+  <h1>Trave<em>lomania</em></h1>
+  <p>Where every road leads somewhere worth remembering. Trip plans, memories, and a crew that makes every destination home.</p>
+  <div class="header-chips">
+    <a class="header-chip" href="thousand-islands/index.html">🏝️ Thousand Islands 2026</a>
+    <a class="header-chip" href="crew.html">👥 Meet the Crew</a>
+  </div>
+  <svg class="header-wave" viewBox="0 0 1440 40" xmlns="http://www.w3.org/2000/svg" preserveAspectRatio="none">
+    <path d="M0 40 C480 5 960 35 1440 10 L1440 40 Z" fill="#f0f4f6"/>
+  </svg>
 </header>
+
 <main>
-  <h2>Upcoming</h2>
-  <div class="trips">
-    <a class="trip-card" href="./thousand-islands/">
-      <div class="trip-img" style="background: linear-gradient(135deg, #0d3f52, #1a6b8a);">
-        <span class="badge">Planning in progress</span>
+  <div style="margin-bottom:2.5rem">
+    <div class="section-header">
+      <div>
+        <p class="section-label">Coming Up</p>
+        <h2 class="section-title">Upcoming Trips</h2>
       </div>
-      <div class="trip-body">
-        <div class="trip-date">Jun 29 – Jul 2, 2025</div>
-        <div class="trip-name">Thousand Islands, NY</div>
-        <div class="trip-tags">
-          <span class="tag">Clayton</span>
-          <span class="tag">Boldt Castle</span>
-          <span class="tag">St. Lawrence River</span>
+    </div>
+    <div class="trips">
+      <a class="trip-card" href="thousand-islands/index.html">
+        <div class="trip-img" style="background:linear-gradient(135deg,#0d3f52,#1a6b8a)">
+          <span class="badge">🗓️ Planning in progress</span>
         </div>
-      </div>
-    </a>
-    <!-- Add more upcoming trips here -->
+        <div class="trip-body">
+          <div class="trip-date">Jun 29 – Jul 2, 2026</div>
+          <div class="trip-name">Thousand Islands, NY</div>
+          <div class="trip-detail">40537 NY-12, Clayton · VRBO · Host: Allison Elliott · 15 travellers</div>
+          <div class="trip-tags">
+            <span class="trip-tag live">Active Plan</span>
+            <span class="trip-tag">Clayton</span>
+            <span class="trip-tag">Boldt Castle</span>
+            <span class="trip-tag">St. Lawrence River</span>
+          </div>
+        </div>
+      </a>
+    </div>
   </div>
 
-  <h2 style="margin-top:2.5rem">Past Trips</h2>
-  <div class="trips">
-    <div class="trip-card" style="opacity:.6;cursor:default;">
-      <div class="trip-img" style="background: #b4b2a9;">
-        <span class="badge">Your next past trip</span>
+  <div>
+    <div class="section-header">
+      <div>
+        <p class="section-label">The Archive</p>
+        <h2 class="section-title">Past Trips</h2>
       </div>
-      <div class="trip-body">
-        <div class="trip-date">Coming soon</div>
-        <div class="trip-name">Add trips after they happen</div>
-        <div class="trip-tags"><span class="tag">example</span></div>
+    </div>
+    <div class="trips">
+      <div class="trip-card" style="opacity:.55;cursor:default;pointer-events:none;">
+        <div class="trip-img" style="background:linear-gradient(135deg,#6b7c88,#9aacb4);">
+          <span class="badge">Memories coming soon</span>
+        </div>
+        <div class="trip-body">
+          <div class="trip-date">Your past trips will live here</div>
+          <div class="trip-name">More adventures await</div>
+          <div class="trip-tags"><span class="trip-tag">example</span></div>
+        </div>
       </div>
     </div>
   </div>
+
+  <!-- Crew teaser -->
+  <div class="crew-teaser">
+    <div style="display:flex;align-items:center;gap:1.2rem;flex-wrap:wrap;">
+      <div class="ct-avatars">
+        <div class="ct-avatar"><img src="crew-photos/Dipankar.jpg" alt="Dipankar"></div>
+        <div class="ct-avatar"><img src="crew-photos/Payel.jpg" alt="Payel"></div>
+        <div class="ct-avatar"><img src="crew-photos/Monalisa.jpg" alt="Monalisa"></div>
+        <div class="ct-avatar"><img src="crew-photos/Tanmay.jpg" alt="Tanmay"></div>
+        <div class="ct-avatar"><img src="crew-photos/Tiya.jpg" alt="Tiya"></div>
+        <div class="ct-avatar" style="background:var(--river-lt);display:flex;align-items:center;justify-content:center;font-size:.7rem;font-weight:600;color:var(--river-dk);">+10</div>
+      </div>
+      <div class="ct-text">
+        <h3>Meet the Crew</h3>
+        <p>11 adults · 4 kids · one big adventure family</p>
+      </div>
+    </div>
+    <a class="ct-btn" href="crew.html">View All →</a>
+  </div>
 </main>
-<footer>Made with love by the crew · Hosted on GitHub Pages</footer>
+
+<footer>
+  <p>Travelomania &nbsp;·&nbsp; Made with ❤️ by Dipankar &nbsp;·&nbsp; <a href="crew.html">The Crew</a> &nbsp;·&nbsp; Hosted on GitHub Pages</p>
+</footer>
 </body>
 </html>
