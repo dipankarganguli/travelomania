@@ -221,6 +221,7 @@
     <p class="hero-tagline">Where every road leads somewhere worth remembering. Trip plans, memories, and a crew that makes every destination feel like home.</p>
     <div class="hero-stats">
       <div class="hs"><div class="hs-num">1</div><div class="hs-lbl">Active Trip</div></div>
+      <div class="hs"><div class="hs-num">1</div><div class="hs-lbl">Past Trip</div></div>
       <div class="hs"><div class="hs-num">15</div><div class="hs-lbl">Travelers</div></div>
       <div class="hs"><div class="hs-num">∞</div><div class="hs-lbl">Adventures Ahead</div></div>
     </div>
@@ -338,14 +339,34 @@
     <p class="section-eyebrow">The Archive</p>
     <h2 class="section-title">Past Trips</h2>
     <div class="trips-grid">
-      <div class="trip-card future" style="opacity:.5;">
+      <!-- Acadia — REAL past trip -->
+      <a class="trip-card" href="acadia/">
+        <div class="card-img" style="background:linear-gradient(145deg,#1a3a1b 0%,#2c5f2d 55%,#4a7c59 100%);">
+          <div class="card-img-overlay" style="background:linear-gradient(to top,rgba(26,58,27,.65),transparent 60%)"></div>
+          <span class="card-status status-past">✅ Trip completed</span>
+        </div>
+        <div class="card-body">
+          <div class="card-date">Jun 27 – Jul 1, 2025 · 5 days</div>
+          <div class="card-name">Acadia National Park, ME</div>
+          <div class="card-desc">Cadillac Mountain at sunset. Jordan Pond popovers. Lobster sliders in Bar Harbor. Potato donuts in Portland. A trip that set the bar for everything after.</div>
+          <div class="card-tags">
+            <span class="ctag ctag-green">Completed</span>
+            <span class="ctag ctag-mist">Bar Harbor</span>
+            <span class="ctag ctag-mist">Hiking</span>
+            <span class="ctag ctag-mist">10 travelers</span>
+          </div>
+        </div>
+      </a>
+
+      <!-- Template card for your next past trip -->
+      <div class="trip-card future" style="opacity:.45;cursor:default;">
         <div class="card-img" style="background:linear-gradient(135deg,#8a9ba5,#b4c2c8);">
-          <span class="card-status status-past">Coming after Jun 2026</span>
+          <span class="card-status status-past">Your next past trip</span>
         </div>
         <div class="card-body">
           <div class="card-date">After the trip happens</div>
-          <div class="card-name">Thousand Islands recap</div>
-          <div class="card-desc">After July 2, the trip page switches to Published mode — photos, stories, and comments from the crew all live here.</div>
+          <div class="card-name">More adventures coming</div>
+          <div class="card-desc">After each trip, add a new folder and link it here. The archive grows with every adventure.</div>
           <div class="card-tags"><span class="ctag ctag-mist">Coming soon</span></div>
         </div>
       </div>
