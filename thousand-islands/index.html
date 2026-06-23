@@ -134,6 +134,20 @@
   .doc-embed-frame { width:100%; height:400px; border:none; display:block; }
   .doc-embed-hint { font-size:.73rem; color:var(--stone); padding:.5rem 1.2rem .7rem; }
 
+  /* Doc cards (PPT + Sheet) */
+  .doc-card { display:flex; align-items:center; gap:1rem; background:var(--white); border-radius:var(--radius); border:1px solid rgba(26,107,138,.12); padding:1rem 1.2rem; text-decoration:none; color:inherit; box-shadow:var(--shadow); transition:box-shadow .2s,transform .2s; }
+  .doc-card:hover { box-shadow:0 6px 24px rgba(26,107,138,.14); transform:translateY(-2px); }
+  .doc-thumb { width:88px; height:54px; border-radius:6px; overflow:hidden; flex-shrink:0; position:relative; box-shadow:0 2px 8px rgba(0,0,0,.12); }
+  .doc-thumb img { width:100%; height:100%; object-fit:cover; display:block; }
+  .doc-thumb-play { position:absolute; inset:0; background:rgba(13,63,82,.4); display:flex; align-items:center; justify-content:center; }
+  .doc-thumb-play svg { width:22px; height:22px; }
+  .doc-meta { flex:1; min-width:0; }
+  .doc-label { font-size:.65rem; font-weight:700; letter-spacing:.1em; text-transform:uppercase; color:var(--river); margin-bottom:.25rem; }
+  .doc-title { font-size:.88rem; font-weight:600; color:var(--ink); margin-bottom:.2rem; white-space:nowrap; overflow:hidden; text-overflow:ellipsis; }
+  .doc-sub { font-size:.74rem; color:var(--stone); white-space:nowrap; overflow:hidden; text-overflow:ellipsis; }
+  .doc-arrow { color:var(--river); font-size:1.1rem; flex-shrink:0; }
+  @media(max-width:580px){ .doc-card { flex-wrap:wrap; } .doc-thumb { width:100%; height:120px; } }
+
   /* ── BUDGET TRACKER ─────────────────────────────────────── */
   .budget-summary { display:grid; grid-template-columns:repeat(auto-fit,minmax(160px,1fr)); gap:1rem; margin-bottom:2rem; }
   .budget-stat { background:var(--mist); border-radius:var(--radius); padding:1.1rem 1.2rem; }
@@ -260,7 +274,7 @@
 <!-- Nav -->
 <nav>
   <a class="nav-brand" href="../">✦ Travelomania</a>
-  <a href="../crew/index.html" style="font-size:.78rem;color:var(--stone);text-decoration:none;font-weight:500;white-space:nowrap;padding:0 .5rem;">👥 The Crew</a><div class="nav-tabs">
+  <a href="../crew.html" style="font-size:.78rem;color:var(--stone);text-decoration:none;font-weight:500;white-space:nowrap;padding:0 .5rem;">👥 The Crew</a><div class="nav-tabs">
     <button class="nav-tab active"   id="tab-plan"   onclick="setMainView('planning')">Plan</button>
     <button class="nav-tab inactive" id="tab-budget" onclick="setMainView('budget')">Budget</button>
     <button class="nav-tab inactive" id="tab-photos" onclick="setMainView('photos')">Photos</button>
@@ -305,6 +319,53 @@
     </div>
   </div>
 </section>
+
+<!-- Docs row: PPT + Sheet -->
+<div class="container" style="padding-bottom:2rem;">
+  <div style="display:grid;grid-template-columns:1fr 1fr;gap:.8rem;">
+
+    <!-- Trip Presentation Deck -->
+    <a class="doc-card" href="https://docs.google.com/presentation/d/1Xp7qFNgQFTErdYbdoFbxGFetJ2Fx6vYjdQ3kHzxn1BQ/edit?usp=sharing" target="_blank">
+      <div class="doc-thumb">
+        <img src="https://lh7-us.googleusercontent.com/docs/AHkbwyIU0XWn5Fs8BumFiL5-841hcgV_se5K4AZ4vm2qA6T-gZg5YBaUBZ1qyb9szGqRk4omhWwSxoXk9eB0POaGBcN6l6KV6KnP5lNX7aoW8DsNJ-GyNP8=w1200-h630-p" alt="Presentation thumbnail">
+        <div class="doc-thumb-play">
+          <svg viewBox="0 0 32 32" fill="none" xmlns="http://www.w3.org/2000/svg">
+            <circle cx="16" cy="16" r="15" fill="rgba(255,255,255,0.9)"/>
+            <path d="M13 10L22 16L13 22V10Z" fill="#1a6b8a"/>
+          </svg>
+        </div>
+      </div>
+      <div class="doc-meta">
+        <div class="doc-label">Trip Presentation</div>
+        <div class="doc-title">Thousand Islands — Plan Deck</div>
+        <div class="doc-sub">Itinerary · Stay · Restaurants · Attractions · All 4 days</div>
+      </div>
+      <div class="doc-arrow">↗</div>
+    </a>
+
+    <!-- Trip Planning Sheet -->
+    <a class="doc-card" href="https://docs.google.com/spreadsheets/d/1B2G8XscPiDLHuD5qYC588c0o6ZYewA_EYW3_jC_L9nE/edit?usp=sharing" target="_blank">
+      <div class="doc-thumb" style="background:linear-gradient(135deg,#1a5c2a,#2a7a40);display:flex;align-items:center;justify-content:center;">
+        <svg viewBox="0 0 40 40" fill="none" xmlns="http://www.w3.org/2000/svg" width="38" height="38">
+          <rect x="4" y="4" width="32" height="32" rx="4" fill="rgba(255,255,255,0.15)"/>
+          <rect x="8" y="12" width="24" height="2.5" rx="1" fill="rgba(255,255,255,0.85)"/>
+          <rect x="8" y="18" width="14" height="2.5" rx="1" fill="rgba(255,255,255,0.55)"/>
+          <rect x="8" y="24" width="18" height="2.5" rx="1" fill="rgba(255,255,255,0.55)"/>
+          <rect x="26" y="16" width="6" height="12" rx="1" fill="rgba(255,255,255,0.25)"/>
+          <rect x="26" y="22" width="6" height="6" rx="1" fill="rgba(255,255,255,0.65)"/>
+        </svg>
+      </div>
+      <div class="doc-meta">
+        <div class="doc-label" style="color:#2a7a40;">Trip Planning List</div>
+        <div class="doc-title">Thousand Islands — Checklist</div>
+        <div class="doc-sub">Tasks · Bookings · Assignments · Status</div>
+      </div>
+      <div class="doc-arrow" style="color:#2a7a40;">↗</div>
+    </a>
+
+  </div>
+</div>
+
 <hr class="section-divider">
 
 <!-- ═══════════════════════════════════════════════════════ -->
