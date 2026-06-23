@@ -2,6 +2,7 @@
 <html lang="en">
 <head>
 <meta charset="UTF-8">
+<link rel="icon" type="image/svg+xml" href="travelomania-favicon.svg">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>Travelomania · Our Trips</title>
 <link rel="preconnect" href="https://fonts.googleapis.com">
@@ -28,7 +29,6 @@
     padding:0 2rem; height:58px; position:sticky; top:0; z-index:100;
   }
   .nav-brand { font-family:var(--serif); font-size:1.1rem; color:var(--river-dk); text-decoration:none; display:flex; align-items:center; gap:.5rem; }
-  .nav-brand span { font-style:italic; color:var(--river); }
   .nav-links { display:flex; gap:1.5rem; align-items:center; }
   .nav-links a { font-size:.82rem; color:var(--stone); text-decoration:none; font-weight:500; transition:color .15s; }
   .nav-links a:hover { color:var(--river); }
@@ -129,40 +129,6 @@
   .future-card .fc-tag { font-size:.66rem; padding:2px 8px; border-radius:8px; background:var(--mist); color:var(--stone); }
   .future-card .fc-hint { font-size:.72rem; color:rgba(26,107,138,.5); font-style:italic; margin-top:.3rem; }
 
-  /* ── Crew teaser ─────────────────────────────────────── */
-  .crew-teaser {
-    margin-top:3.5rem;
-    background:linear-gradient(135deg, var(--river-dk), #1a6b8a);
-    border-radius:var(--radius); padding:2rem 2.2rem;
-    display:flex; align-items:center; justify-content:space-between;
-    gap:2rem; flex-wrap:wrap;
-    box-shadow:0 6px 30px rgba(13,63,82,.2);
-  }
-  .crew-left { display:flex; align-items:center; gap:1.4rem; flex-wrap:wrap; }
-  .crew-avatars { display:flex; }
-  .crew-av {
-    width:46px; height:46px; border-radius:50%;
-    border:2.5px solid rgba(255,255,255,.7);
-    overflow:hidden; margin-left:-14px;
-    box-shadow:0 2px 8px rgba(0,0,0,.2);
-    flex-shrink:0;
-  }
-  .crew-av:first-child { margin-left:0; }
-  .crew-av img { width:100%; height:100%; object-fit:cover; object-position:top; }
-  .crew-av.more {
-    background:rgba(255,255,255,.15); backdrop-filter:blur(4px);
-    display:flex; align-items:center; justify-content:center;
-    font-size:.7rem; font-weight:700; color:#fff;
-  }
-  .crew-text h3 { font-family:var(--serif); font-size:1.3rem; color:#fff; margin-bottom:.3rem; }
-  .crew-text p { font-size:.84rem; color:rgba(255,255,255,.65); line-height:1.5; }
-  .crew-btn {
-    background:#fff; color:var(--river-dk);
-    text-decoration:none; font-size:.85rem; font-weight:600;
-    padding:.65rem 1.5rem; border-radius:8px; white-space:nowrap;
-    transition:all .15s; flex-shrink:0;
-  }
-  .crew-btn:hover { background:var(--river-lt); }
 
   /* ── PPT teaser ──────────────────────────────────────── */
   .ppt-teaser {
@@ -205,7 +171,7 @@
 
 <!-- Nav -->
 <nav>
-  <a class="nav-brand" href="index.html">✦ Travel<span>omania</span></a>
+  <a class="nav-brand" href="index.html">✦ Travelomania</a>
   <div class="nav-links">
     <a href="index.html">Trips</a>
     <a href="crew/index.html">The Crew</a>
@@ -222,7 +188,6 @@
     <div class="hero-stats">
       <div class="hs"><div class="hs-num">1</div><div class="hs-lbl">Active Trip</div></div>
       <div class="hs"><div class="hs-num">1</div><div class="hs-lbl">Past Trip</div></div>
-      <div class="hs"><div class="hs-num">15</div><div class="hs-lbl">Travelers</div></div>
       <div class="hs"><div class="hs-num">∞</div><div class="hs-lbl">Adventures Ahead</div></div>
     </div>
   </div>
@@ -355,23 +320,13 @@
     </div>
   </div>
 
-  <!-- ── Crew Teaser ────────────────────────────────────── -->
-  <div class="crew-teaser">
-    <div class="crew-left">
-      <div class="crew-avatars">
-        <div class="crew-av"><img src="crew/Dipankar.jpg" alt="Dipankar" onerror="this.parentElement.style.background='rgba(255,255,255,.2)'"></div>
-        <div class="crew-av"><img src="crew/Monalisa.jpg" alt="Monalisa" onerror="this.parentElement.style.background='rgba(255,255,255,.2)'"></div>
-        <div class="crew-av"><img src="crew/Tanmay.jpg" alt="Tanmay" onerror="this.parentElement.style.background='rgba(255,255,255,.2)'"></div>
-        <div class="crew-av"><img src="crew/Tiya.jpg" alt="Tiya" onerror="this.parentElement.style.background='rgba(255,255,255,.2)'"></div>
-        <div class="crew-av"><img src="crew/Goutam.jpg" alt="Goutam" onerror="this.parentElement.style.background='rgba(255,255,255,.2)'"></div>
-        <div class="crew-av more">+10</div>
-      </div>
-      <div class="crew-text">
-        <h3>Meet the Crew</h3>
-        <p>15 travelers · 11 adults · 4 kids · one big adventure family<br>From the master planner to the official photographer to the kid who picked up a horseshoe crab.</p>
-      </div>
-    </div>
-    <a class="crew-btn" href="crew/index.html">View the Crew →</a>
+  <!-- ── Creator strip ─────────────────────────────────── -->
+  <div style="text-align:center;padding:1rem 0 .5rem;">
+    <p style="font-size:.82rem;color:var(--stone);">
+      Planned &amp; built by <strong style="color:var(--ink);">Dipankar Ganguli</strong>
+      &nbsp;·&nbsp;
+      <a href="crew/index.html" style="color:var(--river);text-decoration:none;font-weight:500;">Meet the full crew →</a>
+    </p>
   </div>
 
 </main>

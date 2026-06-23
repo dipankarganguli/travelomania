@@ -2,6 +2,7 @@
 <html lang="en">
 <head>
 <meta charset="UTF-8">
+<link rel="icon" type="image/svg+xml" href="../travelomania-favicon.svg">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>Thousand Islands · Jun 29 – Jul 2</title>
 <link rel="preconnect" href="https://fonts.googleapis.com">
@@ -33,7 +34,7 @@
 
   /* Hero */
   .hero { position:relative; overflow:hidden; min-height:88vh; display:flex; flex-direction:column; justify-content:flex-end; background:var(--river-dk); }
-  .hero-bg { position:absolute; inset:0; background:linear-gradient(to bottom,rgba(13,63,82,.2) 0%,rgba(13,63,82,.75) 100%), url('https://images.unsplash.com/photo-1506905925346-21bda4d32df4?w=1600&q=80') center/cover no-repeat; }
+  .hero-bg { position:absolute; inset:0; background:linear-gradient(to bottom,rgba(13,63,82,.2) 0%,rgba(13,63,82,.75) 100%), url('https://images.unsplash.com/photo-1558618666-fcd25c85cd64?w=1600&q=80') center/cover no-repeat; }
   .hero-content { position:relative; z-index:2; padding:3rem 3rem 3.5rem; max-width:900px; }
   .hero-eyebrow { font-size:.72rem; font-weight:600; letter-spacing:.16em; text-transform:uppercase; color:rgba(214,238,245,.75); margin-bottom:.9rem; }
   .hero-title { font-family:var(--serif); font-size:clamp(2.8rem,6vw,5rem); font-weight:400; line-height:1.05; color:#fff; margin-bottom:1.2rem; }
@@ -147,6 +148,39 @@
   .doc-sub { font-size:.74rem; color:var(--stone); white-space:nowrap; overflow:hidden; text-overflow:ellipsis; }
   .doc-arrow { color:var(--river); font-size:1.1rem; flex-shrink:0; }
   @media(max-width:580px){ .doc-card { flex-wrap:wrap; } .doc-thumb { width:100%; height:120px; } }
+
+  /* Weather card */
+  .weather-card { background:linear-gradient(135deg,#0d3f52,#1a6b8a); border-radius:var(--radius); padding:1.2rem 1.4rem; color:#fff; }
+  .wth-header { display:flex; align-items:flex-start; justify-content:space-between; margin-bottom:1rem; }
+  .wth-label { font-size:.82rem; font-weight:600; letter-spacing:.04em; }
+  .wth-sub { font-size:.72rem; opacity:.6; margin-top:.2rem; }
+  .wth-refresh { background:rgba(255,255,255,.15); border:1px solid rgba(255,255,255,.2); color:#fff; border-radius:6px; width:30px; height:30px; cursor:pointer; font-size:1rem; display:flex; align-items:center; justify-content:center; flex-shrink:0; transition:background .2s; }
+  .wth-refresh:hover { background:rgba(255,255,255,.25); }
+  .wth-days { display:grid; grid-template-columns:repeat(4,1fr); gap:.6rem; }
+  .wth-day { background:rgba(255,255,255,.1); border-radius:8px; padding:.7rem .6rem; text-align:center; border:1px solid rgba(255,255,255,.08); }
+  .wth-day-name { font-size:.65rem; font-weight:600; letter-spacing:.08em; text-transform:uppercase; opacity:.65; margin-bottom:.3rem; }
+  .wth-day-date { font-size:.6rem; opacity:.45; margin-bottom:.5rem; }
+  .wth-icon { font-size:1.6rem; line-height:1; margin-bottom:.4rem; }
+  .wth-temp-hi { font-size:1.1rem; font-weight:600; }
+  .wth-temp-lo { font-size:.78rem; opacity:.55; }
+  .wth-desc { font-size:.65rem; opacity:.6; margin-top:.3rem; line-height:1.3; }
+  .wth-rain { font-size:.65rem; color:rgba(168,216,232,.9); margin-top:.25rem; }
+  .wth-foot { display:flex; justify-content:space-between; margin-top:.9rem; font-size:.64rem; opacity:.45; }
+  .wth-loading { text-align:center; padding:1.5rem; opacity:.6; font-size:.85rem; grid-column:span 4; }
+  .wth-error { text-align:center; padding:1rem; opacity:.6; font-size:.82rem; grid-column:span 4; }
+  @media(max-width:500px){ .wth-days { grid-template-columns:repeat(2,1fr); } .wth-loading,.wth-error { grid-column:span 2; } }
+
+
+  /* Locked notes box */
+  .notes-locked { background:var(--mist); border:1px solid rgba(26,107,138,.14); border-radius:var(--radius); padding:1.4rem 1.6rem; margin-top:1.2rem; text-align:center; }
+  .notes-locked .nl-icon { font-size:1.8rem; margin-bottom:.5rem; }
+  .notes-locked .nl-title { font-weight:600; font-size:.9rem; color:var(--ink); margin-bottom:.3rem; }
+  .notes-locked .nl-sub { font-size:.8rem; color:var(--stone); margin-bottom:1rem; line-height:1.5; }
+  .notes-locked input[type=password] { padding:.45rem .8rem; border:1px solid rgba(26,107,138,.25); border-radius:6px; font-size:.88rem; width:160px; font-family:var(--sans); }
+  .notes-locked button { background:var(--river); color:#fff; border:none; padding:.45rem 1rem; border-radius:6px; font-size:.82rem; cursor:pointer; margin-left:.4rem; font-family:var(--sans); transition:background .15s; }
+  .notes-locked button:hover { background:var(--river-dk); }
+  .notes-locked .nl-wrong { font-size:.75rem; color:#c0392b; margin-top:.5rem; display:none; }
+  .notes-embed-wrap { display:none; margin-top:1.2rem; }
 
   /* ── BUDGET TRACKER ─────────────────────────────────────── */
   .budget-summary { display:grid; grid-template-columns:repeat(auto-fit,minmax(160px,1fr)); gap:1rem; margin-bottom:2rem; }
@@ -273,8 +307,7 @@
 
 <!-- Nav -->
 <nav>
-  <a class="nav-brand" href="../">✦ Travelomania</a>
-  <a href="../crew.html" style="font-size:.78rem;color:var(--stone);text-decoration:none;font-weight:500;white-space:nowrap;padding:0 .5rem;">👥 The Crew</a><div class="nav-tabs">
+  <a class="nav-brand" href="../">✦ Travelomania</a><div class="nav-tabs">
     <button class="nav-tab active"   id="tab-plan"   onclick="setMainView('planning')">Plan</button>
     <button class="nav-tab inactive" id="tab-budget" onclick="setMainView('budget')">Budget</button>
     <button class="nav-tab inactive" id="tab-photos" onclick="setMainView('photos')">Photos</button>
@@ -319,6 +352,26 @@
     </div>
   </div>
 </section>
+
+<!-- Weather strip -->
+<div class="container" style="padding:1rem 0 .5rem;">
+  <div class="weather-card" id="weather-card">
+    <div class="wth-header">
+      <div>
+        <div class="wth-label">☁️ Weather Forecast · Clayton, NY</div>
+        <div class="wth-sub">Jun 29 – Jul 2, 2026 · St. Lawrence River region</div>
+      </div>
+      <button class="wth-refresh" onclick="loadWeather()" title="Refresh">↻</button>
+    </div>
+    <div class="wth-days" id="wth-days">
+      <div class="wth-loading">Fetching live forecast…</div>
+    </div>
+    <div class="wth-foot">
+      <span>Source: Open-Meteo · Updated live</span>
+      <span id="wth-updated"></span>
+    </div>
+  </div>
+</div>
 
 <!-- Docs row: PPT + Sheet -->
 <div class="container" style="padding-bottom:2rem;">
@@ -382,22 +435,36 @@
         <div class="day-card">
           <div class="day-header">
             <div class="day-num"><span class="n">1</span><span class="lbl">Day</span></div>
-            <div class="day-info"><div class="day-date">Sunday, June 29</div><div class="day-title">Arrival in Clayton · Settle In</div></div>
+            <div class="day-info"><div class="day-date">Sunday, June 29</div><div class="day-title">Albany → Verona Beach → Clayton Waterfront</div></div>
           </div>
           <div class="day-body">
             <ul class="activity-list">
-              <li><span class="act-time">All day</span><div class="act-content"><div class="act-name">Drive to Clayton, NY <span class="act-tag tag-travel">Travel</span></div><div class="act-note">Coordinate who's driving together. Clayton sits right on the St. Lawrence — expect a scenic final stretch.</div></div></li>
-              <li><span class="act-time">Check-in</span><div class="act-content"><div class="act-name">VRBO · Clayton <span class="act-tag tag-stay">Stay</span></div><div class="act-note">40537 NY-12, Clayton, NY · Host: Allison Elliott · 315-405-3471 · WiFi: nestuseful358</div></div></li>
-              <li><span class="act-time">Evening</span><div class="act-content"><div class="act-name">Dinner in Clayton <span class="act-tag tag-food">Food</span></div><div class="act-note"><strong>Clayton options:</strong> Koffee Kove (breakfast/lunch) · Channelside (lunch/dinner, 506 Riverside Dr) · Wood Boat Brewery (pizza & brews) · The Chateau (fine dining)</div></div></li>
-              <li><span class="act-time">Night</span><div class="act-content"><div class="act-name">Groceries run 🛒</div><div class="act-note">Clayton Shurfine Supermarket — 503 State St, Clayton (5 min away). Stock up on arrival night!</div></div></li>
+              <li><span class="act-time">10:00 AM</span><div class="act-content"><div class="act-name">Depart Albany <span class="act-tag tag-travel">Travel</span></div><div class="act-note">~2 hrs 45 min to Verona Beach via I-90 W. Coordinate carpooling the night before — confirm who's in which car.</div></div></li>
+              <li><span class="act-time">~12:30 PM</span><div class="act-content"><div class="act-name">Lunch stop — Verona Beach State Park <span class="act-tag tag-food">Picnic</span></div><div class="act-note">Beautiful lakeside park on Oneida Lake — great for a picnic lunch stretch. <a href="https://maps.app.goo.gl/Verona-Beach-State-Park" target="_blank" style="color:var(--river)">📍 Verona Beach State Park, NY 13162 ↗</a> · Bring packed lunch from Albany or grab at a deli on the way. ~30 min stop.</div></div></li>
+              <li><span class="act-time">~3:00 PM</span><div class="act-content"><div class="act-name">Arrive Clayton — Explore the Waterfront & Riverwalk <span class="act-tag tag-view">Explore</span></div><div class="act-note"><a href="https://maps.app.goo.gl/Clayton-Riverwalk" target="_blank" style="color:var(--river)">📍 Clayton Riverwalk, Riverside Dr, Clayton NY ↗</a> · Stroll the waterfront, browse the shops on James St, take in the first views of the St. Lawrence. Grab coffee or a snack.</div></div></li>
+              <li><span class="act-time">~7:30 PM</span><div class="act-content"><div class="act-name">Sunset on the St. Lawrence 🌅 <span class="act-tag tag-nature">Scenic</span></div><div class="act-note"><a href="https://maps.app.goo.gl/Clayton-Waterfront-Pier" target="_blank" style="color:var(--river)">📍 Clayton Town Dock & Pier, Riverside Dr ↗</a> · Sun sets ~8:30 PM late June. The pier faces west — perfect golden light over the islands. Don't miss this on Day 1.</div></div></li>
+              <li><span class="act-time">By 6:00 PM</span><div class="act-content"><div class="act-name">Check in — VRBO <span class="act-tag tag-stay">Stay</span></div><div class="act-note">40537 NY-12, Clayton NY · Host: Allison Elliott · 📞 315-405-3471 · WiFi: <code>nestuseful358</code><br>🛒 Grocery run: Clayton Shurfine Supermarket, 503 State St (5 min) — pick up BBQ supplies tonight!</div></div></li>
+              <li><span class="act-time">Evening</span><div class="act-content"><div class="act-name">BBQ at the VRBO 🔥 <span class="act-tag tag-food">Food</span></div><div class="act-note">Fire up the grill on arrival night — low key, get settled, let the kids run around. Assign tomorrow's breakfast duty.</div></div></li>
             </ul>
-            <div class="doc-embed-box">
-              <div class="doc-embed-header">
-                <h4>📝 Day 1 Notes — Jun 29</h4>
-                <a class="doc-open-link" href="https://docs.google.com/document/d/1M74bX2aV5qxtwCyNBsKhJ_UOYHL1RyEzcsSgdHLpWLA/edit?tab=t.0" target="_blank">Open in Google Docs ↗</a>
+            <div class="notes-locked" id="notes-lock-d1">
+              <div class="nl-icon">🔒</div>
+              <div class="nl-title">Trip Members Only</div>
+              <div class="nl-sub">Day 1 planning notes are private.<br>Enter the trip password to view.</div>
+              <div>
+                <input type="password" id="notes-pw-d1" placeholder="Password" onkeydown="if(event.key==='Enter')unlockNotes('d1')">
+                <button onclick="unlockNotes('d1')">Unlock</button>
               </div>
-              <iframe class="doc-embed-frame" src="https://docs.google.com/document/d/1M74bX2aV5qxtwCyNBsKhJ_UOYHL1RyEzcsSgdHLpWLA/pub?tab=t.0&embedded=true"></iframe>
-              <p class="doc-embed-hint">✏️ To add notes — click "Open in Google Docs" above. Changes appear here automatically.</p>
+              <div class="nl-wrong" id="notes-wrong-d1">Incorrect password. Ask Dipankar!</div>
+            </div>
+            <div class="notes-embed-wrap" id="notes-embed-d1">
+              <div class="doc-embed-box">
+                <div class="doc-embed-header">
+                  <h4>📝 Day 1 Notes — Jun 29</h4>
+                  <a class="doc-open-link" href="https://docs.google.com/document/d/1M74bX2aV5qxtwCyNBsKhJ_UOYHL1RyEzcsSgdHLpWLA/edit?tab=t.0" target="_blank">Open in Google Docs ↗</a>
+                </div>
+                <iframe class="doc-embed-frame" src="https://docs.google.com/document/d/1M74bX2aV5qxtwCyNBsKhJ_UOYHL1RyEzcsSgdHLpWLA/pub?tab=t.0&embedded=true"></iframe>
+                <p class="doc-embed-hint">✏️ To add notes — click "Open in Google Docs" above.</p>
+              </div>
             </div>
           </div>
         </div>
@@ -405,22 +472,34 @@
         <div class="day-card">
           <div class="day-header">
             <div class="day-num"><span class="n">2</span><span class="lbl">Day</span></div>
-            <div class="day-info"><div class="day-date">Monday, June 30</div><div class="day-title">Boldt Castle · Two Nation Tour · Sunset</div></div>
+            <div class="day-info"><div class="day-date">Monday, June 30</div><div class="day-title">Two Nations Tour · Boldt Castle · Antique Boat Museum</div></div>
           </div>
           <div class="day-body">
             <ul class="activity-list">
-              <li><span class="act-time">Morning</span><div class="act-content"><div class="act-name">Boldt Castle <span class="act-tag tag-tour">Tour</span></div><div class="act-note">Heart Island, Alexandria Bay. Opens 10:30 AM. $32/person includes ferry + Yacht House. Download the app for the audio tour. ⭐ 4.8/5 (6,600+ reviews).</div></div></li>
-              <li><span class="act-time">Afternoon</span><div class="act-content"><div class="act-name">Two Nation Tour <span class="act-tag tag-tour">Tour</span></div><div class="act-note">Departs Clayton dock. Cruises 40+ islands on both US & Canadian sides of the St. Lawrence. <strong>Bring passports!</strong> Departures usually 10 AM & 1 PM.</div></div></li>
-              <li><span class="act-time">Lunch</span><div class="act-content"><div class="act-name">Waterfront lunch <span class="act-tag tag-food">Food</span></div><div class="act-note">Plenty of options near the castle dock in Alexandria Bay, or head back to Clayton.</div></div></li>
-              <li><span class="act-time">Sunset</span><div class="act-content"><div class="act-name">Clayton Waterfront 🌅 <span class="act-tag tag-nature">Scenic</span></div><div class="act-note">Riverside Drive. Sunset ~8:30 PM late June. The pier faces west — perfect golden hour light over the islands.</div></div></li>
+              <li><span class="act-time">Breakfast</span><div class="act-content"><div class="act-name">Breakfast at the VRBO 🍳 <span class="act-tag tag-food">Food</span></div><div class="act-note">Home cooked — assign duty the night before. Early start today, so keep it simple.</div></div></li>
+              <li><span class="act-time">Morning</span><div class="act-content"><div class="act-name">Uncle Sam Two Nations Tour + Boldt Castle <span class="act-tag tag-tour">Tour</span></div><div class="act-note"><a href="https://maps.app.goo.gl/Uncle-Sam-Boat-Tours-Clayton" target="_blank" style="color:var(--river)">📍 Uncle Sam Boat Tours, 44 James St, Clayton NY ↗</a><br>🎟️ Tickets: <a href="https://www.usboattours.com" target="_blank" style="color:var(--river)">usboattours.com ↗</a> — book in advance! Combo tour covers 40+ islands (US + Canada) and stops at Boldt Castle. <strong>Bring passports</strong> for the Canadian side. ~3.5 hrs. $32/person for castle entry.</div></div></li>
+              <li><span class="act-time">Afternoon</span><div class="act-content"><div class="act-name">Antique Boat Museum <span class="act-tag tag-tour">Tour</span></div><div class="act-note"><a href="https://maps.app.goo.gl/Antique-Boat-Museum-Clayton" target="_blank" style="color:var(--river)">📍 750 Mary St, Clayton NY · ~7 min from VRBO ↗</a><br>🎟️ Adults $15 · Kids under 12 free · <a href="https://www.abm.org" target="_blank" style="color:var(--river)">abm.org ↗</a><br>🕐 Hours: Daily 9 AM – 5 PM (May–Oct). World's largest collection of antique boats on the water. The kids will love the boathouse.</div></div></li>
+              <li><span class="act-time">By 8:00 PM</span><div class="act-content"><div class="act-name">Back to VRBO 🏠</div><div class="act-note">Dinner on the way back or pick up food from Channelside / Wood Boat Brewery.</div></div></li>
             </ul>
-            <div class="doc-embed-box">
-              <div class="doc-embed-header">
-                <h4>📝 Day 2 Notes — Jun 30</h4>
-                <a class="doc-open-link" href="https://docs.google.com/document/d/1M74bX2aV5qxtwCyNBsKhJ_UOYHL1RyEzcsSgdHLpWLA/edit?tab=t.iwy9zzvtmp6j" target="_blank">Open in Google Docs ↗</a>
+            <div class="notes-locked" id="notes-lock-d2">
+              <div class="nl-icon">🔒</div>
+              <div class="nl-title">Trip Members Only</div>
+              <div class="nl-sub">Day 2 planning notes are private.<br>Enter the trip password to view.</div>
+              <div>
+                <input type="password" id="notes-pw-d2" placeholder="Password" onkeydown="if(event.key==='Enter')unlockNotes('d2')">
+                <button onclick="unlockNotes('d2')">Unlock</button>
               </div>
-              <iframe class="doc-embed-frame" src="https://docs.google.com/document/d/1M74bX2aV5qxtwCyNBsKhJ_UOYHL1RyEzcsSgdHLpWLA/pub?tab=t.iwy9zzvtmp6j&embedded=true"></iframe>
-              <p class="doc-embed-hint">✏️ To add notes — click "Open in Google Docs" above. Changes appear here automatically.</p>
+              <div class="nl-wrong" id="notes-wrong-d2">Incorrect password. Ask Dipankar!</div>
+            </div>
+            <div class="notes-embed-wrap" id="notes-embed-d2">
+              <div class="doc-embed-box">
+                <div class="doc-embed-header">
+                  <h4>📝 Day 2 Notes — Jun 30</h4>
+                  <a class="doc-open-link" href="https://docs.google.com/document/d/1M74bX2aV5qxtwCyNBsKhJ_UOYHL1RyEzcsSgdHLpWLA/edit?tab=t.iwy9zzvtmp6j" target="_blank">Open in Google Docs ↗</a>
+                </div>
+                <iframe class="doc-embed-frame" src="https://docs.google.com/document/d/1M74bX2aV5qxtwCyNBsKhJ_UOYHL1RyEzcsSgdHLpWLA/pub?tab=t.iwy9zzvtmp6j&embedded=true"></iframe>
+                <p class="doc-embed-hint">✏️ To add notes — click "Open in Google Docs" above.</p>
+              </div>
             </div>
           </div>
         </div>
@@ -428,22 +507,34 @@
         <div class="day-card">
           <div class="day-header">
             <div class="day-num"><span class="n">3</span><span class="lbl">Day</span></div>
-            <div class="day-info"><div class="day-date">Tuesday, July 1</div><div class="day-title">Cedar Point State Park</div></div>
+            <div class="day-info"><div class="day-date">Tuesday, July 1</div><div class="day-title">Alexandria Bay Beach · Downtown Shopping</div></div>
           </div>
           <div class="day-body">
             <ul class="activity-list">
-              <li><span class="act-time">Morning</span><div class="act-content"><div class="act-name">Cedar Point State Park <span class="act-tag tag-nature">Nature</span></div><div class="act-note">36661 State Park Dr, Clayton (~15 min). Beach, boat launch, fishing docks, kayaking. Open 24 hrs. Other options: Alexandria Bay Park Beach (25 min) · Southwick Beach State Park (1 hr).</div></div></li>
-              <li><span class="act-time">All day</span><div class="act-content"><div class="act-name">Beach & swimming on the St. Lawrence <span class="act-tag tag-nature">Nature</span></div><div class="act-note">Kayak rentals available in Clayton. Great fishing off the dock. Watch for motorboat wakes near the swim area.</div></div></li>
-              <li><span class="act-time">Evening</span><div class="act-content"><div class="act-name">Last dinner in Clayton 🍽️ <span class="act-tag tag-food">Food</span></div><div class="act-note">Channelside (opens 4 PM Thu–Sun) · Wood Boat Brewery for a casual last night · The Chateau if you want to go all out 🍷</div></div></li>
-              <li><span class="act-time">Night</span><div class="act-content"><div class="act-name">Pack up & prep for departure 🧳</div><div class="act-note">Check-out procedures, divvy up who handles what, plan the gas stop.</div></div></li>
+              <li><span class="act-time">Breakfast</span><div class="act-content"><div class="act-name">Breakfast at the VRBO 🍳 <span class="act-tag tag-food">Food</span></div><div class="act-note">Morning at the house — enjoy the river views before heading out.</div></div></li>
+              <li><span class="act-time">10:00 AM</span><div class="act-content"><div class="act-name">Alexandria Bay Park Beach 🏖️ <span class="act-tag tag-nature">Beach</span></div><div class="act-note"><a href="https://maps.app.goo.gl/Alexandria-Bay-Park-Beach" target="_blank" style="color:var(--river)">📍 Church St, Alexandria Bay NY · ~25 min from VRBO ↗</a><br>🎟️ Free entry · Open daily dawn to dusk<br>Sandy beach on the river with views of the islands. Great for kids. Pack sunscreen, towels, and snacks. Kayak/paddleboard rentals nearby.</div></div></li>
+              <li><span class="act-time">Afternoon</span><div class="act-content"><div class="act-name">Downtown Alexandria Bay — Shopping & Mementos 🛍️ <span class="act-tag tag-view">Explore</span></div><div class="act-note">Walk Market St and James St in Alex Bay — gift shops, fudge, local art, Thousand Islands dressing at the source. Pick up your mementos from the trip before heading back.</div></div></li>
+              <li><span class="act-time">By 8:00 PM</span><div class="act-content"><div class="act-name">Back to VRBO 🏠 + BBQ 🔥 <span class="act-tag tag-food">Food</span></div><div class="act-note">Last night — make it count! Fire up the grill, enjoy the river, late night on the dock. Pack up tomorrow morning.</div></div></li>
             </ul>
-            <div class="doc-embed-box">
-              <div class="doc-embed-header">
-                <h4>📝 Day 3 Notes — Jul 1</h4>
-                <a class="doc-open-link" href="https://docs.google.com/document/d/1M74bX2aV5qxtwCyNBsKhJ_UOYHL1RyEzcsSgdHLpWLA/edit?tab=t.xt7u7zijsiem" target="_blank">Open in Google Docs ↗</a>
+            <div class="notes-locked" id="notes-lock-d3">
+              <div class="nl-icon">🔒</div>
+              <div class="nl-title">Trip Members Only</div>
+              <div class="nl-sub">Day 3 planning notes are private.<br>Enter the trip password to view.</div>
+              <div>
+                <input type="password" id="notes-pw-d3" placeholder="Password" onkeydown="if(event.key==='Enter')unlockNotes('d3')">
+                <button onclick="unlockNotes('d3')">Unlock</button>
               </div>
-              <iframe class="doc-embed-frame" src="https://docs.google.com/document/d/1M74bX2aV5qxtwCyNBsKhJ_UOYHL1RyEzcsSgdHLpWLA/pub?tab=t.xt7u7zijsiem&embedded=true"></iframe>
-              <p class="doc-embed-hint">✏️ To add notes — click "Open in Google Docs" above. Changes appear here automatically.</p>
+              <div class="nl-wrong" id="notes-wrong-d3">Incorrect password. Ask Dipankar!</div>
+            </div>
+            <div class="notes-embed-wrap" id="notes-embed-d3">
+              <div class="doc-embed-box">
+                <div class="doc-embed-header">
+                  <h4>📝 Day 3 Notes — Jul 1</h4>
+                  <a class="doc-open-link" href="https://docs.google.com/document/d/1M74bX2aV5qxtwCyNBsKhJ_UOYHL1RyEzcsSgdHLpWLA/edit?tab=t.xt7u7zijsiem" target="_blank">Open in Google Docs ↗</a>
+                </div>
+                <iframe class="doc-embed-frame" src="https://docs.google.com/document/d/1M74bX2aV5qxtwCyNBsKhJ_UOYHL1RyEzcsSgdHLpWLA/pub?tab=t.xt7u7zijsiem&embedded=true"></iframe>
+                <p class="doc-embed-hint">✏️ To add notes — click "Open in Google Docs" above.</p>
+              </div>
             </div>
           </div>
         </div>
@@ -451,20 +542,33 @@
         <div class="day-card">
           <div class="day-header">
             <div class="day-num"><span class="n">4</span><span class="lbl">Day</span></div>
-            <div class="day-info"><div class="day-date">Wednesday, July 2</div><div class="day-title">Head Home</div></div>
+            <div class="day-info"><div class="day-date">Wednesday, July 2</div><div class="day-title">Cedar Point State Park · Drive to Albany</div></div>
           </div>
           <div class="day-body">
             <ul class="activity-list">
-              <li><span class="act-time">Morning</span><div class="act-content"><div class="act-name">Check-out & depart <span class="act-tag tag-travel">Travel</span></div><div class="act-note">Confirm check-out time with VRBO host. Pack the night before. Coffee before hitting the road.</div></div></li>
-              <li><span class="act-time">Drive</span><div class="act-content"><div class="act-name">Journey home 🚗</div><div class="act-note">Add your route + estimated drive time here. Any planned stops on the way back?</div></div></li>
+              <li><span class="act-time">Breakfast</span><div class="act-content"><div class="act-name">Breakfast at the VRBO 🍳 <span class="act-tag tag-food">Food</span></div><div class="act-note">Last breakfast — use up what's in the fridge! Check out procedures: confirm time with Allison, strip beds, take trash.</div></div></li>
+              <li><span class="act-time">Morning</span><div class="act-content"><div class="act-name">Cedar Point State Park 🏕️ <span class="act-tag tag-nature">Nature</span></div><div class="act-note"><a href="https://maps.app.goo.gl/Cedar-Point-State-Park-NY" target="_blank" style="color:var(--river)">📍 36661 Cedar Point Rd, Clayton NY · ~15 min from VRBO ↗</a><br>🎟️ Day use: $8/vehicle (Empire Pass accepted) · <a href="https://parks.ny.gov/parks/cedarpoint" target="_blank" style="color:var(--river)">parks.ny.gov ↗</a><br>🕐 Open dawn to dusk · Beach, boat launch, fishing dock, kayaking on the St. Lawrence. Perfect easy morning before the drive.</div></div></li>
+              <li><span class="act-time">By 4:00 PM</span><div class="act-content"><div class="act-name">Head back to Albany 🚗 <span class="act-tag tag-travel">Travel</span></div><div class="act-note">~2 hrs 45 min via I-81 S → I-90 E. Leave Clayton by noon for a comfortable arrival. Gas up in Watertown before the highway.</div></div></li>
             </ul>
-            <div class="doc-embed-box">
-              <div class="doc-embed-header">
-                <h4>📝 Day 4 Notes — Jul 2</h4>
-                <a class="doc-open-link" href="https://docs.google.com/document/d/1M74bX2aV5qxtwCyNBsKhJ_UOYHL1RyEzcsSgdHLpWLA/edit?tab=t.w8hc33vzbms2" target="_blank">Open in Google Docs ↗</a>
+            <div class="notes-locked" id="notes-lock-d4">
+              <div class="nl-icon">🔒</div>
+              <div class="nl-title">Trip Members Only</div>
+              <div class="nl-sub">Day 4 planning notes are private.<br>Enter the trip password to view.</div>
+              <div>
+                <input type="password" id="notes-pw-d4" placeholder="Password" onkeydown="if(event.key==='Enter')unlockNotes('d4')">
+                <button onclick="unlockNotes('d4')">Unlock</button>
               </div>
-              <iframe class="doc-embed-frame" src="https://docs.google.com/document/d/1M74bX2aV5qxtwCyNBsKhJ_UOYHL1RyEzcsSgdHLpWLA/pub?tab=t.w8hc33vzbms2&embedded=true"></iframe>
-              <p class="doc-embed-hint">✏️ To add notes — click "Open in Google Docs" above. Changes appear here automatically.</p>
+              <div class="nl-wrong" id="notes-wrong-d4">Incorrect password. Ask Dipankar!</div>
+            </div>
+            <div class="notes-embed-wrap" id="notes-embed-d4">
+              <div class="doc-embed-box">
+                <div class="doc-embed-header">
+                  <h4>📝 Day 4 Notes — Jul 2</h4>
+                  <a class="doc-open-link" href="https://docs.google.com/document/d/1M74bX2aV5qxtwCyNBsKhJ_UOYHL1RyEzcsSgdHLpWLA/edit?tab=t.w8hc33vzbms2" target="_blank">Open in Google Docs ↗</a>
+                </div>
+                <iframe class="doc-embed-frame" src="https://docs.google.com/document/d/1M74bX2aV5qxtwCyNBsKhJ_UOYHL1RyEzcsSgdHLpWLA/pub?tab=t.w8hc33vzbms2&embedded=true"></iframe>
+                <p class="doc-embed-hint">✏️ To add notes — click "Open in Google Docs" above.</p>
+              </div>
             </div>
           </div>
         </div>
@@ -642,7 +746,7 @@
       <!-- PHOTO SLOTS — replace src="" with your image URLs after the trip -->
       <div class="gallery-day-label" data-day="day1">Day 1 · Arrival in Clayton</div>
       <div class="gallery-grid" id="gallery-day1">
-        <div class="gallery-item" data-day="day1" onclick="openLightbox(this)"><img src="" data-src="https://images.unsplash.com/photo-1506905925346-21bda4d32df4?w=600&q=70" alt="Clayton waterfront" loading="lazy"><div class="gi-caption">Clayton waterfront</div></div>
+        <div class="gallery-item" data-day="day1" onclick="openLightbox(this)"><img src="" data-src="https://images.unsplash.com/photo-1558618666-fcd25c85cd64?w=600&q=70" alt="Thousand Islands, St. Lawrence River" loading="lazy"><div class="gi-caption">Clayton waterfront</div></div>
         <div class="gallery-item placeholder" data-day="day1"><span class="ph-icon">📷</span><span>Add a photo from Day 1</span></div>
         <div class="gallery-item placeholder" data-day="day1"><span class="ph-icon">📷</span><span>Add a photo from Day 1</span></div>
       </div>
@@ -692,7 +796,7 @@
       <div class="days">
         <div class="day-card"><div class="day-header"><div class="day-num"><span class="n">1</span><span class="lbl">Day</span></div><div class="day-info"><div class="day-date">Sunday, June 29</div><div class="day-title">Arrival in Clayton</div></div></div><div class="day-body"><p style="font-size:.9rem;color:var(--stone)">First impressions of Clayton, the VRBO, dinner on the waterfront. Add your story here after the trip!</p></div></div>
         <div class="day-card"><div class="day-header"><div class="day-num"><span class="n">2</span><span class="lbl">Day</span></div><div class="day-info"><div class="day-date">Monday, June 30</div><div class="day-title">Boldt Castle & Two Nation Tour</div></div></div><div class="day-body"><p style="font-size:.9rem;color:var(--stone)">The castle that was never finished. The river from the boat. Sunset from the pier. Fill this in after you're home.</p></div></div>
-        <div class="day-card"><div class="day-header"><div class="day-num"><span class="n">3</span><span class="lbl">Day</span></div><div class="day-info"><div class="day-date">Tuesday, July 1</div><div class="day-title">Cedar Point State Park</div></div></div><div class="day-body"><p style="font-size:.9rem;color:var(--stone)">Beach day on the St. Lawrence. Add your Cedar Point highlights here after the trip!</p></div></div>
+        <div class="day-card"><div class="day-header"><div class="day-num"><span class="n">3</span><span class="lbl">Day</span></div><div class="day-info"><div class="day-date">Tuesday, July 1</div><div class="day-title">Alexandria Bay Beach · Downtown Shopping</div></div></div><div class="day-body"><p style="font-size:.9rem;color:var(--stone)">Beach day on the St. Lawrence. Add your Cedar Point highlights here after the trip!</p></div></div>
       </div>
     </div>
   </section>
@@ -724,7 +828,64 @@
 </footer>
 
 <script>
-// ── Map tab switcher ───────────────────────────────────────
+// ── Weather (Open-Meteo, no API key needed) ────────────────
+const WEATHER_DATES = ['2026-06-29','2026-06-30','2026-07-01','2026-07-02'];
+const DAY_NAMES = ['Sun Jun 29','Mon Jun 30','Tue Jul 1','Wed Jul 2'];
+
+const WMO = {
+  0:'Clear sky',1:'Mainly clear',2:'Partly cloudy',3:'Overcast',
+  45:'Foggy',48:'Icy fog',
+  51:'Light drizzle',53:'Drizzle',55:'Heavy drizzle',
+  61:'Light rain',63:'Moderate rain',65:'Heavy rain',
+  71:'Light snow',73:'Snow',75:'Heavy snow',77:'Snow grains',
+  80:'Rain showers',81:'Showers',82:'Heavy showers',
+  85:'Snow showers',86:'Heavy snow showers',
+  95:'Thunderstorm',96:'Thunder+hail',99:'Thunder+heavy hail'
+};
+const WMO_ICON = {
+  0:'☀️',1:'🌤️',2:'⛅',3:'☁️',45:'🌫️',48:'🌫️',
+  51:'🌦️',53:'🌧️',55:'🌧️',61:'🌧️',63:'🌧️',65:'🌧️',
+  71:'🌨️',73:'❄️',75:'❄️',77:'🌨️',
+  80:'🌦️',81:'🌧️',82:'⛈️',85:'🌨️',86:'❄️',
+  95:'⛈️',96:'⛈️',99:'⛈️'
+};
+
+async function loadWeather(){
+  const el = document.getElementById('wth-days');
+  el.innerHTML = '<div class="wth-loading">Fetching live forecast…</div>';
+  try {
+    const url = 'https://api.open-meteo.com/v1/forecast?latitude=44.2428&longitude=-76.0883&daily=weathercode,temperature_2m_max,temperature_2m_min,precipitation_probability_max&temperature_unit=fahrenheit&timezone=America%2FNew_York&start_date=2026-06-29&end_date=2026-07-02';
+    const res = await fetch(url);
+    if(!res.ok) throw new Error('API error');
+    const d = await res.json();
+    const days = d.daily;
+    el.innerHTML = WEATHER_DATES.map((date,i)=>{
+      const code = days.weathercode[i];
+      const hi   = Math.round(days.temperature_2m_max[i]);
+      const lo   = Math.round(days.temperature_2m_min[i]);
+      const rain = days.precipitation_probability_max[i];
+      const icon = WMO_ICON[code] || '🌡️';
+      const desc = WMO[code] || 'Unknown';
+      const rainStr = rain != null ? `💧 ${rain}% chance rain` : '';
+      return `<div class="wth-day">
+        <div class="wth-day-name">${DAY_NAMES[i].split(' ')[0]}</div>
+        <div class="wth-day-date">${DAY_NAMES[i].split(' ').slice(1).join(' ')}</div>
+        <div class="wth-icon">${icon}</div>
+        <div class="wth-temp-hi">${hi}°F</div>
+        <div class="wth-temp-lo">${lo}°F</div>
+        <div class="wth-desc">${desc}</div>
+        ${rainStr ? `<div class="wth-rain">${rainStr}</div>` : ''}
+      </div>`;
+    }).join('');
+    const now = new Date();
+    document.getElementById('wth-updated').textContent = 'Updated ' + now.toLocaleTimeString([], {hour:'2-digit',minute:'2-digit'});
+  } catch(e) {
+    el.innerHTML = '<div class="wth-error">⚠️ Forecast unavailable right now — <a href="https://forecast.weather.gov/MapClick.php?CityName=Clayton&state=NY" target="_blank" style="color:rgba(168,216,232,.9)">check NWS instead ↗</a></div>';
+  }
+}
+loadWeather();
+
+
   function showMap(id, btn) {
     ["overview","vrbo","boldt","cedar"].forEach(k => {
       const el = document.getElementById("map-"+k);
