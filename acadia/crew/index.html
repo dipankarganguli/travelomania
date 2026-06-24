@@ -1,0 +1,190 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta http-equiv="Cache-Control" content="no-cache, no-store, must-revalidate">
+<link rel="icon" type="image/svg+xml" href="../../travelomania-favicon.svg">
+<title>The Crew · Acadia 2025</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,700;1,400&family=Inter:wght@300;400;500;600&display=swap" rel="stylesheet">
+<style>
+  *, *::before, *::after { box-sizing:border-box; margin:0; padding:0; }
+  :root {
+    --forest:#2c5f2d; --forest-lt:#d8edd8; --forest-dk:#1a3a1b;
+    --stone:#6b7c88; --ink:#1c2b33; --mist:#f0f4f6;
+    --gold:#c4882a; --gold-lt:#fdf3e0; --white:#fff;
+    --serif:'Playfair Display',Georgia,serif;
+    --sans:'Inter',system-ui,sans-serif;
+    --radius:14px; --shadow:0 4px 24px rgba(44,95,45,.10);
+  }
+  html { scroll-behavior:smooth; }
+  body { font-family:var(--sans); color:var(--ink); background:var(--mist); -webkit-font-smoothing:antialiased; }
+
+  nav { background:rgba(255,255,255,.93); backdrop-filter:blur(12px); border-bottom:1px solid rgba(44,95,45,.12); display:flex; align-items:center; justify-content:space-between; padding:0 2rem; height:56px; position:sticky; top:0; z-index:100; }
+  .nav-brand { font-family:var(--serif); font-size:1rem; color:var(--forest-dk); text-decoration:none; }
+  .nav-links { display:flex; gap:1.5rem; }
+  .nav-links a { font-size:.82rem; color:var(--stone); text-decoration:none; font-weight:500; transition:color .15s; }
+  .nav-links a:hover, .nav-links a.active { color:var(--forest); }
+
+  .hero { background:linear-gradient(135deg,var(--forest-dk) 0%,#2c5f2d 60%,#4a7c59 100%); padding:5rem 2rem 0; text-align:center; position:relative; overflow:hidden; }
+  .hero::before { content:''; position:absolute; inset:0; background:url("data:image/svg+xml,%3Csvg width='60' height='60' viewBox='0 0 60 60' xmlns='http://www.w3.org/2000/svg'%3E%3Cg fill='%23ffffff' fill-opacity='0.04'%3E%3Cpath d='M36 34v-4h-2v4h-4v2h4v4h2v-4h4v-2h-4zm0-30V0h-2v4h-4v2h4v4h2V6h4V4h-4zM6 34v-4H4v4H0v2h4v4h2v-4h4v-2H6zM6 4V0H4v4H0v2h4v4h2V6h4V4H6z'/%3E%3C/g%3E%3C/svg%3E"); }
+  .hero-eyebrow { font-size:.72rem; font-weight:600; letter-spacing:.16em; text-transform:uppercase; color:rgba(216,237,216,.7); margin-bottom:.8rem; }
+  .hero h1 { font-family:var(--serif); font-size:clamp(2.2rem,5vw,3.8rem); color:#fff; font-weight:400; line-height:1.1; margin-bottom:1rem; }
+  .hero h1 em { font-style:italic; color:#a8d4a8; }
+  .hero-sub { color:rgba(255,255,255,.7); font-size:1rem; max-width:480px; margin:0 auto 2rem; line-height:1.7; }
+  .hero-stats { display:inline-flex; gap:2.5rem; background:rgba(255,255,255,.1); backdrop-filter:blur(8px); border:1px solid rgba(255,255,255,.15); border-radius:40px; padding:.8rem 2.2rem; margin-bottom:2.5rem; }
+  .stat .n { font-family:var(--serif); font-size:1.6rem; color:#fff; line-height:1; }
+  .stat .l { font-size:.65rem; letter-spacing:.1em; text-transform:uppercase; color:rgba(255,255,255,.55); margin-top:.2rem; }
+  .hero-wave { display:block; width:100%; }
+
+  .filters { display:flex; justify-content:center; gap:.5rem; flex-wrap:wrap; padding:2rem 1rem 1rem; }
+  .filter-btn { background:var(--white); color:var(--stone); border:1.5px solid rgba(44,95,45,.15); padding:6px 16px; border-radius:20px; font-size:.8rem; font-weight:500; cursor:pointer; transition:all .2s; }
+  .filter-btn.active { background:var(--forest); color:#fff; border-color:var(--forest); }
+  .filter-btn:hover:not(.active) { border-color:var(--forest); color:var(--forest); }
+
+  .crew-grid { display:grid; grid-template-columns:repeat(auto-fill,minmax(240px,1fr)); gap:1.4rem; max-width:1100px; margin:0 auto; padding:1rem 1.5rem 4rem; }
+
+  .crew-card { background:var(--white); border-radius:var(--radius); box-shadow:var(--shadow); overflow:hidden; transition:transform .25s,box-shadow .25s; }
+  .crew-card:hover { transform:translateY(-5px); box-shadow:0 12px 40px rgba(44,95,45,.16); }
+  .card-photo-wrap { position:relative; aspect-ratio:3/4; overflow:hidden; background:var(--mist); }
+  .card-photo-wrap img { width:100%; height:100%; object-fit:cover; object-position:top center; transition:transform .4s; display:block; }
+  .crew-card:hover .card-photo-wrap img { transform:scale(1.04); }
+  .card-type-badge { position:absolute; top:.7rem; left:.7rem; font-size:.62rem; font-weight:700; letter-spacing:.1em; text-transform:uppercase; padding:3px 10px; border-radius:20px; background:var(--forest-lt); color:var(--forest-dk); }
+  .card-type-badge.kid { background:var(--gold-lt); color:var(--gold); }
+  .card-emoji { position:absolute; bottom:.7rem; right:.7rem; width:36px; height:36px; border-radius:50%; background:rgba(255,255,255,.9); display:flex; align-items:center; justify-content:center; font-size:1.1rem; box-shadow:0 2px 8px rgba(0,0,0,.15); }
+  .card-body { padding:1.1rem 1.2rem 1.3rem; }
+  .card-name { font-family:var(--serif); font-size:1.25rem; color:var(--ink); margin-bottom:.15rem; }
+  .card-role { font-size:.75rem; font-weight:600; letter-spacing:.08em; text-transform:uppercase; color:var(--forest); margin-bottom:.7rem; }
+  .card-tags { display:flex; flex-wrap:wrap; gap:.35rem; margin-bottom:.75rem; }
+  .tag { font-size:.68rem; background:var(--mist); color:var(--stone); padding:2px 9px; border-radius:10px; font-weight:500; }
+  .card-fact { font-size:.82rem; color:var(--stone); line-height:1.55; border-top:1px solid var(--mist); padding-top:.7rem; }
+  .card-trips { display:flex; gap:.3rem; flex-wrap:wrap; margin-top:.6rem; }
+  .trip-dot { font-size:.65rem; background:var(--forest-lt); color:var(--forest-dk); padding:2px 7px; border-radius:8px; font-weight:500; }
+
+  .quote-section { max-width:700px; margin:0 auto; padding:1rem 1.5rem 3rem; text-align:center; }
+  .quote-section blockquote { font-family:var(--serif); font-size:1.5rem; font-style:italic; color:var(--forest-dk); line-height:1.5; }
+  .quote-section cite { display:block; margin-top:.8rem; font-size:.82rem; color:var(--stone); font-style:normal; }
+
+  footer { border-top:1px solid rgba(44,95,45,.1); padding:2rem; text-align:center; font-size:.8rem; color:var(--stone); background:var(--white); }
+  footer a { color:var(--forest); text-decoration:none; }
+
+  @media(max-width:600px) {
+    nav { padding:0 1rem; }
+    .crew-grid { grid-template-columns:repeat(2,1fr); gap:.8rem; padding:.5rem .8rem 3rem; }
+    .card-name { font-size:1.05rem; }
+  }
+</style>
+</head>
+<body>
+
+<nav>
+  <a class="nav-brand" href="../">✦ Acadia 2025</a>
+  <div class="nav-links">
+    <a href="../../">All Trips</a>
+    <a href="../">Acadia</a>
+    <a href="#" class="active">The Crew</a>
+  </div>
+</nav>
+
+<div class="hero">
+  <p class="hero-eyebrow">Acadia National Park · June 2025</p>
+  <h1>The <em>Crew</em></h1>
+  <p class="hero-sub">Ten adventurers who drove to Maine, climbed a mountain, ate potato donuts, and watched the sun set from 1,530 feet.</p>
+  <div class="hero-stats">
+    <div class="stat"><div class="n">10</div><div class="l">Travelers</div></div>
+    <div class="stat"><div class="n">6</div><div class="l">Adults</div></div>
+    <div class="stat"><div class="n">4</div><div class="l">Kids</div></div>
+    <div class="stat"><div class="n">5</div><div class="l">Days</div></div>
+  </div>
+  <svg viewBox="0 0 1440 48" xmlns="http://www.w3.org/2000/svg" preserveAspectRatio="none" style="display:block;width:100%;margin-top:2.5rem">
+    <path d="M0 48 C360 10 720 40 1080 20 C1260 10 1380 35 1440 16 L1440 48 Z" fill="#f0f4f6"/>
+  </svg>
+</div>
+
+<div class="filters">
+  <button class="filter-btn active" onclick="filterCrew('all',this)">Everyone 🎉</button>
+  <button class="filter-btn" onclick="filterCrew('adult',this)">Adults</button>
+  <button class="filter-btn" onclick="filterCrew('child',this)">Kids</button>
+  <button class="filter-btn" onclick="filterCrew('planner',this)">Planners 🗺️</button>
+  <button class="filter-btn" onclick="filterCrew('foodie',this)">Foodies 🍽️</button>
+  <button class="filter-btn" onclick="filterCrew('photographer',this)">Photographers 📸</button>
+</div>
+
+<div class="crew-grid">
+
+  <div class="crew-card" data-type="adult" data-tags="planner photographer">
+    <div class="card-photo-wrap"><img src="Dipankar.jpg" alt="Dipankar" loading="lazy"><span class="card-type-badge">Organizer</span><span class="card-emoji">🗺️</span></div>
+    <div class="card-body"><div class="card-name">Dipankar</div><div class="card-role">The Master Planner</div><div class="card-tags"><span class="tag">Trip Architect</span><span class="tag">PPT wizard</span><span class="tag">River lover</span></div><div class="card-fact">22 slides deep before the trip even started. If there's a VRBO booked and an itinerary polished — Dipankar started it. His Acadia deck had tide times, trail ratings, and donut shop hours.</div><div class="card-trips"><span class="trip-dot">🏕️ Acadia 2025</span></div></div>
+  </div>
+
+  <div class="crew-card" data-type="adult" data-tags="foodie">
+    <div class="card-photo-wrap"><img src="Monalisa.jpg" alt="Monalisa" loading="lazy"><span class="card-type-badge">Adult</span><span class="card-emoji">🌿</span></div>
+    <div class="card-body"><div class="card-name">Monalisa</div><div class="card-role">The Vibe Curator</div><div class="card-tags"><span class="tag">Nature enthusiast</span><span class="tag">Foodie</span><span class="tag">Style icon</span></div><div class="card-fact">Brought warmth and laughter to every trail. Has an uncanny ability to find the best photo spot — usually involving autumn leaves or dramatic coastal light.</div><div class="card-trips"><span class="trip-dot">🏕️ Acadia 2025</span></div></div>
+  </div>
+
+  <div class="crew-card" data-type="adult" data-tags="foodie">
+    <div class="card-photo-wrap"><img src="Payel__2_.jpg" alt="Payel" loading="lazy"><span class="card-type-badge">Adult</span><span class="card-emoji">🌸</span></div>
+    <div class="card-body"><div class="card-name">Payel</div><div class="card-role">The Social Spark</div><div class="card-tags"><span class="tag">People person</span><span class="tag">Foodie</span><span class="tag">Beach lover</span></div><div class="card-fact">The one who keeps the group energy high on long drives and longer hikes. Always smiling, never complaining — even on the Beehive Trail.</div><div class="card-trips"><span class="trip-dot">🏕️ Acadia 2025</span></div></div>
+  </div>
+
+  <div class="crew-card" data-type="adult" data-tags="photographer planner">
+    <div class="card-photo-wrap"><img src="Tanmay.jpg" alt="Tanmay" loading="lazy"><span class="card-type-badge">Adult</span><span class="card-emoji">📷</span></div>
+    <div class="card-body"><div class="card-name">Tanmay</div><div class="card-role">Official Trip Photographer</div><div class="card-tags"><span class="tag">📸 Official Photographer</span><span class="tag">Water sports</span><span class="tag">Early riser</span></div><div class="card-fact">Every great memory from Acadia has Tanmay's fingerprints on it. He got the Cadillac sunset shot while everyone else was shivering. The group's visual memory.</div><div class="card-trips"><span class="trip-dot">🏕️ Acadia 2025</span></div></div>
+  </div>
+
+  <div class="crew-card" data-type="adult" data-tags="foodie">
+    <div class="card-photo-wrap"><img src="Goutam.jpg" alt="Goutam" loading="lazy"><span class="card-type-badge">Adult</span><span class="card-emoji">🍗</span></div>
+    <div class="card-body"><div class="card-name">Goutam</div><div class="card-role">The Food Connoisseur</div><div class="card-tags"><span class="tag">Wing specialist</span><span class="tag">Lobster authority</span><span class="tag">Foodie</span></div><div class="card-fact">Two nights in a row he picked dinner in Bar Harbor. Two nights in a row he was right. His lobster slider recommendation is now Travelomania canon.</div><div class="card-trips"><span class="trip-dot">🏕️ Acadia 2025</span></div></div>
+  </div>
+
+  <div class="crew-card" data-type="adult" data-tags="foodie">
+    <div class="card-photo-wrap"><img src="Tanu__2_.jpg" alt="Tanu" loading="lazy"><span class="card-type-badge">Adult</span><span class="card-emoji">🍃</span></div>
+    <div class="card-body"><div class="card-name">Tanu</div><div class="card-role">The Calm in the Storm</div><div class="card-tags"><span class="tag">Peacekeeper</span><span class="tag">Snack manager</span><span class="tag">Night owl</span></div><div class="card-fact">Remembered everyone's dietary preferences and kept the snack bag stocked for every trail. The group's anchor when logistics got complicated.</div><div class="card-trips"><span class="trip-dot">🏕️ Acadia 2025</span></div></div>
+  </div>
+
+  <div class="crew-card" data-type="child" data-tags="photographer">
+    <div class="card-photo-wrap"><img src="Deeparjo__2_.jpg" alt="Deeparjo" loading="lazy"><span class="card-type-badge kid">Kid</span><span class="card-emoji">🎵</span></div>
+    <div class="card-body"><div class="card-name">Deeparjo</div><div class="card-role">The Performer</div><div class="card-tags"><span class="tag">Music</span><span class="tag">Poised</span><span class="tag">Cultural arts</span></div><div class="card-fact">Explored every lighthouse and visitor center with genuine curiosity. Climbed Cadillac with the adults, no complaints. A future world traveler — already keeping a mental list of next destinations.</div><div class="card-trips"><span class="trip-dot">🏕️ Acadia 2025</span></div></div>
+  </div>
+
+  <div class="crew-card" data-type="child" data-tags="">
+    <div class="card-photo-wrap"><img src="Tiya.jpg" alt="Tiya" loading="lazy"><span class="card-type-badge kid">Kid</span><span class="card-emoji">💃</span></div>
+    <div class="card-body"><div class="card-name">Tiya</div><div class="card-role">The Dancer of the Crew</div><div class="card-tags"><span class="tag">Dancer 💃</span><span class="tag">Free spirit</span><span class="tag">Beach girl</span></div><div class="card-fact">Every trail in Acadia became a stage. Every rocky beach an opportunity to twirl. Tiya's energy made even the hardest hikes feel like a celebration.</div><div class="card-trips"><span class="trip-dot">🏕️ Acadia 2025</span></div></div>
+  </div>
+
+  <div class="crew-card" data-type="child" data-tags="">
+    <div class="card-photo-wrap"><img src="Tojo.jpg" alt="Tojo" loading="lazy"><span class="card-type-badge kid">Kid</span><span class="card-emoji">⚡</span></div>
+    <div class="card-body"><div class="card-name">Tojo</div><div class="card-role">The Bundle of Energy</div><div class="card-tags"><span class="tag">Always running</span><span class="tag">Daredevil</span><span class="tag">Crowd pleaser</span></div><div class="card-fact">First one out of the car, last one back in. Made friends with every trail he set foot on. The thunder from Thunder Hole was no match for his enthusiasm.</div><div class="card-trips"><span class="trip-dot">🏕️ Acadia 2025</span></div></div>
+  </div>
+
+  <div class="crew-card" data-type="child" data-tags="photographer">
+    <div class="card-photo-wrap"><img src="Dravin.jpg" alt="Dravin" loading="lazy"><span class="card-type-badge kid">Kid</span><span class="card-emoji">🦀</span></div>
+    <div class="card-body"><div class="card-name">Dravin</div><div class="card-role">The Young Explorer</div><div class="card-tags"><span class="tag">Curious mind</span><span class="tag">Marine life</span><span class="tag">Fearless</span></div><div class="card-fact">Turned Boulder Beach into a biology lab. Identified three species of intertidal creatures before lunch. The kid who makes every trip feel like a discovery.</div><div class="card-trips"><span class="trip-dot">🏕️ Acadia 2025</span></div></div>
+  </div>
+
+</div>
+
+<div class="quote-section">
+  <blockquote>"The mountain was harder than the PPT said. The popovers were better than the PPT said. Worth every step."</blockquote>
+  <cite>— Travelomania · Acadia 2025</cite>
+</div>
+
+<footer>
+  <p>Acadia 2025 · 10 adventurers &nbsp;·&nbsp; <a href="../">Back to Acadia</a> &nbsp;·&nbsp; <a href="../../">All Trips</a></p>
+</footer>
+
+<script>
+function filterCrew(type, btn) {
+  document.querySelectorAll('.filter-btn').forEach(b => b.classList.remove('active'));
+  btn.classList.add('active');
+  document.querySelectorAll('.crew-card').forEach(card => {
+    if (type === 'all') { card.style.display = ''; return; }
+    const isType = card.dataset.type === type;
+    const hasTags = card.dataset.tags && card.dataset.tags.includes(type);
+    card.style.display = (isType || hasTags) ? '' : 'none';
+  });
+}
+</script>
+</body>
+</html>

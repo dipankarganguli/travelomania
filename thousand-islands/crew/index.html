@@ -1,0 +1,454 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<link rel="icon" type="image/svg+xml" href="../travelomania-favicon.svg">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>The Crew · Thousand Islands 2026</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,700;1,400&family=Inter:wght@300;400;500;600&display=swap" rel="stylesheet">
+<style>
+  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+  :root {
+    --river:#1a6b8a; --river-lt:#d6eef5; --river-dk:#0d3f52;
+    --stone:#6b7c88; --ink:#1c2b33; --mist:#f0f4f6;
+    --gold:#c4882a; --gold-lt:#fdf3e0; --white:#ffffff;
+    --serif:'Playfair Display',Georgia,serif;
+    --sans:'Inter',system-ui,sans-serif;
+    --radius:14px; --shadow:0 4px 24px rgba(26,107,138,.10);
+  }
+  html { scroll-behavior:smooth; }
+  body { font-family:var(--sans); color:var(--ink); background:var(--mist); -webkit-font-smoothing:antialiased; }
+
+  nav { background:rgba(255,255,255,.93); backdrop-filter:blur(12px); border-bottom:1px solid rgba(26,107,138,.12); display:flex; align-items:center; justify-content:space-between; padding:0 2rem; height:56px; position:sticky; top:0; z-index:100; flex-wrap:wrap; gap:.5rem; }
+  .nav-brand { font-family:var(--serif); font-size:1rem; color:var(--river-dk); text-decoration:none; }
+  .nav-links { display:flex; gap:1.5rem; }
+  .nav-links a { font-size:.82rem; color:var(--stone); text-decoration:none; font-weight:500; transition:color .15s; }
+  .nav-links a:hover, .nav-links a.active { color:var(--river); }
+
+  /* Hero */
+  .hero { background:linear-gradient(135deg,var(--river-dk) 0%,#1a6b8a 60%,#2a8fa8 100%); padding:5rem 2rem 0; text-align:center; position:relative; overflow:hidden; }
+  .hero::before { content:''; position:absolute; inset:0; background:url("data:image/svg+xml,%3Csvg width='60' height='60' viewBox='0 0 60 60' xmlns='http://www.w3.org/2000/svg'%3E%3Cg fill='%23ffffff' fill-opacity='0.04'%3E%3Cpath d='M36 34v-4h-2v4h-4v2h4v4h2v-4h4v-2h-4zm0-30V0h-2v4h-4v2h4v4h2V6h4V4h-4zM6 34v-4H4v4H0v2h4v4h2v-4h4v-2H6zM6 4V0H4v4H0v2h4v4h2V6h4V4H6z'/%3E%3C/g%3E%3C/svg%3E"); }
+  .hero-eyebrow { font-size:.72rem; font-weight:600; letter-spacing:.16em; text-transform:uppercase; color:rgba(214,238,245,.7); margin-bottom:.8rem; }
+  .hero h1 { font-family:var(--serif); font-size:clamp(2.2rem,5vw,3.8rem); color:#fff; font-weight:400; line-height:1.1; margin-bottom:1rem; }
+  .hero h1 em { font-style:italic; color:#a8d8e8; }
+  .hero-sub { color:rgba(255,255,255,.7); font-size:1rem; max-width:520px; margin:0 auto 2rem; line-height:1.7; }
+  .hero-stats { display:inline-flex; gap:2.5rem; background:rgba(255,255,255,.1); backdrop-filter:blur(8px); border:1px solid rgba(255,255,255,.15); border-radius:40px; padding:.8rem 2.2rem; margin-bottom:2.5rem; }
+  .stat .n { font-family:var(--serif); font-size:1.6rem; color:#fff; line-height:1; }
+  .stat .l { font-size:.65rem; letter-spacing:.1em; text-transform:uppercase; color:rgba(255,255,255,.55); margin-top:.2rem; }
+  .hero-wave { display:block; width:100%; }
+
+  /* PPT Section */
+  .ppt-section { max-width:860px; margin:0 auto; padding:3rem 1.5rem 1rem; }
+  .ppt-label { font-size:.72rem; font-weight:600; letter-spacing:.14em; text-transform:uppercase; color:var(--river); margin-bottom:.5rem; }
+  .ppt-title { font-family:var(--serif); font-size:1.7rem; color:var(--river-dk); margin-bottom:1.2rem; }
+  .ppt-card {
+    display:flex; gap:1.8rem; align-items:center;
+    background:var(--white); border-radius:var(--radius);
+    border:1px solid rgba(26,107,138,.14); box-shadow:var(--shadow);
+    padding:1.6rem; transition:box-shadow .2s;
+  }
+  .ppt-card:hover { box-shadow:0 8px 32px rgba(26,107,138,.16); }
+  .ppt-thumb-wrap { position:relative; flex-shrink:0; width:240px; border-radius:8px; overflow:hidden; box-shadow:0 4px 16px rgba(0,0,0,.15); }
+  .ppt-thumb-wrap img { display:block; width:100%; border-radius:8px; }
+  .ppt-play {
+    position:absolute; inset:0; display:flex; align-items:center; justify-content:center;
+    background:rgba(13,63,82,.45); opacity:0; transition:opacity .2s;
+  }
+  .ppt-thumb-wrap:hover .ppt-play { opacity:1; }
+  .ppt-play svg { width:48px; height:48px; }
+  .ppt-info h3 { font-family:var(--serif); font-size:1.2rem; color:var(--ink); margin-bottom:.5rem; }
+  .ppt-info p { font-size:.88rem; color:var(--stone); line-height:1.6; margin-bottom:1.1rem; }
+  .ppt-bullets { list-style:none; margin-bottom:1.2rem; display:flex; flex-direction:column; gap:.35rem; }
+  .ppt-bullets li { font-size:.83rem; color:var(--stone); display:flex; align-items:flex-start; gap:.5rem; }
+  .ppt-bullets li::before { content:'→'; color:var(--river); font-weight:600; flex-shrink:0; }
+  .btn-ppt { display:inline-flex; align-items:center; gap:.5rem; background:var(--river); color:#fff; padding:.6rem 1.3rem; border-radius:6px; text-decoration:none; font-size:.88rem; font-weight:500; transition:background .2s; }
+  .btn-ppt:hover { background:var(--river-dk); }
+
+  /* Filters */
+  .filters { display:flex; justify-content:center; gap:.5rem; flex-wrap:wrap; padding:2rem 1rem 1rem; }
+  .filter-btn { background:var(--white); color:var(--stone); border:1.5px solid rgba(26,107,138,.15); padding:6px 16px; border-radius:20px; font-size:.8rem; font-weight:500; cursor:pointer; transition:all .2s; }
+  .filter-btn.active { background:var(--river); color:#fff; border-color:var(--river); }
+  .filter-btn:hover:not(.active) { border-color:var(--river); color:var(--river); }
+
+  /* Grid */
+  .crew-grid { display:grid; grid-template-columns:repeat(auto-fill,minmax(240px,1fr)); gap:1.4rem; max-width:1100px; margin:0 auto; padding:1rem 1.5rem 4rem; }
+
+  /* Card */
+  .crew-card { background:var(--white); border-radius:var(--radius); box-shadow:var(--shadow); overflow:hidden; transition:transform .25s,box-shadow .25s; }
+  .crew-card:hover { transform:translateY(-5px); box-shadow:0 12px 40px rgba(26,107,138,.16); }
+  .card-photo-wrap { position:relative; aspect-ratio:3/4; overflow:hidden; background:var(--mist); }
+  .card-photo-wrap img { width:100%; height:100%; object-fit:cover; object-position:top center; transition:transform .4s ease; display:block; }
+  .crew-card:hover .card-photo-wrap img { transform:scale(1.04); }
+  .card-type-badge { position:absolute; top:.7rem; left:.7rem; font-size:.62rem; font-weight:700; letter-spacing:.1em; text-transform:uppercase; padding:3px 10px; border-radius:20px; background:var(--river-lt); color:var(--river-dk); }
+  .card-type-badge.kid { background:var(--gold-lt); color:var(--gold); }
+  .card-emoji { position:absolute; bottom:.7rem; right:.7rem; width:36px; height:36px; border-radius:50%; background:rgba(255,255,255,.9); display:flex; align-items:center; justify-content:center; font-size:1.1rem; box-shadow:0 2px 8px rgba(0,0,0,.15); }
+  .card-body { padding:1.1rem 1.2rem 1.3rem; }
+  .card-name { font-family:var(--serif); font-size:1.25rem; font-weight:400; color:var(--ink); margin-bottom:.15rem; }
+  .card-role { font-size:.75rem; font-weight:600; letter-spacing:.08em; text-transform:uppercase; color:var(--river); margin-bottom:.7rem; }
+  .card-tags { display:flex; flex-wrap:wrap; gap:.35rem; margin-bottom:.75rem; }
+  .tag { font-size:.68rem; background:var(--mist); color:var(--stone); padding:2px 9px; border-radius:10px; font-weight:500; }
+  .card-fact { font-size:.82rem; color:var(--stone); line-height:1.55; border-top:1px solid var(--mist); padding-top:.7rem; }
+  .card-trips { display:flex; gap:.3rem; flex-wrap:wrap; margin-top:.6rem; }
+  .trip-dot { font-size:.65rem; background:var(--river-lt); color:var(--river-dk); padding:2px 7px; border-radius:8px; font-weight:500; }
+
+  /* Quote */
+  .quote-section { max-width:700px; margin:0 auto; padding:1rem 1.5rem 3rem; text-align:center; }
+  .quote-section blockquote { font-family:var(--serif); font-size:1.5rem; font-style:italic; color:var(--river-dk); line-height:1.5; }
+  .quote-section cite { display:block; margin-top:.8rem; font-size:.82rem; color:var(--stone); font-style:normal; }
+
+  hr.divider { border:none; height:1px; background:linear-gradient(to right,transparent,rgba(26,107,138,.15),transparent); margin:0; }
+
+  footer { border-top:1px solid rgba(26,107,138,.1); padding:2rem; text-align:center; font-size:.8rem; color:var(--stone); background:var(--white); }
+  footer a { color:var(--river); text-decoration:none; }
+
+  @media(max-width:700px) {
+    .ppt-card { flex-direction:column; }
+    .ppt-thumb-wrap { width:100%; }
+    nav { padding:.5rem 1rem; height:auto; }
+    .crew-grid { grid-template-columns:repeat(2,1fr); gap:.8rem; padding:.5rem .8rem 3rem; }
+    .card-body { padding:.8rem .9rem 1rem; }
+    .card-name { font-size:1.05rem; }
+    .hero-stats { gap:1.5rem; padding:.7rem 1.5rem; }
+  }
+</style>
+</head>
+<body>
+
+<nav>
+  <a class="nav-brand" href="../">✦ Thousand Islands</a>
+  <div class="nav-links">
+    <a href="../../">All Trips</a>
+    <a href="../">Thousand Islands</a>
+    <a href="crew/" class="active">The Crew</a>
+  </div>
+</nav>
+
+<!-- Hero -->
+<div class="hero">
+  <p class="hero-eyebrow">Thousand Islands · Jun 29 – Jul 2, 2026</p>
+  <h1>Meet the <em>Crew</em></h1>
+  <p class="hero-sub">Fifteen adventurers — one shared obsession. Every great trip needs its cast of characters. Here's ours.</p>
+  <div class="hero-stats">
+    <div class="stat"><div class="n">15</div><div class="l">Travelers</div></div>
+    <div class="stat"><div class="n">11</div><div class="l">Adults</div></div>
+    <div class="stat"><div class="n">4</div><div class="l">Kids</div></div>
+    <div class="stat"><div class="n">∞</div><div class="l">Memories</div></div>
+  </div>
+  <svg viewBox="0 0 1440 48" xmlns="http://www.w3.org/2000/svg" preserveAspectRatio="none" style="display:block;width:100%">
+    <path d="M0 48 C360 10 720 40 1080 20 C1260 10 1380 35 1440 24 L1440 48 Z" fill="#f0f4f6"/>
+  </svg>
+</div>
+
+<!-- PPT Section -->
+<div class="ppt-section">
+  <p class="ppt-label">Trip Presentation</p>
+  <h2 class="ppt-title">Thousand Islands 2026 — Trip Plan</h2>
+  <a class="ppt-card" href="https://docs.google.com/presentation/d/1Xp7qFNgQFTErdYbdoFbxGFetJ2Fx6vYjdQ3kHzxn1BQ/edit?usp=sharing" target="_blank" style="text-decoration:none;color:inherit;">
+    <div class="ppt-thumb-wrap">
+      <img src="https://lh7-us.googleusercontent.com/docs/AHkbwyIU0XWn5Fs8BumFiL5-841hcgV_se5K4AZ4vm2qA6T-gZg5YBaUBZ1qyb9szGqRk4omhWwSxoXk9eB0POaGBcN6l6KV6KnP5lNX7aoW8DsNJ-GyNP8=w1200-h630-p" alt="Thousand Islands presentation thumbnail">
+      <div class="ppt-play">
+        <svg viewBox="0 0 64 64" fill="none" xmlns="http://www.w3.org/2000/svg">
+          <circle cx="32" cy="32" r="30" fill="rgba(255,255,255,0.9)"/>
+          <path d="M26 20L46 32L26 44V20Z" fill="#1a6b8a"/>
+        </svg>
+      </div>
+    </div>
+    <div class="ppt-info">
+      <h3>Thousand Islands, NY — Jun 29 to Jul 2, 2026</h3>
+      <p>Dipankar's full trip deck covers everything — the itinerary, the stay, must-visit spots, dining picks, and logistics for 15 travelers. Click to open in Google Slides.</p>
+      <ul class="ppt-bullets">
+        <li>Day-by-day itinerary for all 4 days</li>
+        <li>Boldt Castle &amp; Two Nation Tour details</li>
+        <li>Clayton VRBO · Host · WiFi · Grocery</li>
+        <li>Restaurants: Koffee Kove, Channelside, Wood Boat Brewery, The Chateau</li>
+        <li>Beaches, lighthouses &amp; nearby attractions</li>
+      </ul>
+      <span class="btn-ppt">
+        <svg width="16" height="16" fill="currentColor" viewBox="0 0 16 16"><path d="M4.5 2A2.5 2.5 0 0 0 2 4.5v7A2.5 2.5 0 0 0 4.5 14h7A2.5 2.5 0 0 0 14 11.5v-7A2.5 2.5 0 0 0 11.5 2h-7zm2.5 3.5a.5.5 0 0 1 .5.5v3.793l1.146-1.147a.5.5 0 0 1 .708.708l-2 2a.5.5 0 0 1-.708 0l-2-2a.5.5 0 0 1 .708-.708L7 9.293V6a.5.5 0 0 1 .5-.5z"/></svg>
+        Open Presentation ↗
+      </span>
+    </div>
+  </a>
+</div>
+
+<hr class="divider" style="max-width:860px;margin:2rem auto 0;">
+
+<!-- Filters -->
+<div class="filters">
+  <button class="filter-btn active" onclick="filterCrew('all',this)">Everyone 🎉</button>
+  <button class="filter-btn" onclick="filterCrew('adult',this)">Adults</button>
+  <button class="filter-btn" onclick="filterCrew('child',this)">Kids</button>
+  <button class="filter-btn" onclick="filterCrew('planner',this)">Planners 🗺️</button>
+  <button class="filter-btn" onclick="filterCrew('foodie',this)">Foodies 🍽️</button>
+  <button class="filter-btn" onclick="filterCrew('photographer',this)">Photographers 📸</button>
+</div>
+
+<!-- Crew Grid -->
+<div class="crew-grid" id="crew-grid">
+
+  <!-- Dipankar -->
+  <div class="crew-card" data-type="adult" data-tags="planner photographer">
+    <div class="card-photo-wrap">
+      <img src="Dipankar.jpg" alt="Dipankar" loading="lazy">
+      <span class="card-type-badge">Organizer</span>
+      <span class="card-emoji">🗺️</span>
+    </div>
+    <div class="card-body">
+      <div class="card-name">Dipankar</div>
+      <div class="card-role">The Master Planner</div>
+      <div class="card-tags"><span class="tag">Trip Architect</span><span class="tag">River lover</span><span class="tag">PPT wizard</span></div>
+      <div class="card-fact">The brain behind Travelomania. If there's a VRBO booked, an itinerary crafted, and a presentation polished — Dipankar started it. Usually found with one eye on Google Maps and one on the sunset.</div>
+      <div class="card-trips"><span class="trip-dot">🏝️ Thousand Islands</span></div>
+    </div>
+  </div>
+
+  <!-- Monalisa -->
+  <div class="crew-card" data-type="adult" data-tags="foodie">
+    <div class="card-photo-wrap">
+      <img src="Monalisa.jpg" alt="Monalisa" loading="lazy">
+      <span class="card-type-badge">Adult</span>
+      <span class="card-emoji">🌿</span>
+    </div>
+    <div class="card-body">
+      <div class="card-name">Monalisa</div>
+      <div class="card-role">The Vibe Curator</div>
+      <div class="card-tags"><span class="tag">Nature enthusiast</span><span class="tag">Foodie</span><span class="tag">Style icon</span></div>
+      <div class="card-fact">Brings warmth and laughter to every room she walks into. Has a gift for finding the most photogenic spot at any destination — usually holding autumn leaves in golden light.</div>
+      <div class="card-trips"><span class="trip-dot">🏝️ Thousand Islands</span></div>
+    </div>
+  </div>
+
+  <!-- Payel -->
+  <div class="crew-card" data-type="adult" data-tags="foodie">
+    <div class="card-photo-wrap">
+      <img src="Payel__2_.jpg" alt="Payel" loading="lazy">
+      <span class="card-type-badge">Adult</span>
+      <span class="card-emoji">🌸</span>
+    </div>
+    <div class="card-body">
+      <div class="card-name">Payel</div>
+      <div class="card-role">The Social Spark</div>
+      <div class="card-tags"><span class="tag">People person</span><span class="tag">Foodie</span><span class="tag">Beach lover</span></div>
+      <div class="card-fact">The one who keeps the group energy high — always up for the next activity, always smiling. Known for suggesting the best restaurants and never missing a group photo.</div>
+      <div class="card-trips"><span class="trip-dot">🏝️ Thousand Islands</span></div>
+    </div>
+  </div>
+
+  <!-- Tanmay — UPDATED: official photographer -->
+  <div class="crew-card" data-type="adult" data-tags="photographer planner">
+    <div class="card-photo-wrap">
+      <img src="Tanmay.jpg" alt="Tanmay" loading="lazy">
+      <span class="card-type-badge">Adult</span>
+      <span class="card-emoji">📷</span>
+    </div>
+    <div class="card-body">
+      <div class="card-name">Tanmay</div>
+      <div class="card-role">Official Trip Photographer</div>
+      <div class="card-tags"><span class="tag">📸 Official Photographer</span><span class="tag">Water sports</span><span class="tag">Early riser</span></div>
+      <div class="card-fact">Every great trip needs someone to capture it properly — that's Tanmay. He's got the eye, the gear, and the patience to get the perfect shot while everyone else is already eating. The group's visual memory.</div>
+      <div class="card-trips"><span class="trip-dot">🏝️ Thousand Islands</span></div>
+    </div>
+  </div>
+
+  <!-- Goutam — UPDATED: food lover, wings -->
+  <div class="crew-card" data-type="adult" data-tags="foodie">
+    <div class="card-photo-wrap">
+      <img src="Goutam.jpg" alt="Goutam" loading="lazy">
+      <span class="card-type-badge">Adult</span>
+      <span class="card-emoji">🍗</span>
+    </div>
+    <div class="card-body">
+      <div class="card-name">Goutam</div>
+      <div class="card-role">The Food Connoisseur</div>
+      <div class="card-tags"><span class="tag">Foodie</span><span class="tag">Wing specialist</span><span class="tag">Coastal soul</span></div>
+      <div class="card-fact">Ask Goutam about wings and you'll be there a while. He has strong opinions about sauces, cook time, and crispiness — and he's usually right. The first to find the best local spot, the last to leave the table.</div>
+      <div class="card-trips"><span class="trip-dot">🏝️ Thousand Islands</span></div>
+    </div>
+  </div>
+
+  <!-- Shikha -->
+  <div class="crew-card" data-type="adult" data-tags="foodie photographer">
+    <div class="card-photo-wrap">
+      <img src="Shikha.jpg" alt="Shikha" loading="lazy">
+      <span class="card-type-badge">Adult</span>
+      <span class="card-emoji">🌊</span>
+    </div>
+    <div class="card-body">
+      <div class="card-name">Shikha</div>
+      <div class="card-role">The Beach Wanderer</div>
+      <div class="card-tags"><span class="tag">Ocean lover</span><span class="tag">Foodie</span><span class="tag">Style-forward</span></div>
+      <div class="card-fact">Effortlessly chic at every destination. Shikha has an uncanny ability to look like she belongs on a travel magazine cover — straw hat, sunglasses, waves in the background. Always.</div>
+      <div class="card-trips"><span class="trip-dot">🏝️ Thousand Islands</span></div>
+    </div>
+  </div>
+
+  <!-- Sujit — NEW -->
+  <div class="crew-card" data-type="adult" data-tags="planner">
+    <div class="card-photo-wrap">
+      <img src="SUJIT.jpeg" alt="Sujit" loading="lazy">
+      <span class="card-type-badge">Adult</span>
+      <span class="card-emoji">🔧</span>
+    </div>
+    <div class="card-body">
+      <div class="card-name">Sujit</div>
+      <div class="card-role">The Engineer of Everything</div>
+      <div class="card-tags"><span class="tag">Problem solver</span><span class="tag">Fixer</span><span class="tag">Mountain man</span></div>
+      <div class="card-fact">Nothing stays broken when Sujit is around. Wobbly chair? Fixed. WiFi not connecting? Fixed. Car making a weird noise? He's already googled it. The group's unofficial maintenance crew and the most reliable person on any trip.</div>
+      <div class="card-trips"><span class="trip-dot">🏝️ Thousand Islands</span></div>
+    </div>
+  </div>
+
+  <!-- Anita — NEW -->
+  <div class="crew-card" data-type="adult" data-tags="foodie">
+    <div class="card-photo-wrap">
+      <img src="Anita.jpeg" alt="Anita" loading="lazy">
+      <span class="card-type-badge">Adult</span>
+      <span class="card-emoji">💬</span>
+    </div>
+    <div class="card-body">
+      <div class="card-name">Anita</div>
+      <div class="card-role">The Friendly Ambassador</div>
+      <div class="card-tags"><span class="tag">Chatty</span><span class="tag">Warm heart</span><span class="tag">People magnet</span></div>
+      <div class="card-fact">Anita has the rare ability to become best friends with anyone within five minutes. She'll chat with the boat captain, the restaurant owner, and the stranger at the next table — and come back with insider tips none of us would have found.</div>
+      <div class="card-trips"><span class="trip-dot">🏝️ Thousand Islands</span></div>
+    </div>
+  </div>
+
+  <!-- Tanu -->
+  <div class="crew-card" data-type="adult" data-tags="foodie">
+    <div class="card-photo-wrap">
+      <img src="Tanu__2_.jpg" alt="Tanu" loading="lazy">
+      <span class="card-type-badge">Adult</span>
+      <span class="card-emoji">🍃</span>
+    </div>
+    <div class="card-body">
+      <div class="card-name">Tanu</div>
+      <div class="card-role">The Calm in the Storm</div>
+      <div class="card-tags"><span class="tag">Peacekeeper</span><span class="tag">Foodie</span><span class="tag">Night owl</span></div>
+      <div class="card-fact">The one who remembers everyone's dietary preferences, keeps the snack bag stocked, and somehow always has a solution when plans go sideways. The group's anchor.</div>
+      <div class="card-trips"><span class="trip-dot">🏝️ Thousand Islands</span></div>
+    </div>
+  </div>
+
+  <!-- Ruma — UPDATED: doesn't fall asleep easily -->
+  <div class="crew-card" data-type="adult" data-tags="foodie">
+    <div class="card-photo-wrap">
+      <img src="Ruma.jpg" alt="Ruma" loading="lazy">
+      <span class="card-type-badge">Adult</span>
+      <span class="card-emoji">🌙</span>
+    </div>
+    <div class="card-body">
+      <div class="card-name">Ruma</div>
+      <div class="card-role">The Last One Standing</div>
+      <div class="card-tags"><span class="tag">Night owl 🦉</span><span class="tag">Storyteller</span><span class="tag">Foodie</span></div>
+      <div class="card-fact">While others fade after dinner, Ruma is just getting started. The self-appointed guardian of late-night conversations — she'll still be telling stories when everyone else has called it a night. Sleep? Optional.</div>
+      <div class="card-trips"><span class="trip-dot">🏝️ Thousand Islands</span></div>
+    </div>
+  </div>
+
+  <!-- Deba Prasad -->
+  <div class="crew-card" data-type="adult" data-tags="photographer">
+    <div class="card-photo-wrap">
+      <img src="Deba_Prasad_Ganguli.jpg" alt="Deba Prasad" loading="lazy">
+      <span class="card-type-badge">Adult</span>
+      <span class="card-emoji">🌷</span>
+    </div>
+    <div class="card-body">
+      <div class="card-name">Deba Prasad</div>
+      <div class="card-role">The Wise Traveler</div>
+      <div class="card-tags"><span class="tag">Nature walks</span><span class="tag">History</span><span class="tag">Steady presence</span></div>
+      <div class="card-fact">Brings wisdom and perspective to every adventure. Deba Prasad notices the botanical garden, reads the heritage plaque, and slows the group down just enough to appreciate where they truly are.</div>
+      <div class="card-trips"><span class="trip-dot">🏝️ Thousand Islands</span></div>
+    </div>
+  </div>
+
+  <!-- Deeparjo -->
+  <div class="crew-card" data-type="child" data-tags="photographer">
+    <div class="card-photo-wrap">
+      <img src="Deeparjo__2_.jpg" alt="Deeparjo" loading="lazy">
+      <span class="card-type-badge kid">Kid</span>
+      <span class="card-emoji">🎵</span>
+    </div>
+    <div class="card-body">
+      <div class="card-name">Deeparjo</div>
+      <div class="card-role">The Performer</div>
+      <div class="card-tags"><span class="tag">Music</span><span class="tag">Cultural arts</span><span class="tag">Poised</span></div>
+      <div class="card-fact">Commands a stage as naturally as he explores a new city. Equally at home reciting poetry or discovering a lighthouse. A future world traveler — already building his list of must-visit places.</div>
+      <div class="card-trips"><span class="trip-dot">🏝️ Thousand Islands</span></div>
+    </div>
+  </div>
+
+  <!-- Tiya — UPDATED: dancer -->
+  <div class="crew-card" data-type="child" data-tags="">
+    <div class="card-photo-wrap">
+      <img src="Tiya.jpg" alt="Tiya" loading="lazy">
+      <span class="card-type-badge kid">Kid</span>
+      <span class="card-emoji">💃</span>
+    </div>
+    <div class="card-body">
+      <div class="card-name">Tiya</div>
+      <div class="card-role">The Dancer of the Crew</div>
+      <div class="card-tags"><span class="tag">Dancer 💃</span><span class="tag">Beach girl</span><span class="tag">Free spirit</span></div>
+      <div class="card-fact">Pure joy in motion. Tiya is a dancer through and through — every beach becomes a stage, every open space an invitation. Whether she's wading in turquoise water or spinning on the pier, she makes the world more beautiful.</div>
+      <div class="card-trips"><span class="trip-dot">🏝️ Thousand Islands</span></div>
+    </div>
+  </div>
+
+  <!-- Tojo -->
+  <div class="crew-card" data-type="child" data-tags="">
+    <div class="card-photo-wrap">
+      <img src="Tojo.jpg" alt="Tojo" loading="lazy">
+      <span class="card-type-badge kid">Kid</span>
+      <span class="card-emoji">⚡</span>
+    </div>
+    <div class="card-body">
+      <div class="card-name">Tojo</div>
+      <div class="card-role">The Bundle of Energy</div>
+      <div class="card-tags"><span class="tag">Always running</span><span class="tag">Daredevil</span><span class="tag">Crowd pleaser</span></div>
+      <div class="card-fact">Tojo's smile can light up a room and his energy can fill an entire national park. First kid to try anything new, last to leave the playground. The absolute highlight of every trip photo.</div>
+      <div class="card-trips"><span class="trip-dot">🏝️ Thousand Islands</span></div>
+    </div>
+  </div>
+
+  <!-- Dravin -->
+  <div class="crew-card" data-type="child" data-tags="photographer">
+    <div class="card-photo-wrap">
+      <img src="Dravin.jpg" alt="Dravin" loading="lazy">
+      <span class="card-type-badge kid">Kid</span>
+      <span class="card-emoji">🦀</span>
+    </div>
+    <div class="card-body">
+      <div class="card-name">Dravin</div>
+      <div class="card-role">The Young Explorer</div>
+      <div class="card-tags"><span class="tag">Curious mind</span><span class="tag">Marine life</span><span class="tag">Fearless</span></div>
+      <div class="card-fact">Will absolutely pick up a horseshoe crab and grin about it. Dravin turns a beach walk into a marine biology expedition. The fearless curiosity every trip needs — and the proof that kids see the world best.</div>
+      <div class="card-trips"><span class="trip-dot">🏝️ Thousand Islands</span></div>
+    </div>
+  </div>
+
+</div><!-- /crew-grid -->
+
+<div class="quote-section">
+  <blockquote>"Not all those who wander are lost — some of them are just waiting for the group chat to agree on a departure time."</blockquote>
+  <cite>— Travelomania Crew Motto</cite>
+</div>
+
+<footer>
+  <p>Thousand Islands 2026 · 15 travelers &nbsp;·&nbsp; <a href="../../">All Trips</a> &nbsp;·&nbsp; <a href="../">Thousand Islands ↗</a></p>
+</footer>
+
+<script>
+function filterCrew(type, btn) {
+  document.querySelectorAll('.filter-btn').forEach(b => b.classList.remove('active'));
+  btn.classList.add('active');
+  document.querySelectorAll('.crew-card').forEach(card => {
+    if (type === 'all') { card.style.display = ''; return; }
+    const isType = card.dataset.type === type;
+    const hasTags = card.dataset.tags && card.dataset.tags.includes(type);
+    card.style.display = (isType || hasTags) ? '' : 'none';
+  });
+}
+</script>
+</body>
+</html>
