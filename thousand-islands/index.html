@@ -313,7 +313,8 @@
     <button class="nav-tab inactive" id="tab-photos" onclick="setMainView('photos')">Photos</button>
     <button class="nav-tab inactive" id="tab-pub"    onclick="setMainView('published')">Published</button>
   </div>
-  <a href="../crew/" style="font-size:.78rem;color:var(--stone);text-decoration:none;font-weight:500;white-space:nowrap;" onmouseover="this.style.color='#1a6b8a'" onmouseout="this.style.color='#6b7c88'">👥 The Crew</a>
+  <a href="../crew/\" style="font-size:.78rem;color:var(--stone);text-decoration:none;font-weight:500;white-space:nowrap;" onmouseover="this.style.color='#1a6b8a'" onmouseout="this.style.color='#6b7c88'">👥 The Crew</a>
+  <a href="photos/" style="font-size:.78rem;color:var(--stone);text-decoration:none;font-weight:500;white-space:nowrap;background:var(--river-lt);color:var(--river-dk) !important;padding:4px 12px;border-radius:20px;" onmouseover="this.style.background='#1a6b8a';this.style.color='#fff'" onmouseout="this.style.background='var(--river-lt)';this.style.color='var(--river-dk)'">📸 Add Photos</a>
 </nav>
 
 <!-- Hero -->
@@ -730,6 +731,16 @@
     <div class="container">
       <p class="section-label">Memories</p>
       <h2 class="section-title">Photo Gallery</h2>
+
+      <!-- Upload CTA -->
+      <div style="background:linear-gradient(135deg,var(--river-dk),#1a6b8a);border-radius:var(--radius);padding:1.3rem 1.6rem;margin-bottom:1.5rem;display:flex;align-items:center;justify-content:space-between;gap:1rem;flex-wrap:wrap;">
+        <div>
+          <div style="font-size:.72rem;font-weight:700;letter-spacing:.12em;text-transform:uppercase;color:rgba(214,238,245,.65);margin-bottom:.3rem;">Crew members</div>
+          <div style="font-size:.95rem;font-weight:500;color:#fff;">Add your trip photos to the shared album</div>
+          <div style="font-size:.78rem;color:rgba(255,255,255,.6);margin-top:.2rem;">iPhone · Android · Desktop — step-by-step guide included</div>
+        </div>
+        <a href="photos/" style="display:inline-flex;align-items:center;gap:.5rem;background:#fff;color:var(--river-dk);text-decoration:none;font-size:.88rem;font-weight:600;padding:.6rem 1.3rem;border-radius:8px;white-space:nowrap;transition:all .15s;" onmouseover="this.style.background='var(--river-lt)'" onmouseout="this.style.background='#fff'">📸 Upload Photos →</a>
+      </div>
 
       <div class="gallery-hint">
         <strong>How to add your photos:</strong> Upload photos anywhere free — <a href="https://photos.google.com" target="_blank" style="color:var(--river)">Google Photos</a> (right-click → "Copy image address") or <a href="https://imgur.com" target="_blank" style="color:var(--river)">Imgur</a> (upload → get direct link ending in .jpg). Then paste the URL into the boxes below. After the trip, replace the placeholder slots with real ones!<br>
