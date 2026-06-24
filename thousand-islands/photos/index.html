@@ -1,0 +1,310 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta http-equiv="Cache-Control" content="no-cache, no-store, must-revalidate">
+<link rel="icon" type="image/svg+xml" href="../../travelomania-favicon.svg">
+<title>Trip Photos · Thousand Islands 2026</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,700;1,400&family=Inter:wght@300;400;500;600&display=swap" rel="stylesheet">
+<style>
+  *, *::before, *::after { box-sizing:border-box; margin:0; padding:0; }
+  :root {
+    --river:#1a6b8a; --river-lt:#d6eef5; --river-dk:#0d3f52;
+    --stone:#6b7c88; --ink:#1c2b33; --mist:#f0f4f6;
+    --gold:#c4882a; --gold-lt:#fdf3e0; --white:#fff;
+    --green:#2a7a40; --green-lt:#d8f0e2;
+    --serif:'Playfair Display',Georgia,serif;
+    --sans:'Inter',system-ui,sans-serif;
+    --radius:12px; --shadow:0 2px 16px rgba(26,107,138,.10);
+  }
+  html { scroll-behavior:smooth; }
+  body { font-family:var(--sans); color:var(--ink); background:var(--mist); -webkit-font-smoothing:antialiased; }
+
+  /* Nav */
+  nav { background:rgba(255,255,255,.93); backdrop-filter:blur(12px); border-bottom:1px solid rgba(26,107,138,.12); display:flex; align-items:center; justify-content:space-between; padding:0 1.5rem; height:56px; position:sticky; top:0; z-index:100; gap:1rem; }
+  .nav-brand { font-family:var(--serif); font-size:1rem; color:var(--river-dk); text-decoration:none; }
+  .nav-back { font-size:.8rem; color:var(--stone); text-decoration:none; font-weight:500; display:flex; align-items:center; gap:.3rem; transition:color .15s; }
+  .nav-back:hover { color:var(--river); }
+
+  /* Hero */
+  .hero { background:linear-gradient(135deg,var(--river-dk) 0%,#1a6b8a 60%,#2896b0 100%); padding:3.5rem 2rem 0; text-align:center; position:relative; overflow:hidden; }
+  .hero::before { content:''; position:absolute; inset:0; background-image:radial-gradient(circle,rgba(255,255,255,.06) 1px,transparent 1px); background-size:28px 28px; }
+  .hero-inner { position:relative; z-index:1; }
+  .hero-eyebrow { font-size:.7rem; font-weight:600; letter-spacing:.18em; text-transform:uppercase; color:rgba(214,238,245,.65); margin-bottom:.7rem; }
+  .hero-title { font-family:var(--serif); font-size:clamp(2rem,5vw,3.2rem); color:#fff; font-weight:400; line-height:1.1; margin-bottom:.8rem; }
+  .hero-title em { font-style:italic; color:#a8d8e8; }
+  .hero-sub { color:rgba(255,255,255,.65); font-size:.92rem; max-width:480px; margin:0 auto 2rem; line-height:1.7; }
+  .hero-wave { display:block; width:100%; }
+
+  /* Main */
+  main { max-width:860px; margin:0 auto; padding:2.5rem 1.5rem 5rem; }
+
+  /* Section label */
+  .sec-label { font-size:.68rem; font-weight:700; letter-spacing:.16em; text-transform:uppercase; color:var(--river); margin-bottom:.5rem; }
+  .sec-title { font-family:var(--serif); font-size:1.6rem; color:var(--river-dk); margin-bottom:1.2rem; font-weight:400; }
+  .sec-divider { border:none; height:1px; background:linear-gradient(to right,transparent,rgba(26,107,138,.15),transparent); margin:2.5rem 0; }
+
+  /* Big CTA button */
+  .cta-btn {
+    display:inline-flex; align-items:center; gap:.7rem;
+    background:var(--river); color:#fff;
+    text-decoration:none; font-size:1rem; font-weight:600;
+    padding:.85rem 2rem; border-radius:10px;
+    box-shadow:0 4px 20px rgba(26,107,138,.3);
+    transition:all .2s; border:none; cursor:pointer; font-family:var(--sans);
+  }
+  .cta-btn:hover { background:var(--river-dk); transform:translateY(-2px); box-shadow:0 6px 28px rgba(26,107,138,.35); }
+  .cta-btn.green { background:var(--green); box-shadow:0 4px 20px rgba(42,122,64,.3); }
+  .cta-btn.green:hover { background:#1f5c30; box-shadow:0 6px 28px rgba(42,122,64,.35); }
+  .cta-btn-icon { font-size:1.3rem; }
+
+  /* Option cards */
+  .options-grid { display:grid; grid-template-columns:1fr 1fr; gap:1.2rem; margin-bottom:2.5rem; }
+  .option-card {
+    background:var(--white); border-radius:var(--radius);
+    border:1px solid rgba(26,107,138,.12); box-shadow:var(--shadow);
+    overflow:hidden; cursor:pointer; transition:box-shadow .2s, transform .15s;
+  }
+  .option-card:hover { box-shadow:0 6px 28px rgba(26,107,138,.14); transform:translateY(-2px); }
+  .option-card.active { border-color:var(--river); box-shadow:0 0 0 2px var(--river); }
+  .option-card-head { padding:1.4rem 1.4rem 1rem; display:flex; gap:1rem; align-items:flex-start; }
+  .option-num { width:36px; height:36px; border-radius:50%; background:var(--river-lt); color:var(--river-dk); font-family:var(--serif); font-size:1.1rem; font-weight:700; display:flex; align-items:center; justify-content:center; flex-shrink:0; }
+  .option-card.active .option-num { background:var(--river); color:#fff; }
+  .option-title { font-weight:600; font-size:.95rem; color:var(--ink); margin-bottom:.25rem; }
+  .option-desc { font-size:.8rem; color:var(--stone); line-height:1.5; }
+  .option-tag { display:inline-block; font-size:.62rem; font-weight:700; letter-spacing:.08em; text-transform:uppercase; padding:2px 8px; border-radius:10px; margin-top:.5rem; }
+  .tag-easy { background:var(--green-lt); color:var(--green); }
+  .tag-quick { background:var(--river-lt); color:var(--river-dk); }
+  .option-card-foot { padding:.8rem 1.4rem 1.2rem; border-top:1px solid var(--mist); }
+
+  /* Option panels */
+  .option-panel { display:none; }
+  .option-panel.active { display:block; }
+
+  /* Google Photos embed card */
+  .album-card { background:var(--white); border-radius:var(--radius); border:1px solid rgba(26,107,138,.12); box-shadow:var(--shadow); overflow:hidden; margin-bottom:1.5rem; }
+  .album-card-head { padding:1.2rem 1.4rem; border-bottom:1px solid var(--mist); display:flex; align-items:center; justify-content:space-between; flex-wrap:wrap; gap:.8rem; }
+  .album-card-head h3 { font-family:var(--serif); font-size:1.1rem; color:var(--ink); }
+  .album-card-head p { font-size:.78rem; color:var(--stone); margin-top:.15rem; }
+  .album-embed { width:100%; height:520px; border:none; display:block; }
+  .album-foot { padding:.8rem 1.4rem; background:var(--mist); font-size:.75rem; color:var(--stone); display:flex; align-items:center; justify-content:space-between; flex-wrap:wrap; gap:.5rem; }
+  .album-foot a { color:var(--river); text-decoration:none; font-weight:500; }
+  .album-foot a:hover { text-decoration:underline; }
+
+  /* Step cards */
+  .steps { display:flex; flex-direction:column; gap:.8rem; }
+  .step { display:flex; gap:1rem; align-items:flex-start; background:var(--white); border-radius:var(--radius); border:1px solid rgba(26,107,138,.1); padding:1.1rem 1.3rem; box-shadow:var(--shadow); }
+  .step-num { width:30px; height:30px; border-radius:50%; background:var(--river); color:#fff; font-size:.85rem; font-weight:700; display:flex; align-items:center; justify-content:center; flex-shrink:0; margin-top:.1rem; }
+  .step-body { flex:1; }
+  .step-title { font-weight:600; font-size:.92rem; color:var(--ink); margin-bottom:.25rem; }
+  .step-desc { font-size:.82rem; color:var(--stone); line-height:1.55; }
+  .step-desc code { background:rgba(26,107,138,.1); color:var(--river-dk); padding:1px 5px; border-radius:3px; font-size:.78rem; }
+  .step-img { margin-top:.6rem; background:var(--mist); border-radius:6px; padding:.6rem .9rem; font-size:.78rem; color:var(--stone); border-left:3px solid var(--river); }
+
+  /* Device tabs */
+  .device-tabs { display:flex; gap:.4rem; margin-bottom:1.2rem; flex-wrap:wrap; }
+  .device-tab { background:var(--white); color:var(--stone); border:1.5px solid rgba(26,107,138,.18); padding:6px 14px; border-radius:20px; font-size:.78rem; font-weight:500; cursor:pointer; transition:all .15s; font-family:var(--sans); }
+  .device-tab.active { background:var(--river); color:#fff; border-color:var(--river); }
+  .device-tab:hover:not(.active) { border-color:var(--river); color:var(--river); }
+  .device-steps { display:none; }
+  .device-steps.active { display:flex; flex-direction:column; gap:.8rem; }
+
+  /* Tips */
+  .tips-grid { display:grid; grid-template-columns:repeat(auto-fit,minmax(200px,1fr)); gap:.9rem; margin-top:1.2rem; }
+  .tip { background:var(--gold-lt); border:1px solid rgba(196,136,42,.2); border-radius:var(--radius); padding:1rem 1.1rem; }
+  .tip-icon { font-size:1.2rem; margin-bottom:.4rem; }
+  .tip-title { font-weight:600; font-size:.85rem; color:var(--ink); margin-bottom:.25rem; }
+  .tip-desc { font-size:.78rem; color:var(--stone); line-height:1.5; }
+
+  /* Album stats */
+  .album-stats { display:flex; gap:1rem; flex-wrap:wrap; margin-bottom:1.5rem; }
+  .astat { background:var(--white); border-radius:var(--radius); border:1px solid rgba(26,107,138,.1); padding:.8rem 1.2rem; display:flex; align-items:center; gap:.7rem; box-shadow:var(--shadow); flex:1; min-width:140px; }
+  .astat-icon { font-size:1.4rem; }
+  .astat-val { font-family:var(--serif); font-size:1.2rem; color:var(--ink); line-height:1; }
+  .astat-lbl { font-size:.68rem; color:var(--stone); margin-top:.15rem; letter-spacing:.03em; }
+
+  footer { text-align:center; padding:2rem; font-size:.78rem; color:var(--stone); border-top:1px solid rgba(26,107,138,.1); background:var(--white); }
+  footer a { color:var(--river); text-decoration:none; }
+
+  @media(max-width:580px) {
+    .options-grid { grid-template-columns:1fr; }
+    .album-embed { height:360px; }
+    main { padding:2rem 1rem 4rem; }
+  }
+</style>
+</head>
+<body>
+
+<nav>
+  <a class="nav-brand" href="../">✦ Thousand Islands</a>
+  <a class="nav-back" href="../">← Back to trip</a>
+</nav>
+
+<!-- Hero -->
+<div class="hero">
+  <div class="hero-inner">
+    <p class="hero-eyebrow">Thousand Islands · Jun 29 – Jul 2, 2026</p>
+    <h1 class="hero-title">Trip <em>Photos</em></h1>
+    <p class="hero-sub">Add your photos to the shared album — everyone in the crew gets access instantly. Pick the method that works best for you.</p>
+  </div>
+  <svg class="hero-wave" viewBox="0 0 1440 48" xmlns="http://www.w3.org/2000/svg" preserveAspectRatio="none">
+    <path d="M0 48 C240 10 480 40 720 20 C960 0 1200 35 1440 16 L1440 48 Z" fill="#f0f4f6"/>
+  </svg>
+</div>
+
+<main>
+
+  <!-- Album stats -->
+  <div class="album-stats">
+    <div class="astat"><div class="astat-icon">📸</div><div><div class="astat-val">1</div><div class="astat-lbl">Shared Album</div></div></div>
+    <div class="astat"><div class="astat-icon">👥</div><div><div class="astat-val">15</div><div class="astat-lbl">Contributors</div></div></div>
+    <div class="astat"><div class="astat-icon">☁️</div><div><div class="astat-val">Google Photos</div><div class="astat-lbl">Auto-backup enabled</div></div></div>
+    <div class="astat"><div class="astat-icon">🔗</div><div><div class="astat-val">Shared link</div><div class="astat-lbl">Crew access only</div></div></div>
+  </div>
+
+  <!-- Pick your method -->
+  <p class="sec-label">Choose your method</p>
+  <h2 class="sec-title">How would you like to add photos?</h2>
+
+  <div class="options-grid">
+    <div class="option-card active" id="opt1-card" onclick="switchOption(1)">
+      <div class="option-card-head">
+        <div class="option-num">1</div>
+        <div>
+          <div class="option-title">Open the shared album directly</div>
+          <div class="option-desc">Tap the link, open Google Photos, add photos from your camera roll. Works on any device.</div>
+          <span class="option-tag tag-easy">✓ Easiest</span>
+        </div>
+      </div>
+      <div class="option-card-foot">
+        <a class="cta-btn green" href="https://photos.app.goo.gl/W1zCAE1NW9KFy8Qz9" target="_blank" onclick="event.stopPropagation()">
+          <span class="cta-btn-icon">📷</span> Open Album →
+        </a>
+      </div>
+    </div>
+
+    <div class="option-card" id="opt2-card" onclick="switchOption(2)">
+      <div class="option-card-head">
+        <div class="option-num">2</div>
+        <div>
+          <div class="option-title">Step-by-step guide</div>
+          <div class="option-desc">Instructions for iPhone, Android, and desktop — with tips for bulk uploading all your trip photos at once.</div>
+          <span class="option-tag tag-quick">📋 With instructions</span>
+        </div>
+      </div>
+      <div class="option-card-foot" style="color:var(--stone);font-size:.8rem;">
+        Click to see step-by-step guide ↓
+      </div>
+    </div>
+  </div>
+
+  <!-- ── OPTION 1: Album embed ── -->
+  <div class="option-panel active" id="panel-1">
+    <div class="album-card">
+      <div class="album-card-head">
+        <div>
+          <h3>📸 Thousand Islands 2026 — Shared Album</h3>
+          <p>You're viewing the live album. Open it in Google Photos to add your photos.</p>
+        </div>
+        <a class="cta-btn" href="https://photos.app.goo.gl/W1zCAE1NW9KFy8Qz9" target="_blank">
+          <span>Open in Google Photos ↗</span>
+        </a>
+      </div>
+      <iframe
+        class="album-embed"
+        src="https://photos.app.goo.gl/W1zCAE1NW9KFy8Qz9"
+        title="Thousand Islands 2026 shared album"
+        allowfullscreen>
+      </iframe>
+      <div class="album-foot">
+        <span>📍 Google Photos shared album · Thousand Islands 2026</span>
+        <a href="https://photos.app.goo.gl/W1zCAE1NW9KFy8Qz9" target="_blank">Open full screen ↗</a>
+      </div>
+    </div>
+
+    <div class="tips-grid">
+      <div class="tip"><div class="tip-icon">💡</div><div class="tip-title">Can't see an Add button?</div><div class="tip-desc">You need to be signed into the Google account Dipankar granted access to. Switch accounts in Google Photos if needed.</div></div>
+      <div class="tip"><div class="tip-icon">📱</div><div class="tip-title">On mobile?</div><div class="tip-desc">The album link opens the Google Photos app directly if it's installed. Tap "Add photos" at the top of the album.</div></div>
+      <div class="tip"><div class="tip-icon">🗂️</div><div class="tip-title">Bulk upload</div><div class="tip-desc">In the Google Photos app, long-press the first photo, then tap others to select many at once, then share → add to album.</div></div>
+    </div>
+  </div>
+
+  <!-- ── OPTION 2: Step by step ── -->
+  <div class="option-panel" id="panel-2">
+
+    <div style="background:var(--river-lt);border-radius:var(--radius);padding:1rem 1.3rem;margin-bottom:1.5rem;font-size:.85rem;color:var(--river-dk);line-height:1.6;">
+      <strong>Album link:</strong>
+      <a href="https://photos.app.goo.gl/W1zCAE1NW9KFy8Qz9" target="_blank" style="color:var(--river);word-break:break-all;">
+        https://photos.app.goo.gl/W1zCAE1NW9KFy8Qz9
+      </a>
+      &nbsp;·&nbsp; Make sure you're signed in with the Google account that has access.
+    </div>
+
+    <!-- Device tabs -->
+    <div class="device-tabs">
+      <button class="device-tab active" onclick="switchDevice('iphone',this)">📱 iPhone</button>
+      <button class="device-tab" onclick="switchDevice('android',this)">🤖 Android</button>
+      <button class="device-tab" onclick="switchDevice('desktop',this)">💻 Desktop</button>
+    </div>
+
+    <!-- iPhone -->
+    <div class="device-steps active" id="steps-iphone">
+      <div class="step"><div class="step-num">1</div><div class="step-body"><div class="step-title">Install Google Photos</div><div class="step-desc">Download <strong>Google Photos</strong> from the App Store if you don't have it. Sign in with your Google account.</div></div></div>
+      <div class="step"><div class="step-num">2</div><div class="step-body"><div class="step-title">Open the album link</div><div class="step-desc">Tap this link: <a href="https://photos.app.goo.gl/W1zCAE1NW9KFy8Qz9" target="_blank" style="color:var(--river)">photos.app.goo.gl/W1zCAE1NW9KFy8Qz9 ↗</a><br>It will open the shared album in the Google Photos app.</div></div></div>
+      <div class="step"><div class="step-num">3</div><div class="step-body"><div class="step-title">Tap "Add photos" at the top</div><div class="step-desc">You'll see a blue <strong>"Add photos"</strong> button at the top of the album. Tap it.</div><div class="step-img">💡 If you don't see "Add photos", you may need Dipankar to re-confirm your Google account has contributor access.</div></div></div>
+      <div class="step"><div class="step-num">4</div><div class="step-body"><div class="step-title">Select your photos</div><div class="step-desc">Your camera roll opens. <strong>Long press</strong> the first photo to enter multi-select mode, then tap each photo you want to add. Tap <strong>Done</strong> when ready.</div></div></div>
+      <div class="step"><div class="step-num">5</div><div class="step-body"><div class="step-title">Done! 🎉</div><div class="step-desc">Your photos are now in the shared album. Everyone in the crew can see them instantly.</div></div></div>
+    </div>
+
+    <!-- Android -->
+    <div class="device-steps" id="steps-android">
+      <div class="step"><div class="step-num">1</div><div class="step-body"><div class="step-title">Open Google Photos</div><div class="step-desc">Google Photos comes pre-installed on most Android phones. Open it and make sure you're signed into the right Google account.</div></div></div>
+      <div class="step"><div class="step-num">2</div><div class="step-body"><div class="step-title">Open the album link</div><div class="step-desc">Tap: <a href="https://photos.app.goo.gl/W1zCAE1NW9KFy8Qz9" target="_blank" style="color:var(--river)">photos.app.goo.gl/W1zCAE1NW9KFy8Qz9 ↗</a> — it opens directly in Google Photos.</div></div></div>
+      <div class="step"><div class="step-num">3</div><div class="step-body"><div class="step-title">Tap the "+" or "Add photos" button</div><div class="step-desc">At the top of the album, tap <strong>"Add photos"</strong>. This opens your phone's photo library.</div></div></div>
+      <div class="step"><div class="step-num">4</div><div class="step-body"><div class="step-title">Bulk select your trip photos</div><div class="step-desc"><strong>Long press</strong> the first photo to enter select mode. Tap all the photos from the trip. Use the <strong>date headers</strong> to quickly find Jun 29 – Jul 2 photos.</div><div class="step-img">💡 Tip: Tap the date "Jun 29" header to select all photos from that day at once.</div></div></div>
+      <div class="step"><div class="step-num">5</div><div class="step-body"><div class="step-title">Tap Add → Done 🎉</div><div class="step-desc">All selected photos upload to the shared album. Depending on your internet speed, larger batches may take a minute.</div></div></div>
+    </div>
+
+    <!-- Desktop -->
+    <div class="device-steps" id="steps-desktop">
+      <div class="step"><div class="step-num">1</div><div class="step-body"><div class="step-title">Open the album in your browser</div><div class="step-desc">Go to <a href="https://photos.app.goo.gl/W1zCAE1NW9KFy8Qz9" target="_blank" style="color:var(--river)">photos.app.goo.gl/W1zCAE1NW9KFy8Qz9 ↗</a> and sign in with your Google account.</div></div></div>
+      <div class="step"><div class="step-num">2</div><div class="step-body"><div class="step-title">Click "Add photos" button</div><div class="step-desc">You'll see an <strong>"Add photos"</strong> button at the top right of the album page. Click it.</div></div></div>
+      <div class="step"><div class="step-num">3</div><div class="step-body"><div class="step-title">Choose your source</div><div class="step-desc">A dialog asks where to get photos from:<br>• <strong>"Select from computer"</strong> — drag and drop or browse your files<br>• <strong>"Select from Google Photos"</strong> — if photos are already backed up</div></div></div>
+      <div class="step"><div class="step-num">4</div><div class="step-body"><div class="step-title">Bulk select your photos</div><div class="step-desc">In the file picker, hold <code>Ctrl</code> (Windows) or <code>Cmd</code> (Mac) and click each photo to select multiple. Or select the first, hold <code>Shift</code>, click the last to select a range.</div><div class="step-img">💡 Tip: Sort your folder by date to find Jun 29 – Jul 2 photos quickly.</div></div></div>
+      <div class="step"><div class="step-num">5</div><div class="step-body"><div class="step-title">Upload & wait 🎉</div><div class="step-desc">Click Open/Upload. A progress bar shows the upload. Once done, all crew members can see your photos in the album immediately.</div></div></div>
+    </div>
+
+    <div class="tips-grid" style="margin-top:1.5rem;">
+      <div class="tip"><div class="tip-icon">🔑</div><div class="tip-title">Wrong account?</div><div class="tip-desc">Make sure you're signed into the same Google account that Dipankar granted access to. You can switch accounts in the top-right corner of Google Photos.</div></div>
+      <div class="tip"><div class="tip-icon">📶</div><div class="tip-title">On mobile data?</div><div class="tip-desc">Use WiFi for bulk uploads — large photos can eat through data quickly. The VRBO WiFi password is <strong>nestuseful358</strong>.</div></div>
+      <div class="tip"><div class="tip-icon">🗓️</div><div class="tip-title">Upload during the trip</div><div class="tip-desc">Best to upload each evening so everyone can enjoy the day's photos together at the house.</div></div>
+      <div class="tip"><div class="tip-icon">❓</div><div class="tip-title">Still not working?</div><div class="tip-desc">Message Dipankar — he may need to re-send the contributor invite to your specific Google account.</div></div>
+    </div>
+
+  </div><!-- /panel-2 -->
+
+</main>
+
+<footer>
+  <p>Thousand Islands 2026 · <a href="../">Back to trip page</a> · <a href="https://photos.app.goo.gl/W1zCAE1NW9KFy8Qz9" target="_blank">Open album ↗</a></p>
+</footer>
+
+<script>
+  function switchOption(n) {
+    [1,2].forEach(i => {
+      document.getElementById('opt'+i+'-card').classList.toggle('active', i===n);
+      document.getElementById('panel-'+i).classList.toggle('active', i===n);
+    });
+  }
+
+  function switchDevice(id, btn) {
+    document.querySelectorAll('.device-tab').forEach(b => b.classList.remove('active'));
+    document.querySelectorAll('.device-steps').forEach(s => s.classList.remove('active'));
+    btn.classList.add('active');
+    document.getElementById('steps-'+id).classList.add('active');
+  }
+</script>
+</body>
+</html>
