@@ -86,6 +86,21 @@
   .hc-title { font-weight:600; font-size:.9rem; color:var(--ink); margin-bottom:.3rem; }
   .hc-desc { font-size:.8rem; color:var(--stone); line-height:1.5; }
 
+  /* Password gate */
+  #gate { position:fixed; inset:0; z-index:1000; background:linear-gradient(150deg,var(--ocean-dk) 0%,#1a6b8a 55%,#2896b0 100%); display:flex; align-items:center; justify-content:center; padding:1.5rem; }
+  #gate.hidden { display:none; }
+  .gate-card { background:var(--white); border-radius:16px; box-shadow:0 20px 60px rgba(0,0,0,.3); padding:2.4rem 2.2rem; max-width:360px; width:100%; text-align:center; }
+  .gate-icon { font-size:2.4rem; margin-bottom:.6rem; }
+  .gate-title { font-family:var(--serif); font-size:1.5rem; color:var(--ocean-dk); margin-bottom:.4rem; }
+  .gate-sub { font-size:.85rem; color:var(--stone); line-height:1.5; margin-bottom:1.4rem; }
+  .gate-form { display:flex; gap:.5rem; }
+  .gate-form input { flex:1; padding:.6rem .9rem; border:1px solid rgba(26,107,138,.25); border-radius:8px; font-size:.95rem; font-family:var(--sans); }
+  .gate-form input:focus { outline:2px solid var(--ocean); outline-offset:1px; border-color:transparent; }
+  .gate-form button { background:var(--ocean); color:#fff; border:none; padding:.6rem 1.2rem; border-radius:8px; font-size:.9rem; font-weight:500; cursor:pointer; font-family:var(--sans); transition:background .15s; }
+  .gate-form button:hover { background:var(--ocean-dk); }
+  .gate-wrong { font-size:.78rem; color:#c0392b; margin-top:.8rem; min-height:1rem; visibility:hidden; }
+  .gate-wrong.show { visibility:visible; }
+
   footer { text-align:center; padding:2.5rem 1.5rem; font-size:.8rem; color:var(--stone); border-top:1px solid rgba(26,107,138,.1); background:var(--white); line-height:1.8; }
   footer a { color:var(--ocean); text-decoration:none; }
   footer a:hover { text-decoration:underline; }
@@ -107,6 +122,20 @@
   <script>window.dataLayer=window.dataLayer||[];function gtag(){dataLayer.push(arguments);}gtag('js',new Date());gtag('config','G-VH9D51QJJS');</script>
 </head>
 <body>
+
+<!-- Password gate -->
+<div id="gate">
+  <div class="gate-card">
+    <div class="gate-icon">🔒</div>
+    <div class="gate-title">Atlantic City Trip</div>
+    <div class="gate-sub">This trip is private. Enter the password to view the itinerary.</div>
+    <div class="gate-form">
+      <input type="password" id="gate-pw" placeholder="Password" autocomplete="off">
+      <button type="button" id="gate-btn">Unlock</button>
+    </div>
+    <div class="gate-wrong" id="gate-wrong">Incorrect password. Try again.</div>
+  </div>
+</div>
 
 <!-- Nav -->
 <nav>
@@ -288,6 +317,48 @@
     &nbsp;·&nbsp; Hosted on GitHub Pages
   </p>
 </footer>
+
+<script>
+  // ── Simple client-side password gate ──────────────────────
+  // Note: this is light obfuscation for a personal site, not real security.
+  (function () {
+    var GATE_PW = 'x';
+    var GATE_KEY = 'atlantic-city-unlocked';
+    var gate = document.getElementById('gate');
+    var input = document.getElementById('gate-pw');
+    var btn = document.getElementById('gate-btn');
+    var wrong = document.getElementById('gate-wrong');
+
+    function openGate() {
+      gate.classList.add('hidden');
+      document.body.style.overflow = '';
+    }
+    function checkGate() {
+      if (input.value.trim() === GATE_PW) {
+        try { sessionStorage.setItem(GATE_KEY, '1'); } catch (e) {}
+        openGate();
+      } else {
+        wrong.classList.add('show');
+        input.value = '';
+        input.focus();
+      }
+    }
+
+    btn.addEventListener('click', checkGate);
+    input.addEventListener('keydown', function (e) {
+      if (e.key === 'Enter') { e.preventDefault(); checkGate(); }
+    });
+
+    var unlocked = false;
+    try { unlocked = sessionStorage.getItem(GATE_KEY) === '1'; } catch (e) {}
+    if (unlocked) {
+      openGate();
+    } else {
+      document.body.style.overflow = 'hidden';
+      input.focus();
+    }
+  })();
+</script>
 
 </body>
 </html>
