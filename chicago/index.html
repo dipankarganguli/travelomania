@@ -80,6 +80,12 @@
   .tag-tour { background:#d6eef5; color:#0d5a77; }
   .tag-indian { background:#fdeede; color:#a85212; }
 
+  /* Map links */
+  .maplink { color:var(--ocean); text-decoration:none; font-weight:500; white-space:nowrap; }
+  .maplink:hover { text-decoration:underline; }
+  .food-card .fc-list li a { color:inherit; text-decoration:none; }
+  .food-card .fc-list li a:hover { color:var(--ocean); text-decoration:underline; }
+
   /* Callout note */
   .trip-note { background:var(--ocean-lt); border-left:3px solid var(--ocean); border-radius:8px; padding:1.1rem 1.3rem; margin-top:1.4rem; font-size:.9rem; line-height:1.6; color:#0d3f52; }
   .trip-note strong { color:var(--ocean-dk); }
@@ -362,14 +368,14 @@
         <div class="day-body">
           <ul class="act-list">
             <li><span class="act-time">8:10 AM</span><div class="act-content"><div class="act-name">Depart Albany (ALB) <span class="act-tag tag-travel">Travel</span></div><div class="act-note">United Airlines UA 214, non-stop to Chicago O'Hare. Get to ALB ~2 hrs early — 6 travelers, so allow time at security.</div></div></li>
-            <li><span class="act-time">9:45 AM</span><div class="act-content"><div class="act-name">Arrive Chicago O'Hare (ORD) <span class="act-tag tag-travel">Travel</span></div><div class="act-note">Grab the bags and head into the city.</div></div></li>
-            <li><span class="act-time">10:15–11:15 AM</span><div class="act-content"><div class="act-name">Head downtown <span class="act-tag tag-travel">Transit</span></div><div class="act-note">Take the CTA Blue Line straight to the Loop (~45 min), or split into Uber/Lyft to the hotel area.</div></div></li>
-            <li><span class="act-time">11:30 AM</span><div class="act-content"><div class="act-name">Drop luggage at the Travelodge <span class="act-tag tag-view">Stay</span></div><div class="act-note">Leave bags at the front desk before official check-in so you can start exploring right away.</div></div></li>
-            <li><span class="act-time">12:00 PM</span><div class="act-content"><div class="act-name">Lunch <span class="act-tag tag-food">Food</span></div><div class="act-note">Choose one: Eleven City Diner · The Berghoff · Cafecito.</div></div></li>
-            <li><span class="act-time">12:45–3:00 PM</span><div class="act-content"><div class="act-name">Explore Grant Park &amp; the lakefront <span class="act-tag tag-view">Views</span></div><div class="act-note">Grant Park · Buckingham Fountain · Museum Campus lakefront. Easy, scenic, and steps from the hotel.</div></div></li>
+            <li><span class="act-time">9:45 AM</span><div class="act-content"><div class="act-name">Arrive Chicago O'Hare (ORD) <a class="maplink" href="https://www.google.com/maps/search/?api=1&query=O%27Hare%20International%20Airport%20Chicago" target="_blank" rel="noopener">📍</a> <span class="act-tag tag-travel">Travel</span></div><div class="act-note">Grab the bags and head into the city.</div></div></li>
+            <li><span class="act-time">10:15–11:15 AM</span><div class="act-content"><div class="act-name">Head downtown <span class="act-tag tag-travel">Transit</span></div><div class="act-note">Take the <a class="maplink" href="https://www.google.com/maps/search/?api=1&query=CTA%20Blue%20Line%20O%27Hare%20Station" target="_blank" rel="noopener">CTA Blue Line 📍</a> straight to the Loop (~45 min), or split into Uber/Lyft to the hotel area.</div></div></li>
+            <li><span class="act-time">11:30 AM</span><div class="act-content"><div class="act-name">Drop luggage at the Travelodge <a class="maplink" href="https://www.google.com/maps/search/?api=1&query=Travelodge%20by%20Wyndham%20Downtown%20Chicago" target="_blank" rel="noopener">📍</a> <span class="act-tag tag-view">Stay</span></div><div class="act-note">Leave bags at the front desk before official check-in so you can start exploring right away.</div></div></li>
+            <li><span class="act-time">12:00 PM</span><div class="act-content"><div class="act-name">Lunch <span class="act-tag tag-food">Food</span></div><div class="act-note">Choose one: <a class="maplink" href="https://www.google.com/maps/search/?api=1&query=Eleven%20City%20Diner%20Chicago" target="_blank" rel="noopener">Eleven City Diner 📍</a> · <a class="maplink" href="https://www.google.com/maps/search/?api=1&query=The%20Berghoff%20Chicago" target="_blank" rel="noopener">The Berghoff 📍</a> · <a class="maplink" href="https://www.google.com/maps/search/?api=1&query=Cafecito%20Chicago" target="_blank" rel="noopener">Cafecito 📍</a>.</div></div></li>
+            <li><span class="act-time">12:45–3:00 PM</span><div class="act-content"><div class="act-name">Explore Grant Park &amp; the lakefront <span class="act-tag tag-view">Views</span></div><div class="act-note"><a class="maplink" href="https://www.google.com/maps/search/?api=1&query=Grant%20Park%20Chicago" target="_blank" rel="noopener">Grant Park 📍</a> · <a class="maplink" href="https://www.google.com/maps/search/?api=1&query=Buckingham%20Fountain%20Chicago" target="_blank" rel="noopener">Buckingham Fountain 📍</a> · <a class="maplink" href="https://www.google.com/maps/search/?api=1&query=Museum%20Campus%20Chicago" target="_blank" rel="noopener">Museum Campus 📍</a> lakefront. Easy, scenic, and steps from the hotel.</div></div></li>
             <li><span class="act-time">3:00 PM</span><div class="act-content"><div class="act-name">Check in to the hotel &amp; relax <span class="act-tag tag-view">Stay</span></div><div class="act-note">Freshen up and regroup before the evening.</div></div></li>
-            <li><span class="act-time">5:00 PM</span><div class="act-content"><div class="act-name">Evening at Millennium Park <span class="act-tag tag-view">Views</span></div><div class="act-note">Walk over to Cloud Gate ("The Bean"), Crown Fountain, and the Lurie Garden. Great for group photos.</div></div></li>
-            <li><span class="act-time">Dinner</span><div class="act-content"><div class="act-name">Deep-dish or Indian <span class="act-tag tag-food">Food</span></div><div class="act-note">Deep dish: Giordano's or Lou Malnati's (great veg options). Prefer Indian tonight? Gaylord Fine Indian Cuisine (River North).</div></div></li>
+            <li><span class="act-time">5:00 PM</span><div class="act-content"><div class="act-name">Evening at Millennium Park <a class="maplink" href="https://www.google.com/maps/search/?api=1&query=Millennium%20Park%20Chicago" target="_blank" rel="noopener">📍</a> <span class="act-tag tag-view">Views</span></div><div class="act-note">Walk over to <a class="maplink" href="https://www.google.com/maps/search/?api=1&query=Cloud%20Gate%20The%20Bean%20Chicago" target="_blank" rel="noopener">Cloud Gate ("The Bean") 📍</a>, <a class="maplink" href="https://www.google.com/maps/search/?api=1&query=Crown%20Fountain%20Chicago" target="_blank" rel="noopener">Crown Fountain 📍</a>, and the <a class="maplink" href="https://www.google.com/maps/search/?api=1&query=Lurie%20Garden%20Chicago" target="_blank" rel="noopener">Lurie Garden 📍</a>. Great for group photos.</div></div></li>
+            <li><span class="act-time">Dinner</span><div class="act-content"><div class="act-name">Deep-dish or Indian <span class="act-tag tag-food">Food</span></div><div class="act-note">Deep dish: <a class="maplink" href="https://www.google.com/maps/search/?api=1&query=Giordano%27s%20Chicago" target="_blank" rel="noopener">Giordano's 📍</a> or <a class="maplink" href="https://www.google.com/maps/search/?api=1&query=Lou%20Malnati%27s%20Pizzeria%20Chicago" target="_blank" rel="noopener">Lou Malnati's 📍</a> (great veg options). Prefer Indian tonight? <a class="maplink" href="https://www.google.com/maps/search/?api=1&query=Gaylord%20Fine%20Indian%20Cuisine%20Chicago" target="_blank" rel="noopener">Gaylord Fine Indian Cuisine 📍</a> (River North).</div></div></li>
             <li><span class="act-time">Overnight</span><div class="act-content"><div class="act-name">Overnight in Chicago 🌙</div><div class="act-note">Rest up for a full day tomorrow.</div></div></li>
           </ul>
         </div>
@@ -387,12 +393,12 @@
         <div class="day-body">
           <ul class="act-list">
             <li><span class="act-time">8:00 AM</span><div class="act-content"><div class="act-name">Breakfast <span class="act-tag tag-food">Food</span></div><div class="act-note">Fuel up before a big day of walking.</div></div></li>
-            <li><span class="act-time">9:00 AM</span><div class="act-content"><div class="act-name">Vivekananda Way &amp; Art Institute of Chicago <span class="act-tag tag-tour">Culture</span></div><div class="act-note">Walk to the Art Institute (~8 min). See <strong>Vivekananda Way</strong> — the honorary street commemorating Swami Vivekananda's 1893 Parliament of Religions address — then the Art Institute. Plan ~3 hours. Book timed tickets ahead.</div></div></li>
-            <li><span class="act-time">Lunch</span><div class="act-content"><div class="act-name">The Gage <span class="act-tag tag-food">Food</span></div><div class="act-note">Right across from the Art Institute on Michigan Avenue.</div></div></li>
-            <li><span class="act-time">Afternoon</span><div class="act-content"><div class="act-name">Chicago Architecture River Cruise <span class="act-tag tag-tour">Tour</span></div><div class="act-note">The best way to see the city's skyline — 90 minutes on the river. Reserve tickets in advance.</div></div></li>
-            <li><span class="act-time">After cruise</span><div class="act-content"><div class="act-name">Riverwalk &amp; Magnificent Mile <span class="act-tag tag-fun">Fun</span></div><div class="act-note">Stroll the Chicago Riverwalk, then Michigan Avenue and the Magnificent Mile.</div></div></li>
-            <li><span class="act-time">Evening</span><div class="act-content"><div class="act-name">360 CHICAGO Observation Deck <span class="act-tag tag-view">Views</span></div><div class="act-note">Sweeping views from the John Hancock Center (or Willis Tower Skydeck if you prefer).</div></div></li>
-            <li><span class="act-time">Dinner</span><div class="act-content"><div class="act-name">Italian or Indian <span class="act-tag tag-food">Food</span></div><div class="act-note">Eataly Chicago · Beatrix · Quartino Ristorante. For Indian: Rooh Chicago (modern Indian, West Loop) or India House (River North).</div></div></li>
+            <li><span class="act-time">9:00 AM</span><div class="act-content"><div class="act-name">Vivekananda Way &amp; Art Institute of Chicago <a class="maplink" href="https://www.google.com/maps/search/?api=1&query=Art%20Institute%20of%20Chicago" target="_blank" rel="noopener">📍</a> <span class="act-tag tag-tour">Culture</span></div><div class="act-note">Walk to the Art Institute (~8 min). See <strong><a class="maplink" href="https://www.google.com/maps/search/?api=1&query=Vivekananda%20Way%20Chicago" target="_blank" rel="noopener">Vivekananda Way 📍</a></strong> — the honorary street commemorating Swami Vivekananda's 1893 Parliament of Religions address — then the Art Institute. Plan ~3 hours. Book timed tickets ahead.</div></div></li>
+            <li><span class="act-time">Lunch</span><div class="act-content"><div class="act-name">The Gage <a class="maplink" href="https://www.google.com/maps/search/?api=1&query=The%20Gage%20Chicago" target="_blank" rel="noopener">📍</a> <span class="act-tag tag-food">Food</span></div><div class="act-note">Right across from the Art Institute on Michigan Avenue.</div></div></li>
+            <li><span class="act-time">Afternoon</span><div class="act-content"><div class="act-name">Chicago Architecture River Cruise <a class="maplink" href="https://www.google.com/maps/search/?api=1&query=Chicago%20Architecture%20Center%20River%20Cruise" target="_blank" rel="noopener">📍</a> <span class="act-tag tag-tour">Tour</span></div><div class="act-note">The best way to see the city's skyline — 90 minutes on the river. Reserve tickets in advance.</div></div></li>
+            <li><span class="act-time">After cruise</span><div class="act-content"><div class="act-name">Riverwalk &amp; Magnificent Mile <span class="act-tag tag-fun">Fun</span></div><div class="act-note">Stroll the <a class="maplink" href="https://www.google.com/maps/search/?api=1&query=Chicago%20Riverwalk" target="_blank" rel="noopener">Chicago Riverwalk 📍</a>, then Michigan Avenue and the <a class="maplink" href="https://www.google.com/maps/search/?api=1&query=Magnificent%20Mile%20Chicago" target="_blank" rel="noopener">Magnificent Mile 📍</a>.</div></div></li>
+            <li><span class="act-time">Evening</span><div class="act-content"><div class="act-name">360 CHICAGO Observation Deck <a class="maplink" href="https://www.google.com/maps/search/?api=1&query=360%20CHICAGO%20Observation%20Deck" target="_blank" rel="noopener">📍</a> <span class="act-tag tag-view">Views</span></div><div class="act-note">Sweeping views from the John Hancock Center (or <a class="maplink" href="https://www.google.com/maps/search/?api=1&query=Willis%20Tower%20Skydeck%20Chicago" target="_blank" rel="noopener">Willis Tower Skydeck 📍</a> if you prefer).</div></div></li>
+            <li><span class="act-time">Dinner</span><div class="act-content"><div class="act-name">Italian or Indian <span class="act-tag tag-food">Food</span></div><div class="act-note"><a class="maplink" href="https://www.google.com/maps/search/?api=1&query=Eataly%20Chicago" target="_blank" rel="noopener">Eataly Chicago 📍</a> · <a class="maplink" href="https://www.google.com/maps/search/?api=1&query=Beatrix%20River%20North%20Chicago" target="_blank" rel="noopener">Beatrix 📍</a> · <a class="maplink" href="https://www.google.com/maps/search/?api=1&query=Quartino%20Ristorante%20Chicago" target="_blank" rel="noopener">Quartino Ristorante 📍</a>. For Indian: <a class="maplink" href="https://www.google.com/maps/search/?api=1&query=Rooh%20Chicago%20West%20Loop" target="_blank" rel="noopener">Rooh Chicago 📍</a> (modern Indian, West Loop) or <a class="maplink" href="https://www.google.com/maps/search/?api=1&query=India%20House%20River%20North%20Chicago" target="_blank" rel="noopener">India House 📍</a> (River North).</div></div></li>
             <li><span class="act-time">Overnight</span><div class="act-content"><div class="act-name">Overnight in Chicago 🌙</div><div class="act-note"></div></div></li>
           </ul>
         </div>
@@ -409,11 +415,11 @@
         </div>
         <div class="day-body">
           <ul class="act-list">
-            <li><span class="act-time">Morning</span><div class="act-content"><div class="act-name">Choose one museum <span class="act-tag tag-tour">Culture</span></div><div class="act-note"><strong>Option 1 (Recommended):</strong> Field Museum. &nbsp;<strong>Option 2:</strong> Shedd Aquarium. Both are on the Museum Campus by the lake.</div></div></li>
+            <li><span class="act-time">Morning</span><div class="act-content"><div class="act-name">Choose one museum <span class="act-tag tag-tour">Culture</span></div><div class="act-note"><strong>Option 1 (Recommended):</strong> <a class="maplink" href="https://www.google.com/maps/search/?api=1&query=Field%20Museum%20Chicago" target="_blank" rel="noopener">Field Museum 📍</a>. &nbsp;<strong>Option 2:</strong> <a class="maplink" href="https://www.google.com/maps/search/?api=1&query=Shedd%20Aquarium%20Chicago" target="_blank" rel="noopener">Shedd Aquarium 📍</a>. Both are on the <a class="maplink" href="https://www.google.com/maps/search/?api=1&query=Museum%20Campus%20Chicago" target="_blank" rel="noopener">Museum Campus 📍</a> by the lake.</div></div></li>
             <li><span class="act-time">Lunch</span><div class="act-content"><div class="act-name">Near Museum Campus <span class="act-tag tag-food">Food</span></div><div class="act-note">Grab a bite close to the museums before heading up to the pier.</div></div></li>
-            <li><span class="act-time">Afternoon</span><div class="act-content"><div class="act-name">Navy Pier <span class="act-tag tag-fun">Fun</span></div><div class="act-note">Centennial Wheel · lakefront walk · boat rides (optional). A highlight for the kids.</div></div></li>
-            <li><span class="act-time">Evening</span><div class="act-content"><div class="act-name">Relax by the water <span class="act-tag tag-view">Views</span></div><div class="act-note">Wind down at Ohio Street Beach or along the Riverwalk.</div></div></li>
-            <li><span class="act-time">Dinner</span><div class="act-content"><div class="act-name">Chicago specialty or Indian <span class="act-tag tag-food">Food</span></div><div class="act-note">Small Cheval (burgers) · a classic Chicago deep-dish · or go Indian at Cumin or The Spice Room. For South Indian vegetarian, Udupi Palace on Devon Ave is worth the trip.</div></div></li>
+            <li><span class="act-time">Afternoon</span><div class="act-content"><div class="act-name">Navy Pier <a class="maplink" href="https://www.google.com/maps/search/?api=1&query=Navy%20Pier%20Chicago" target="_blank" rel="noopener">📍</a> <span class="act-tag tag-fun">Fun</span></div><div class="act-note"><a class="maplink" href="https://www.google.com/maps/search/?api=1&query=Centennial%20Wheel%20Navy%20Pier%20Chicago" target="_blank" rel="noopener">Centennial Wheel 📍</a> · lakefront walk · boat rides (optional). A highlight for the kids.</div></div></li>
+            <li><span class="act-time">Evening</span><div class="act-content"><div class="act-name">Relax by the water <span class="act-tag tag-view">Views</span></div><div class="act-note">Wind down at <a class="maplink" href="https://www.google.com/maps/search/?api=1&query=Ohio%20Street%20Beach%20Chicago" target="_blank" rel="noopener">Ohio Street Beach 📍</a> or along the <a class="maplink" href="https://www.google.com/maps/search/?api=1&query=Chicago%20Riverwalk" target="_blank" rel="noopener">Riverwalk 📍</a>.</div></div></li>
+            <li><span class="act-time">Dinner</span><div class="act-content"><div class="act-name">Chicago specialty or Indian <span class="act-tag tag-food">Food</span></div><div class="act-note"><a class="maplink" href="https://www.google.com/maps/search/?api=1&query=Small%20Cheval%20Chicago" target="_blank" rel="noopener">Small Cheval 📍</a> (burgers) · a classic Chicago deep-dish · or go Indian at <a class="maplink" href="https://www.google.com/maps/search/?api=1&query=Cumin%20Restaurant%20Chicago" target="_blank" rel="noopener">Cumin 📍</a> or <a class="maplink" href="https://www.google.com/maps/search/?api=1&query=The%20Spice%20Room%20Chicago" target="_blank" rel="noopener">The Spice Room 📍</a>. For South Indian vegetarian, <a class="maplink" href="https://www.google.com/maps/search/?api=1&query=Udupi%20Palace%20Devon%20Avenue%20Chicago" target="_blank" rel="noopener">Udupi Palace 📍</a> on Devon Ave is worth the trip.</div></div></li>
             <li><span class="act-time">Overnight</span><div class="act-content"><div class="act-name">Overnight in Chicago 🌙</div><div class="act-note"></div></div></li>
           </ul>
         </div>
@@ -432,10 +438,10 @@
           <ul class="act-list">
             <li><span class="act-time">8:00 AM</span><div class="act-content"><div class="act-name">Breakfast <span class="act-tag tag-food">Food</span></div><div class="act-note">One last Chicago breakfast.</div></div></li>
             <li><span class="act-time">11:00 AM</span><div class="act-content"><div class="act-name">Check out &amp; store luggage <span class="act-tag tag-travel">Travel</span></div><div class="act-note">Check out and leave the bags with the hotel to keep the afternoon free.</div></div></li>
-            <li><span class="act-time">Midday</span><div class="act-content"><div class="act-name">Last-minute sightseeing <span class="act-tag tag-fun">Fun</span></div><div class="act-note">Chicago Cultural Center · Maggie Daley Park · last-minute shopping on State Street or the Magnificent Mile · Garrett Popcorn for souvenirs.</div></div></li>
-            <li><span class="act-time">Lunch</span><div class="act-content"><div class="act-name">Revival Food Hall <span class="act-tag tag-food">Food</span></div><div class="act-note">Revival Food Hall (lots of variety for the group) or another nearby spot.</div></div></li>
+            <li><span class="act-time">Midday</span><div class="act-content"><div class="act-name">Last-minute sightseeing <span class="act-tag tag-fun">Fun</span></div><div class="act-note"><a class="maplink" href="https://www.google.com/maps/search/?api=1&query=Chicago%20Cultural%20Center" target="_blank" rel="noopener">Chicago Cultural Center 📍</a> · <a class="maplink" href="https://www.google.com/maps/search/?api=1&query=Maggie%20Daley%20Park%20Chicago" target="_blank" rel="noopener">Maggie Daley Park 📍</a> · last-minute shopping on <a class="maplink" href="https://www.google.com/maps/search/?api=1&query=State%20Street%20Chicago" target="_blank" rel="noopener">State Street 📍</a> or the <a class="maplink" href="https://www.google.com/maps/search/?api=1&query=Magnificent%20Mile%20Chicago" target="_blank" rel="noopener">Magnificent Mile 📍</a> · <a class="maplink" href="https://www.google.com/maps/search/?api=1&query=Garrett%20Popcorn%20Shops%20Chicago" target="_blank" rel="noopener">Garrett Popcorn 📍</a> for souvenirs.</div></div></li>
+            <li><span class="act-time">Lunch</span><div class="act-content"><div class="act-name">Revival Food Hall <a class="maplink" href="https://www.google.com/maps/search/?api=1&query=Revival%20Food%20Hall%20Chicago" target="_blank" rel="noopener">📍</a> <span class="act-tag tag-food">Food</span></div><div class="act-note">Revival Food Hall (lots of variety for the group) or another nearby spot.</div></div></li>
             <li><span class="act-time">2:00 PM</span><div class="act-content"><div class="act-name">Collect luggage <span class="act-tag tag-travel">Travel</span></div><div class="act-note">Return to the hotel and pick up the bags.</div></div></li>
-            <li><span class="act-time">2:30 PM</span><div class="act-content"><div class="act-name">Leave for O'Hare (ORD) <span class="act-tag tag-travel">Travel</span></div><div class="act-note">Allow 60–90 minutes depending on traffic.</div></div></li>
+            <li><span class="act-time">2:30 PM</span><div class="act-content"><div class="act-name">Leave for O'Hare (ORD) <a class="maplink" href="https://www.google.com/maps/search/?api=1&query=O%27Hare%20International%20Airport%20Chicago" target="_blank" rel="noopener">📍</a> <span class="act-tag tag-travel">Travel</span></div><div class="act-note">Allow 60–90 minutes depending on traffic.</div></div></li>
             <li><span class="act-time">5:18 PM</span><div class="act-content"><div class="act-name">Depart ORD → Albany <span class="act-tag tag-travel">Travel</span></div><div class="act-note">Delta Air Lines DL 2358 / DL 2660 with a connection in Detroit (DTW).</div></div></li>
             <li><span class="act-time">11:05 PM</span><div class="act-content"><div class="act-name">Arrive Albany (ALB) 🏡</div><div class="act-note">Home!</div></div></li>
           </ul>
@@ -475,39 +481,39 @@
       <div class="food-card">
         <div class="fc-cat">🇮🇳 Indian</div>
         <ul class="fc-list">
-          <li>Rooh Chicago — modern Indian (West Loop)</li>
-          <li>Gaylord Fine Indian Cuisine (River North)</li>
-          <li>India House (River North)</li>
-          <li>Cumin · The Spice Room</li>
+          <li><a href="https://www.google.com/maps/search/?api=1&query=Rooh%20Chicago%20West%20Loop" target="_blank" rel="noopener">Rooh Chicago — modern Indian (West Loop) 📍</a></li>
+          <li><a href="https://www.google.com/maps/search/?api=1&query=Gaylord%20Fine%20Indian%20Cuisine%20Chicago" target="_blank" rel="noopener">Gaylord Fine Indian Cuisine (River North) 📍</a></li>
+          <li><a href="https://www.google.com/maps/search/?api=1&query=India%20House%20River%20North%20Chicago" target="_blank" rel="noopener">India House (River North) 📍</a></li>
+          <li><a href="https://www.google.com/maps/search/?api=1&query=Cumin%20Restaurant%20Chicago" target="_blank" rel="noopener">Cumin 📍</a> · <a href="https://www.google.com/maps/search/?api=1&query=The%20Spice%20Room%20Chicago" target="_blank" rel="noopener">The Spice Room 📍</a></li>
         </ul>
       </div>
       <div class="food-card">
         <div class="fc-cat">🌿 South Indian / Vegetarian</div>
         <ul class="fc-list">
-          <li>Udupi Palace — South Indian veg (Devon Ave)</li>
-          <li>Mysore Woodlands (Devon Ave)</li>
-          <li>Devon Avenue — Chicago's Indian district</li>
+          <li><a href="https://www.google.com/maps/search/?api=1&query=Udupi%20Palace%20Devon%20Avenue%20Chicago" target="_blank" rel="noopener">Udupi Palace — South Indian veg (Devon Ave) 📍</a></li>
+          <li><a href="https://www.google.com/maps/search/?api=1&query=Mysore%20Woodlands%20Devon%20Avenue%20Chicago" target="_blank" rel="noopener">Mysore Woodlands (Devon Ave) 📍</a></li>
+          <li><a href="https://www.google.com/maps/search/?api=1&query=Devon%20Avenue%20Chicago" target="_blank" rel="noopener">Devon Avenue — Chicago's Indian district 📍</a></li>
         </ul>
       </div>
       <div class="food-card">
         <div class="fc-cat">🍕 Deep Dish Pizza</div>
         <ul class="fc-list">
-          <li>Lou Malnati's</li>
-          <li>Giordano's</li>
+          <li><a href="https://www.google.com/maps/search/?api=1&query=Lou%20Malnati%27s%20Pizzeria%20Chicago" target="_blank" rel="noopener">Lou Malnati's 📍</a></li>
+          <li><a href="https://www.google.com/maps/search/?api=1&query=Giordano%27s%20Chicago" target="_blank" rel="noopener">Giordano's 📍</a></li>
         </ul>
       </div>
       <div class="food-card">
         <div class="fc-cat">🍽️ Fine Dining</div>
         <ul class="fc-list">
-          <li>The Gage</li>
-          <li>Quartino Ristorante</li>
+          <li><a href="https://www.google.com/maps/search/?api=1&query=The%20Gage%20Chicago" target="_blank" rel="noopener">The Gage 📍</a></li>
+          <li><a href="https://www.google.com/maps/search/?api=1&query=Quartino%20Ristorante%20Chicago" target="_blank" rel="noopener">Quartino Ristorante 📍</a></li>
         </ul>
       </div>
       <div class="food-card">
         <div class="fc-cat">🥞 Breakfast</div>
         <ul class="fc-list">
-          <li>Wildberry Pancakes &amp; Cafe</li>
-          <li>Yolk</li>
+          <li><a href="https://www.google.com/maps/search/?api=1&query=Wildberry%20Pancakes%20and%20Cafe%20Chicago" target="_blank" rel="noopener">Wildberry Pancakes &amp; Cafe 📍</a></li>
+          <li><a href="https://www.google.com/maps/search/?api=1&query=Yolk%20Chicago" target="_blank" rel="noopener">Yolk 📍</a></li>
         </ul>
       </div>
     </div>
@@ -525,8 +531,8 @@
     <div class="hotel-card">
       <div class="hotel-icon">🏨</div>
       <div class="hotel-body">
-        <div class="hotel-name">Travelodge by Wyndham Downtown Chicago</div>
-        <div class="hotel-loc">📍 Chicago, IL</div>
+        <div class="hotel-name"><a class="maplink" style="white-space:normal;" href="https://www.google.com/maps/search/?api=1&query=Travelodge%20by%20Wyndham%20Downtown%20Chicago" target="_blank" rel="noopener">Travelodge by Wyndham Downtown Chicago</a></div>
+        <div class="hotel-loc"><a class="maplink" href="https://www.google.com/maps/search/?api=1&query=Travelodge%20by%20Wyndham%20Downtown%20Chicago" target="_blank" rel="noopener">📍 Chicago, IL — view on map</a></div>
         <div class="hotel-rating">
           <span class="rating-badge">7.6</span>
           <span class="rating-word">Good</span>
@@ -570,6 +576,9 @@
     Travelomania &nbsp;·&nbsp; Made with <span class="footer-heart">♥</span> by Dipankar
     &nbsp;·&nbsp; <a href="../index.html">All Trips</a>
     &nbsp;·&nbsp; Hosted on GitHub Pages
+  </p>
+  <p style="margin-top:.6rem;font-size:.72rem;color:var(--stone);opacity:.7;">
+    <a href="budget/index.html" style="color:var(--stone);text-decoration:none;border-bottom:1px dotted rgba(107,124,136,.5);">Budget &amp; expenses</a>
   </p>
 </footer>
 

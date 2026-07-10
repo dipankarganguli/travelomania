@@ -1,0 +1,235 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<link rel="icon" type="image/svg+xml" href="../../travelomania-favicon.svg">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Chicago · Budget &amp; Expenses</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,700;1,400&family=Inter:wght@300;400;500;600&display=swap" rel="stylesheet">
+<style>
+  *, *::before, *::after { box-sizing:border-box; margin:0; padding:0; }
+  :root {
+    --ocean:#1a6b8a; --ocean-lt:#d6eef5; --ocean-dk:#0c3a50;
+    --stone:#6b7c88; --ink:#1c2b33; --mist:#f0f4f6;
+    --gold:#c4882a; --gold-lt:#fdf3e0; --white:#fff;
+    --green:#2a7a4a; --green-lt:#d8f0e2;
+    --serif:'Playfair Display',Georgia,serif;
+    --sans:'Inter',system-ui,sans-serif;
+    --radius:10px; --shadow:0 2px 16px rgba(26,107,138,.10);
+  }
+  html { scroll-behavior:smooth; }
+  body { font-family:var(--sans); color:var(--ink); background:var(--white); -webkit-font-smoothing:antialiased; }
+
+  nav { position:sticky; top:0; z-index:100; background:rgba(255,255,255,.93); backdrop-filter:blur(12px); border-bottom:1px solid rgba(26,107,138,.14); display:flex; align-items:center; justify-content:space-between; padding:0 1.5rem; height:56px; gap:1rem; }
+  .nav-brand { font-family:var(--serif); font-size:1rem; color:var(--ocean-dk); text-decoration:none; }
+  .nav-links { display:flex; gap:1.2rem; align-items:center; }
+  .nav-links a { font-size:.8rem; color:var(--stone); text-decoration:none; font-weight:500; transition:color .15s; }
+  .nav-links a:hover { color:var(--ocean); }
+
+  .hero { background:linear-gradient(150deg,var(--ocean-dk) 0%,#1a6b8a 55%,#2896b0 100%); padding:3rem 1.5rem 3.5rem; text-align:center; }
+  .hero-eyebrow { font-size:.7rem; font-weight:600; letter-spacing:.18em; text-transform:uppercase; color:rgba(214,238,245,.72); margin-bottom:.7rem; }
+  .hero h1 { font-family:var(--serif); font-size:clamp(2rem,5vw,3rem); font-weight:400; color:#fff; }
+  .hero p { color:rgba(255,255,255,.72); font-size:.9rem; margin-top:.6rem; }
+
+  .container { max-width:760px; margin:0 auto; padding:2.5rem 1.5rem 3.5rem; }
+
+  .summary { display:grid; grid-template-columns:repeat(auto-fit,minmax(150px,1fr)); gap:1rem; margin-bottom:2.2rem; }
+  .stat { background:var(--mist); border-radius:var(--radius); padding:1.1rem 1.2rem; }
+  .stat.total { background:var(--ocean-dk); }
+  .stat.total .s-val, .stat.total .s-label, .stat.total .s-sub { color:#fff; }
+  .stat.total .s-label { color:rgba(255,255,255,.7); }
+  .stat.total .s-sub { color:rgba(255,255,255,.6); }
+  .stat.points { background:var(--green-lt); }
+  .s-label { font-size:.68rem; font-weight:600; letter-spacing:.1em; text-transform:uppercase; color:var(--stone); margin-bottom:.4rem; }
+  .s-val { font-family:var(--serif); font-size:1.7rem; font-weight:700; color:var(--ink); line-height:1; }
+  .stat.points .s-val { color:var(--green); }
+  .s-sub { font-size:.75rem; color:var(--stone); margin-top:.3rem; }
+
+  .budget-table { width:100%; border-collapse:collapse; box-shadow:var(--shadow); border:1px solid rgba(26,107,138,.14); border-radius:var(--radius); overflow:hidden; }
+  .budget-table th { font-size:.7rem; font-weight:600; letter-spacing:.08em; text-transform:uppercase; color:#fff; background:var(--ocean); padding:.8rem 1rem; text-align:left; }
+  .budget-table th.amt, .budget-table td.amt { text-align:right; }
+  .budget-table td { padding:.85rem 1rem; border-bottom:1px solid var(--mist); font-size:.92rem; vertical-align:top; }
+  .budget-table tbody tr:last-child td { border-bottom:none; }
+  .budget-table tbody tr:nth-child(even) { background:#fafcfd; }
+  .bt-item { font-weight:600; color:var(--ink); }
+  .bt-detail { font-size:.8rem; color:var(--stone); margin-top:.2rem; }
+  .bt-detail a { color:var(--ocean); text-decoration:none; font-weight:500; }
+  .bt-detail a:hover { text-decoration:underline; }
+  td.amt { font-variant-numeric:tabular-nums; font-weight:600; color:var(--ink); white-space:nowrap; }
+  .budget-table tfoot td { padding:1rem; font-size:1.05rem; font-weight:700; background:var(--ocean-dk); color:#fff; border-bottom:none; }
+  .budget-table tfoot td.amt { font-family:var(--serif); font-size:1.3rem; }
+
+  .note { background:var(--gold-lt); border-left:3px solid var(--gold); border-radius:8px; padding:1rem 1.2rem; margin-top:1.6rem; font-size:.85rem; line-height:1.6; color:#5a4212; }
+  .note strong { color:var(--ink); }
+
+  footer { text-align:center; padding:2.5rem 1.5rem; font-size:.8rem; color:var(--stone); border-top:1px solid rgba(26,107,138,.1); background:var(--white); line-height:1.8; }
+  footer a { color:var(--ocean); text-decoration:none; }
+
+  /* Password gate */
+  #gate { position:fixed; inset:0; z-index:1000; background:linear-gradient(150deg,var(--ocean-dk) 0%,#1a6b8a 55%,#2896b0 100%); display:flex; align-items:center; justify-content:center; padding:1.5rem; }
+  #gate.hidden { display:none; }
+  .gate-card { background:var(--white); border-radius:16px; box-shadow:0 20px 60px rgba(0,0,0,.3); padding:2.4rem 2.2rem; max-width:360px; width:100%; text-align:center; }
+  .gate-icon { font-size:2.4rem; margin-bottom:.6rem; }
+  .gate-title { font-family:var(--serif); font-size:1.5rem; color:var(--ocean-dk); margin-bottom:.4rem; }
+  .gate-sub { font-size:.85rem; color:var(--stone); line-height:1.5; margin-bottom:1.4rem; }
+  .gate-form { display:flex; gap:.5rem; }
+  .gate-form input { flex:1; padding:.6rem .9rem; border:1px solid rgba(26,107,138,.25); border-radius:8px; font-size:.95rem; font-family:var(--sans); }
+  .gate-form input:focus { outline:2px solid var(--ocean); outline-offset:1px; border-color:transparent; }
+  .gate-form button { background:var(--ocean); color:#fff; border:none; padding:.6rem 1.2rem; border-radius:8px; font-size:.9rem; font-weight:500; cursor:pointer; font-family:var(--sans); transition:background .15s; }
+  .gate-form button:hover { background:var(--ocean-dk); }
+  .gate-wrong { font-size:.78rem; color:#c0392b; margin-top:.8rem; min-height:1rem; visibility:hidden; }
+  .gate-wrong.show { visibility:visible; }
+
+  @media(max-width:520px){ .budget-table td, .budget-table th { padding:.7rem .7rem; } }
+</style>
+
+  <!-- Microsoft Clarity -->
+  <script type="text/javascript">(function(c,l,a,r,i,t,y){c[a]=c[a]||function(){(c[a].q=c[a].q||[]).push(arguments)};t=l.createElement(r);t.async=1;t.src="https://www.clarity.ms/tag/"+i;y=l.getElementsByTagName(r)[0];y.parentNode.insertBefore(t,y)})(window,document,"clarity","script","xcll8onspw");</script>
+  <!-- Google Analytics -->
+  <script async src="https://www.googletagmanager.com/gtag/js?id=G-VH9D51QJJS"></script>
+  <script>window.dataLayer=window.dataLayer||[];function gtag(){dataLayer.push(arguments);}gtag('js',new Date());gtag('config','G-VH9D51QJJS');</script>
+</head>
+<body>
+
+<!-- Password gate -->
+<div id="gate">
+  <div class="gate-card">
+    <div class="gate-icon">🔒</div>
+    <div class="gate-title">Chicago Budget</div>
+    <div class="gate-sub">This page is private. Enter the password to view the budget.</div>
+    <div class="gate-form">
+      <input type="password" id="gate-pw" placeholder="Password" autocomplete="off">
+      <button type="button" id="gate-btn">Unlock</button>
+    </div>
+    <div class="gate-wrong" id="gate-wrong">Incorrect password. Try again.</div>
+  </div>
+</div>
+
+<nav>
+  <a class="nav-brand" href="../index.html">✦ Travelomania</a>
+  <div class="nav-links">
+    <a href="../../index.html">← All Trips</a>
+    <a href="../index.html">Chicago</a>
+  </div>
+</nav>
+
+<div class="hero">
+  <p class="hero-eyebrow">Chicago · Aug 19–22, 2026</p>
+  <h1>Budget &amp; Expenses</h1>
+  <p>What the trip costs the crew — 6 travelers, 3 nights.</p>
+</div>
+
+<div class="container">
+
+  <div class="summary">
+    <div class="stat total">
+      <div class="s-label">Total Trip Cost</div>
+      <div class="s-val">$4,429</div>
+      <div class="s-sub">all-in value</div>
+    </div>
+    <div class="stat points">
+      <div class="s-label">Chase Points</div>
+      <div class="s-val">$1,118</div>
+      <div class="s-sub">covers part of the flights</div>
+    </div>
+    <div class="stat">
+      <div class="s-label">Cash Out-of-Pocket</div>
+      <div class="s-val">$3,311</div>
+      <div class="s-sub">after points</div>
+    </div>
+    <div class="stat">
+      <div class="s-label">Per Person</div>
+      <div class="s-val">~$738</div>
+      <div class="s-sub">÷ 6 travelers</div>
+    </div>
+  </div>
+
+  <table class="budget-table">
+    <thead>
+      <tr><th>Item</th><th class="amt">Cost</th></tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><div class="bt-item">Hotel</div><div class="bt-detail">2 rooms × 3 nights</div></td>
+        <td class="amt">$1,100</td>
+      </tr>
+      <tr>
+        <td><div class="bt-item">Flights</div><div class="bt-detail">6 travelers · $421 paid in cash, rest on Chase points</div></td>
+        <td class="amt">$1,539</td>
+      </tr>
+      <tr>
+        <td><div class="bt-item">City Pass</div><div class="bt-detail">6 people · <a href="https://www.citypass.com/chicago" target="_blank" rel="noopener">Chicago CityPASS ↗</a></div></td>
+        <td class="amt">$700</td>
+      </tr>
+      <tr>
+        <td><div class="bt-item">Unlimited Ride Pass</div><div class="bt-detail">6 people · <a href="https://www.ventrachicago.com/" target="_blank" rel="noopener">Buy pass (Ventra / CTA) ↗</a></div></td>
+        <td class="amt">$90</td>
+      </tr>
+      <tr>
+        <td><div class="bt-item">Food</div><div class="bt-detail">estimated for the whole trip</div></td>
+        <td class="amt">$1,000</td>
+      </tr>
+    </tbody>
+    <tfoot>
+      <tr><td>Total</td><td class="amt">$4,429</td></tr>
+    </tfoot>
+  </table>
+
+  <div class="note">
+    💳 <strong>On the flights:</strong> the fare value is $1,539 for all 6 travelers, but only <strong>$421 was paid in cash</strong> — the remaining ~$1,118 was covered with Chase points. So the actual cash out-of-pocket for the trip is about <strong>$3,311</strong> (~$552 per person), while the full all-in value is <strong>$4,429</strong>.
+  </div>
+
+</div>
+
+<footer>
+  <p>
+    Travelomania &nbsp;·&nbsp; Chicago 2026 &nbsp;·&nbsp;
+    <a href="../index.html">Back to Chicago</a> &nbsp;·&nbsp;
+    <a href="../../index.html">All Trips</a>
+  </p>
+</footer>
+
+<script>
+  // ── Simple client-side password gate (shares session with the Chicago page) ──
+  (function () {
+    var GATE_PW = 'x';
+    var GATE_KEY = 'chicago-unlocked';
+    var gate = document.getElementById('gate');
+    var input = document.getElementById('gate-pw');
+    var btn = document.getElementById('gate-btn');
+    var wrong = document.getElementById('gate-wrong');
+
+    function openGate() {
+      gate.classList.add('hidden');
+      document.body.style.overflow = '';
+    }
+    function checkGate() {
+      if (input.value.trim() === GATE_PW) {
+        try { sessionStorage.setItem(GATE_KEY, '1'); } catch (e) {}
+        openGate();
+      } else {
+        wrong.classList.add('show');
+        input.value = '';
+        input.focus();
+      }
+    }
+
+    btn.addEventListener('click', checkGate);
+    input.addEventListener('keydown', function (e) {
+      if (e.key === 'Enter') { e.preventDefault(); checkGate(); }
+    });
+
+    var unlocked = false;
+    try { unlocked = sessionStorage.getItem(GATE_KEY) === '1'; } catch (e) {}
+    if (unlocked) {
+      openGate();
+    } else {
+      document.body.style.overflow = 'hidden';
+      input.focus();
+    }
+  })();
+</script>
+
+</body>
+</html>
