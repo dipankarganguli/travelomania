@@ -1,0 +1,440 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<link rel="icon" type="image/svg+xml" href="../../travelomania-favicon.svg">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Chicago · Getting Around</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,700;1,400&family=Inter:wght@300;400;500;600&display=swap" rel="stylesheet">
+<style>
+  *, *::before, *::after { box-sizing:border-box; margin:0; padding:0; }
+  :root {
+    --ocean:#1a6b8a; --ocean-lt:#d6eef5; --ocean-dk:#0c3a50;
+    --stone:#6b7c88; --ink:#1c2b33; --mist:#f0f4f6;
+    --gold:#c4882a; --gold-lt:#fdf3e0; --white:#fff;
+    --green:#2a7a4a; --green-lt:#d8f0e2;
+    --serif:'Playfair Display',Georgia,serif;
+    --sans:'Inter',system-ui,sans-serif;
+    --radius:10px; --shadow:0 2px 16px rgba(26,107,138,.10);
+  }
+  html { scroll-behavior:smooth; }
+  body { font-family:var(--sans); color:var(--ink); background:var(--white); -webkit-font-smoothing:antialiased; }
+
+  nav { position:sticky; top:0; z-index:100; background:rgba(255,255,255,.93); backdrop-filter:blur(12px); border-bottom:1px solid rgba(26,107,138,.14); display:flex; align-items:center; justify-content:space-between; padding:0 1.5rem; height:56px; gap:1rem; }
+  .nav-brand { font-family:var(--serif); font-size:1rem; color:var(--ocean-dk); text-decoration:none; }
+  .nav-links { display:flex; gap:1.2rem; align-items:center; }
+  .nav-links a { font-size:.8rem; color:var(--stone); text-decoration:none; font-weight:500; transition:color .15s; }
+  .nav-links a:hover { color:var(--ocean); }
+
+  .hero { background:linear-gradient(150deg,var(--ocean-dk) 0%,#1a6b8a 55%,#2896b0 100%); padding:3rem 1.5rem 3.5rem; text-align:center; }
+  .hero-eyebrow { font-size:.7rem; font-weight:600; letter-spacing:.18em; text-transform:uppercase; color:rgba(214,238,245,.72); margin-bottom:.7rem; }
+  .hero h1 { font-family:var(--serif); font-size:clamp(2rem,5vw,3rem); font-weight:400; color:#fff; }
+  .hero p { color:rgba(255,255,255,.72); font-size:.9rem; margin-top:.6rem; }
+
+  .container { max-width:780px; margin:0 auto; padding:2.5rem 1.5rem 3.5rem; }
+  .section-label { font-size:.72rem; font-weight:600; letter-spacing:.14em; text-transform:uppercase; color:var(--ocean); margin-bottom:.5rem; }
+  .section-title { font-family:var(--serif); font-size:1.5rem; font-weight:400; color:var(--ocean-dk); margin:0 0 1.4rem; }
+
+  /* Summary stats */
+  .summary { display:grid; grid-template-columns:repeat(auto-fit,minmax(160px,1fr)); gap:1rem; margin-bottom:2.4rem; }
+  .stat { background:var(--mist); border-radius:var(--radius); padding:1.1rem 1.2rem; }
+  .stat.green { background:var(--green-lt); }
+  .s-label { font-size:.68rem; font-weight:600; letter-spacing:.1em; text-transform:uppercase; color:var(--stone); margin-bottom:.4rem; }
+  .s-val { font-family:var(--serif); font-size:1.5rem; font-weight:700; color:var(--ink); line-height:1.1; }
+  .stat.green .s-val { color:var(--green); }
+  .s-sub { font-size:.75rem; color:var(--stone); margin-top:.3rem; }
+
+  /* Route cards */
+  .routes { display:flex; flex-direction:column; gap:1.1rem; }
+  .route-card { border:1px solid rgba(26,107,138,.14); border-radius:var(--radius); overflow:hidden; background:var(--white); box-shadow:var(--shadow); }
+  .route-head { display:flex; align-items:center; gap:.8rem; background:var(--ocean-dk); color:#fff; padding:.8rem 1.1rem; }
+  .route-num { flex-shrink:0; width:28px; height:28px; border-radius:50%; background:var(--ocean); display:flex; align-items:center; justify-content:center; font-family:var(--serif); font-weight:700; font-size:.95rem; }
+  .route-path { font-weight:600; font-size:.92rem; line-height:1.4; }
+  .route-path a { color:#a8d8e8; text-decoration:none; white-space:nowrap; }
+  .route-path a:hover { text-decoration:underline; }
+  .route-body { padding:1rem 1.1rem; display:flex; flex-direction:column; gap:.9rem; }
+  .opt { }
+  .opt + .opt { border-top:1px solid var(--mist); padding-top:.9rem; }
+  .opt-line { display:flex; flex-wrap:wrap; align-items:center; gap:.5rem; }
+  .opt-badge { font-size:.64rem; font-weight:700; letter-spacing:.06em; text-transform:uppercase; padding:2px 8px; border-radius:20px; background:var(--mist); color:var(--stone); white-space:nowrap; }
+  .opt-badge.rec { background:var(--gold-lt); color:#8a5a1a; }
+  .opt-badge.walk { background:var(--green-lt); color:var(--green); }
+  .opt-mode { font-weight:600; font-size:.9rem; color:var(--ink); }
+  .opt-time { font-size:.82rem; color:var(--ocean); font-weight:600; }
+  .opt-note { font-size:.8rem; color:var(--stone); line-height:1.5; margin-top:.35rem; }
+
+  /* CTA pass box */
+  .pass-box { background:var(--green-lt); border:1px solid rgba(42,122,74,.25); border-radius:var(--radius); padding:1.4rem 1.5rem; }
+  .pass-box h3 { font-family:var(--serif); font-size:1.15rem; color:var(--green); margin-bottom:.3rem; }
+  .pass-price { font-size:.95rem; color:var(--ink); margin-bottom:.9rem; }
+  .pass-price strong { font-size:1.05rem; }
+  .pass-list { list-style:none; display:flex; flex-direction:column; gap:.35rem; }
+  .pass-list li { font-size:.86rem; color:var(--ink); }
+  .pass-list li.no { color:var(--stone); }
+  .pass-link { display:inline-block; margin-top:.9rem; font-size:.82rem; color:var(--green); font-weight:600; text-decoration:none; }
+  .pass-link:hover { text-decoration:underline; }
+
+  /* Recommendation table */
+  .rec-table { width:100%; border-collapse:collapse; box-shadow:var(--shadow); border:1px solid rgba(26,107,138,.14); border-radius:var(--radius); overflow:hidden; }
+  .rec-table th { font-size:.68rem; font-weight:600; letter-spacing:.06em; text-transform:uppercase; color:#fff; background:var(--ocean); padding:.7rem .9rem; text-align:left; }
+  .rec-table td { padding:.7rem .9rem; border-bottom:1px solid var(--mist); font-size:.86rem; vertical-align:top; }
+  .rec-table tbody tr:last-child td { border-bottom:none; }
+  .rec-table tbody tr:nth-child(even) { background:#fafcfd; }
+  .rec-table td.trip { font-weight:600; color:var(--ink); }
+  .rec-table td.pick { white-space:nowrap; }
+
+  .note { background:var(--gold-lt); border-left:3px solid var(--gold); border-radius:8px; padding:1rem 1.2rem; margin-top:1.6rem; font-size:.85rem; line-height:1.6; color:#5a4212; }
+  .note strong { color:var(--ink); }
+
+  .divider { border:none; height:1px; background:linear-gradient(to right,transparent,rgba(26,107,138,.15),transparent); margin:2.6rem 0; }
+
+  footer { text-align:center; padding:2.5rem 1.5rem; font-size:.8rem; color:var(--stone); border-top:1px solid rgba(26,107,138,.1); background:var(--white); line-height:1.8; }
+  footer a { color:var(--ocean); text-decoration:none; }
+
+  /* Password gate */
+  #gate { position:fixed; inset:0; z-index:1000; background:linear-gradient(150deg,var(--ocean-dk) 0%,#1a6b8a 55%,#2896b0 100%); display:flex; align-items:center; justify-content:center; padding:1.5rem; }
+  #gate.hidden { display:none; }
+  .gate-card { background:var(--white); border-radius:16px; box-shadow:0 20px 60px rgba(0,0,0,.3); padding:2.4rem 2.2rem; max-width:360px; width:100%; text-align:center; }
+  .gate-icon { font-size:2.4rem; margin-bottom:.6rem; }
+  .gate-title { font-family:var(--serif); font-size:1.5rem; color:var(--ocean-dk); margin-bottom:.4rem; }
+  .gate-sub { font-size:.85rem; color:var(--stone); line-height:1.5; margin-bottom:1.4rem; }
+  .gate-form { display:flex; gap:.5rem; }
+  .gate-form input { flex:1; padding:.6rem .9rem; border:1px solid rgba(26,107,138,.25); border-radius:8px; font-size:.95rem; font-family:var(--sans); }
+  .gate-form input:focus { outline:2px solid var(--ocean); outline-offset:1px; border-color:transparent; }
+  .gate-form button { background:var(--ocean); color:#fff; border:none; padding:.6rem 1.2rem; border-radius:8px; font-size:.9rem; font-weight:500; cursor:pointer; font-family:var(--sans); transition:background .15s; }
+  .gate-form button:hover { background:var(--ocean-dk); }
+  .gate-wrong { font-size:.78rem; color:#c0392b; margin-top:.8rem; min-height:1rem; visibility:hidden; }
+  .gate-wrong.show { visibility:visible; }
+
+  @media(max-width:520px){ .rec-table td, .rec-table th { padding:.55rem .6rem; } }
+</style>
+
+  <!-- Microsoft Clarity -->
+  <script type="text/javascript">(function(c,l,a,r,i,t,y){c[a]=c[a]||function(){(c[a].q=c[a].q||[]).push(arguments)};t=l.createElement(r);t.async=1;t.src="https://www.clarity.ms/tag/"+i;y=l.getElementsByTagName(r)[0];y.parentNode.insertBefore(t,y)})(window,document,"clarity","script","xcll8onspw");</script>
+  <!-- Google Analytics -->
+  <script async src="https://www.googletagmanager.com/gtag/js?id=G-VH9D51QJJS"></script>
+  <script>window.dataLayer=window.dataLayer||[];function gtag(){dataLayer.push(arguments);}gtag('js',new Date());gtag('config','G-VH9D51QJJS');</script>
+</head>
+<body>
+
+<!-- Password gate -->
+<div id="gate">
+  <div class="gate-card">
+    <div class="gate-icon">🔒</div>
+    <div class="gate-title">Chicago Transport</div>
+    <div class="gate-sub">This page is private. Enter the password to view transport recommendations.</div>
+    <div class="gate-form">
+      <input type="password" id="gate-pw" placeholder="Password" autocomplete="off">
+      <button type="button" id="gate-btn">Unlock</button>
+    </div>
+    <div class="gate-wrong" id="gate-wrong">Incorrect password. Try again.</div>
+  </div>
+</div>
+
+<nav>
+  <a class="nav-brand" href="../index.html">✦ Travelomania</a>
+  <div class="nav-links">
+    <a href="../../index.html">← All Trips</a>
+    <a href="../index.html">Chicago</a>
+  </div>
+</nav>
+
+<div class="hero">
+  <p class="hero-eyebrow">Chicago · Aug 19–22, 2026</p>
+  <h1>Getting Around</h1>
+  <p>Transport recommendations for the crew — 6 travelers, downtown base.</p>
+</div>
+
+<div class="container">
+
+  <p class="section-label">At a Glance</p>
+  <h2 class="section-title">Two ways to move</h2>
+  <div class="summary">
+    <div class="stat green">
+      <div class="s-label">CTA 3-Day Pass</div>
+      <div class="s-val">$15 <span style="font-size:.9rem;font-weight:500;">/ person</span></div>
+      <div class="s-sub">$90 total for 6 · unlimited trains &amp; buses</div>
+    </div>
+    <div class="stat">
+      <div class="s-label">UberXL (recommended trips)</div>
+      <div class="s-val">~$140–200</div>
+      <div class="s-sub">total · roughly $23–33 / person</div>
+    </div>
+    <div class="stat">
+      <div class="s-label">Downtown attractions</div>
+      <div class="s-val">🚶 Walk</div>
+      <div class="s-sub">5–12 min · no transport needed</div>
+    </div>
+  </div>
+
+  <p class="section-label">Route by Route</p>
+  <h2 class="section-title">Recommended for each leg</h2>
+  <div class="routes">
+
+    <!-- 1 -->
+    <div class="route-card">
+      <div class="route-head">
+        <span class="route-num">1</span>
+        <div class="route-path"><a href="https://www.google.com/maps/search/?api=1&query=O%27Hare%20International%20Airport%20Chicago" target="_blank" rel="noopener">O'Hare (ORD) 📍</a> → <a href="https://www.google.com/maps/search/?api=1&query=Travelodge%20by%20Wyndham%20Downtown%20Chicago" target="_blank" rel="noopener">Travelodge 📍</a></div>
+      </div>
+      <div class="route-body">
+        <div class="opt">
+          <div class="opt-line"><span class="opt-badge rec">⭐ Recommended</span><span class="opt-mode">UberXL</span><span class="opt-time">45–60 min</span></div>
+          <div class="opt-note">Door-to-door, best option with luggage, most comfortable for the group. If everyone has large suitcases, two regular Ubers can be comfier than one UberXL.</div>
+        </div>
+        <div class="opt">
+          <div class="opt-line"><span class="opt-badge">Budget · CTA</span><span class="opt-mode">Blue Line → Jackson</span><span class="opt-time">~50–60 min</span></div>
+          <div class="opt-note">Take the <a href="https://www.google.com/maps/search/?api=1&query=CTA%20Blue%20Line%20O%27Hare%20Station" target="_blank" rel="noopener" style="color:var(--ocean)">Blue Line</a> from O'Hare, get off at <a href="https://www.google.com/maps/search/?api=1&query=Jackson%20Blue%20Line%20Station%20Chicago" target="_blank" rel="noopener" style="color:var(--ocean)">Jackson Station</a>, then walk ~10–12 min to the hotel.</div>
+        </div>
+      </div>
+    </div>
+
+    <!-- 2 -->
+    <div class="route-card">
+      <div class="route-head">
+        <span class="route-num">2</span>
+        <div class="route-path"><a href="https://www.google.com/maps/search/?api=1&query=Travelodge%20by%20Wyndham%20Downtown%20Chicago" target="_blank" rel="noopener">Hotel 📍</a> → <a href="https://www.google.com/maps/search/?api=1&query=Millennium%20Park%20Chicago" target="_blank" rel="noopener">Millennium Park / The Bean / Grant Park 📍</a></div>
+      </div>
+      <div class="route-body">
+        <div class="opt">
+          <div class="opt-line"><span class="opt-badge walk">🚶 Walk</span><span class="opt-mode">On foot</span><span class="opt-time">5–12 min</span></div>
+          <div class="opt-note">No transportation needed — Millennium Park, The Bean, Grant Park, and Buckingham Fountain are all a short walk.</div>
+        </div>
+      </div>
+    </div>
+
+    <!-- 3 -->
+    <div class="route-card">
+      <div class="route-head">
+        <span class="route-num">3</span>
+        <div class="route-path"><a href="https://www.google.com/maps/search/?api=1&query=Travelodge%20by%20Wyndham%20Downtown%20Chicago" target="_blank" rel="noopener">Hotel 📍</a> → <a href="https://www.google.com/maps/search/?api=1&query=Art%20Institute%20of%20Chicago" target="_blank" rel="noopener">Vivekananda Way / Art Institute 📍</a></div>
+      </div>
+      <div class="route-body">
+        <div class="opt">
+          <div class="opt-line"><span class="opt-badge walk">🚶 Walk</span><span class="opt-mode">On foot</span><span class="opt-time">8–10 min</span></div>
+          <div class="opt-note">An easy walk up Michigan Avenue.</div>
+        </div>
+      </div>
+    </div>
+
+    <!-- 4 -->
+    <div class="route-card">
+      <div class="route-head">
+        <span class="route-num">4</span>
+        <div class="route-path"><a href="https://www.google.com/maps/search/?api=1&query=Art%20Institute%20of%20Chicago" target="_blank" rel="noopener">Art Institute 📍</a> → <a href="https://www.google.com/maps/search/?api=1&query=Chicago%20Architecture%20Center%20River%20Cruise" target="_blank" rel="noopener">Architecture River Cruise 📍</a></div>
+      </div>
+      <div class="route-body">
+        <div class="opt">
+          <div class="opt-line"><span class="opt-badge rec">⭐ Recommended</span><span class="opt-mode">Walk</span><span class="opt-time">15–20 min</span></div>
+          <div class="opt-note">A pleasant walk north along Michigan Avenue.</div>
+        </div>
+        <div class="opt">
+          <div class="opt-line"><span class="opt-badge">CTA</span><span class="opt-mode">Bus #3 or #146</span><span class="opt-time">~5–10 min</span></div>
+          <div class="opt-note">North along Michigan Avenue.</div>
+        </div>
+      </div>
+    </div>
+
+    <!-- 5 -->
+    <div class="route-card">
+      <div class="route-head">
+        <span class="route-num">5</span>
+        <div class="route-path"><a href="https://www.google.com/maps/search/?api=1&query=Chicago%20Architecture%20Center%20River%20Cruise" target="_blank" rel="noopener">River Cruise 📍</a> → <a href="https://www.google.com/maps/search/?api=1&query=Willis%20Tower%20Skydeck%20Chicago" target="_blank" rel="noopener">Skydeck (Willis Tower) 📍</a></div>
+      </div>
+      <div class="route-body">
+        <div class="opt">
+          <div class="opt-line"><span class="opt-badge rec">⭐ Recommended</span><span class="opt-mode">UberXL</span><span class="opt-time">8–10 min</span></div>
+          <div class="opt-note">Quick hop across the Loop.</div>
+        </div>
+        <div class="opt">
+          <div class="opt-line"><span class="opt-badge">CTA</span><span class="opt-mode">Brown / Orange / Pink / Purple Line</span><span class="opt-time">~10 min</span></div>
+          <div class="opt-note">From <a href="https://www.google.com/maps/search/?api=1&query=Washington%2FWabash%20Station%20Chicago" target="_blank" rel="noopener" style="color:var(--ocean)">Washington/Wabash</a>, ride to <a href="https://www.google.com/maps/search/?api=1&query=Quincy%20CTA%20Station%20Chicago" target="_blank" rel="noopener" style="color:var(--ocean)">Quincy</a>, then walk ~5 min to the Skydeck.</div>
+        </div>
+      </div>
+    </div>
+
+    <!-- 6 -->
+    <div class="route-card">
+      <div class="route-head">
+        <span class="route-num">6</span>
+        <div class="route-path"><a href="https://www.google.com/maps/search/?api=1&query=Travelodge%20by%20Wyndham%20Downtown%20Chicago" target="_blank" rel="noopener">Hotel 📍</a> → <a href="https://www.google.com/maps/search/?api=1&query=Shedd%20Aquarium%20Chicago" target="_blank" rel="noopener">Shedd Aquarium 📍</a></div>
+      </div>
+      <div class="route-body">
+        <div class="opt">
+          <div class="opt-line"><span class="opt-badge rec">⭐ Recommended</span><span class="opt-mode">UberXL</span><span class="opt-time">8–10 min</span></div>
+          <div class="opt-note">Best choice for comfort and to minimize walking.</div>
+        </div>
+        <div class="opt">
+          <div class="opt-line"><span class="opt-badge">CTA</span><span class="opt-mode">Bus #146 (Museum Campus)</span><span class="opt-time">~15–20 min</span></div>
+          <div class="opt-note">The easiest public-transit option. Alternative: Red/Orange/Green Line to <a href="https://www.google.com/maps/search/?api=1&query=Roosevelt%20CTA%20Station%20Chicago" target="_blank" rel="noopener" style="color:var(--ocean)">Roosevelt</a>, then a ~15-min walk.</div>
+        </div>
+      </div>
+    </div>
+
+    <!-- 7 -->
+    <div class="route-card">
+      <div class="route-head">
+        <span class="route-num">7</span>
+        <div class="route-path"><a href="https://www.google.com/maps/search/?api=1&query=Shedd%20Aquarium%20Chicago" target="_blank" rel="noopener">Shedd Aquarium 📍</a> → <a href="https://www.google.com/maps/search/?api=1&query=Navy%20Pier%20Chicago" target="_blank" rel="noopener">Navy Pier 📍</a></div>
+      </div>
+      <div class="route-body">
+        <div class="opt">
+          <div class="opt-line"><span class="opt-badge rec">⭐ Recommended</span><span class="opt-mode">UberXL</span><span class="opt-time">10–15 min</span></div>
+          <div class="opt-note">Comfortable and direct along the lakefront.</div>
+        </div>
+        <div class="opt">
+          <div class="opt-line"><span class="opt-badge">CTA</span><span class="opt-mode">Bus #146</span><span class="opt-time">~20–25 min</span></div>
+          <div class="opt-note"></div>
+        </div>
+      </div>
+    </div>
+
+    <!-- 8 -->
+    <div class="route-card">
+      <div class="route-head">
+        <span class="route-num">8</span>
+        <div class="route-path"><a href="https://www.google.com/maps/search/?api=1&query=Navy%20Pier%20Chicago" target="_blank" rel="noopener">Navy Pier 📍</a> → <a href="https://www.google.com/maps/search/?api=1&query=Travelodge%20by%20Wyndham%20Downtown%20Chicago" target="_blank" rel="noopener">Hotel 📍</a></div>
+      </div>
+      <div class="route-body">
+        <div class="opt">
+          <div class="opt-line"><span class="opt-badge rec">⭐ Recommended</span><span class="opt-mode">UberXL</span><span class="opt-time">10–15 min</span></div>
+          <div class="opt-note">Easy ride back after a full day.</div>
+        </div>
+        <div class="opt">
+          <div class="opt-line"><span class="opt-badge">CTA</span><span class="opt-mode">Bus #29 or #124</span><span class="opt-time">~20–25 min</span></div>
+          <div class="opt-note"></div>
+        </div>
+      </div>
+    </div>
+
+    <!-- 9 -->
+    <div class="route-card">
+      <div class="route-head">
+        <span class="route-num">9</span>
+        <div class="route-path"><a href="https://www.google.com/maps/search/?api=1&query=Travelodge%20by%20Wyndham%20Downtown%20Chicago" target="_blank" rel="noopener">Hotel 📍</a> → <a href="https://www.google.com/maps/search/?api=1&query=O%27Hare%20International%20Airport%20Chicago" target="_blank" rel="noopener">O'Hare (ORD) 📍</a></div>
+      </div>
+      <div class="route-body">
+        <div class="opt">
+          <div class="opt-line"><span class="opt-badge rec">⭐ Recommended</span><span class="opt-mode">UberXL</span><span class="opt-time">45–60 min</span></div>
+          <div class="opt-note">Leave around <strong>2:15–2:30 PM</strong> for the 5:18 PM flight.</div>
+        </div>
+        <div class="opt">
+          <div class="opt-line"><span class="opt-badge">Budget · CTA</span><span class="opt-mode">Blue Line from Jackson</span><span class="opt-time">~50–60 min</span></div>
+          <div class="opt-note">Walk to <a href="https://www.google.com/maps/search/?api=1&query=Jackson%20Blue%20Line%20Station%20Chicago" target="_blank" rel="noopener" style="color:var(--ocean)">Jackson Station</a> and take the Blue Line directly to O'Hare.</div>
+        </div>
+      </div>
+    </div>
+
+  </div>
+
+  <hr class="divider">
+
+  <p class="section-label">Best Value on Transit</p>
+  <h2 class="section-title">CTA 3-Day Pass</h2>
+  <div class="pass-box">
+    <h3>72-hour Unlimited Ride Pass</h3>
+    <div class="pass-price"><strong>$15 per person</strong> · $90 total for 6 travelers</div>
+    <ul class="pass-list">
+      <li>✅ Blue Line to / from O'Hare</li>
+      <li>✅ All CTA trains</li>
+      <li>✅ All CTA buses (including Bus #146)</li>
+      <li class="no">✖ Does not include Metra commuter rail or Pace buses</li>
+    </ul>
+    <a class="pass-link" href="https://www.ventrachicago.com/" target="_blank" rel="noopener">Buy pass (Ventra / CTA) ↗</a>
+  </div>
+
+  <hr class="divider">
+
+  <p class="section-label">My Overall Recommendation</p>
+  <h2 class="section-title">Pick per trip</h2>
+  <table class="rec-table">
+    <thead>
+      <tr><th>Trip</th><th>Recommended</th><th>CTA Alternative</th></tr>
+    </thead>
+    <tbody>
+      <tr><td class="trip">ORD → Hotel</td><td class="pick">✅ UberXL</td><td>Blue Line → Jackson + walk</td></tr>
+      <tr><td class="trip">Hotel → Millennium Park / Art Institute</td><td class="pick">🚶 Walk</td><td>—</td></tr>
+      <tr><td class="trip">Art Institute → River Cruise</td><td class="pick">🚶 Walk</td><td>Bus #3 or #146</td></tr>
+      <tr><td class="trip">River Cruise → Skydeck</td><td class="pick">✅ UberXL</td><td>Brown/Orange/Pink/Purple → Quincy</td></tr>
+      <tr><td class="trip">Hotel → Shedd Aquarium</td><td class="pick">✅ UberXL</td><td>Bus #146</td></tr>
+      <tr><td class="trip">Shedd → Navy Pier</td><td class="pick">✅ UberXL</td><td>Bus #146</td></tr>
+      <tr><td class="trip">Navy Pier → Hotel</td><td class="pick">✅ UberXL</td><td>Bus #29 or #124</td></tr>
+      <tr><td class="trip">Hotel → ORD</td><td class="pick">✅ UberXL</td><td>Blue Line from Jackson</td></tr>
+    </tbody>
+  </table>
+
+  <hr class="divider">
+
+  <p class="section-label">Cost Comparison</p>
+  <h2 class="section-title">What it adds up to</h2>
+  <div class="summary">
+    <div class="stat green">
+      <div class="s-label">CTA 3-Day Pass · 6 people</div>
+      <div class="s-val">$90</div>
+      <div class="s-sub">$15 / person</div>
+    </div>
+    <div class="stat">
+      <div class="s-label">UberXL (recommended trips)</div>
+      <div class="s-val">~$140–200</div>
+      <div class="s-sub">~$23–33 / person · varies with demand &amp; traffic</div>
+    </div>
+  </div>
+
+  <div class="note">
+    👨‍👩‍👧‍👦 <strong>For your family of six:</strong> use <strong>UberXL</strong> for the airport transfers and for trips to/from Shedd Aquarium (and optionally between Navy Pier and the hotel). <strong>Walk</strong> to the downtown attractions. Keep the <strong>CTA</strong> as your budget-friendly backup when weather and energy levels are good. This mix gives the best balance of comfort, convenience, and cost.
+  </div>
+
+</div>
+
+<footer>
+  <p>
+    Travelomania &nbsp;·&nbsp; Chicago 2026 &nbsp;·&nbsp;
+    <a href="../index.html">Back to Chicago</a> &nbsp;·&nbsp;
+    <a href="../../index.html">All Trips</a>
+  </p>
+</footer>
+
+<script>
+  // ── Simple client-side password gate (shares session with the Chicago page) ──
+  (function () {
+    var GATE_PW = 'x';
+    var GATE_KEY = 'chicago-unlocked';
+    var gate = document.getElementById('gate');
+    var input = document.getElementById('gate-pw');
+    var btn = document.getElementById('gate-btn');
+    var wrong = document.getElementById('gate-wrong');
+
+    function openGate() {
+      gate.classList.add('hidden');
+      document.body.style.overflow = '';
+    }
+    function checkGate() {
+      if (input.value.trim() === GATE_PW) {
+        try { sessionStorage.setItem(GATE_KEY, '1'); } catch (e) {}
+        openGate();
+      } else {
+        wrong.classList.add('show');
+        input.value = '';
+        input.focus();
+      }
+    }
+
+    btn.addEventListener('click', checkGate);
+    input.addEventListener('keydown', function (e) {
+      if (e.key === 'Enter') { e.preventDefault(); checkGate(); }
+    });
+
+    var unlocked = false;
+    try { unlocked = sessionStorage.getItem(GATE_KEY) === '1'; } catch (e) {}
+    if (unlocked) {
+      openGate();
+    } else {
+      document.body.style.overflow = 'hidden';
+      input.focus();
+    }
+  })();
+</script>
+
+</body>
+</html>
