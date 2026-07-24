@@ -86,6 +86,41 @@
   .hc-title { font-weight:600; font-size:.9rem; color:var(--ink); margin-bottom:.3rem; }
   .hc-desc { font-size:.8rem; color:var(--stone); line-height:1.5; }
 
+  /* Map links */
+  .maplink { color:var(--ocean); text-decoration:none; font-weight:500; }
+  .maplink:hover { text-decoration:underline; }
+  .act-note a { color:var(--ocean); text-decoration:none; }
+  .act-note a:hover { text-decoration:underline; }
+
+  /* Stay cards (hotels at top) */
+  .stay-grid { display:grid; grid-template-columns:repeat(auto-fit,minmax(260px,1fr)); gap:1.1rem; }
+  .stay-card { display:flex; gap:1rem; align-items:flex-start; border:1px solid rgba(26,107,138,.15); border-radius:var(--radius); padding:1.1rem 1.3rem; background:var(--white); box-shadow:var(--shadow); }
+  .stay-icon { font-size:1.9rem; line-height:1; flex-shrink:0; }
+  .stay-night { font-size:.68rem; font-weight:600; letter-spacing:.1em; text-transform:uppercase; color:var(--ocean); margin-bottom:.3rem; }
+  .stay-name { font-size:1rem; font-weight:600; color:var(--ink); line-height:1.3; }
+  .stay-addr { font-size:.8rem; color:var(--stone); margin-top:.35rem; line-height:1.5; }
+  .stay-addr a { color:var(--ocean); text-decoration:none; }
+  .stay-addr a:hover { text-decoration:underline; }
+
+  /* Event cards */
+  .events-grid { display:grid; grid-template-columns:repeat(auto-fit,minmax(230px,1fr)); gap:1rem; }
+  .event-card { background:var(--mist); border-radius:var(--radius); padding:1.1rem 1.2rem; border-left:3px solid var(--saffron); }
+  .event-date { font-size:.66rem; font-weight:600; letter-spacing:.08em; text-transform:uppercase; color:var(--saffron); margin-bottom:.3rem; }
+  .event-name { font-weight:600; font-size:.92rem; color:var(--ink); margin-bottom:.3rem; }
+  .event-desc { font-size:.8rem; color:var(--stone); line-height:1.5; }
+  .event-desc a { color:var(--ocean); text-decoration:none; }
+  .event-desc a:hover { text-decoration:underline; }
+  .events-note { font-size:.8rem; color:var(--stone); margin-top:1.2rem; line-height:1.6; }
+
+  /* Photos band */
+  .photos-band { display:flex; align-items:center; gap:1.2rem; flex-wrap:wrap; background:linear-gradient(135deg,var(--ocean-dk),var(--ocean)); border-radius:var(--radius); padding:1.6rem 1.8rem; color:#fff; }
+  .photos-band .pb-icon { font-size:2.4rem; }
+  .photos-band .pb-text { flex:1; min-width:200px; }
+  .photos-band .pb-title { font-family:var(--serif); font-size:1.3rem; margin-bottom:.3rem; }
+  .photos-band .pb-sub { font-size:.85rem; opacity:.82; line-height:1.5; }
+  .photos-band .pb-btn { background:#fff; color:var(--ocean-dk); text-decoration:none; font-weight:600; font-size:.88rem; padding:.65rem 1.3rem; border-radius:8px; white-space:nowrap; }
+  .photos-band .pb-btn:hover { background:var(--ocean-lt); }
+
   /* Password gate */
   #gate { position:fixed; inset:0; z-index:1000; background:linear-gradient(150deg,var(--ocean-dk) 0%,#1a6b8a 55%,#2896b0 100%); display:flex; align-items:center; justify-content:center; padding:1.5rem; }
   #gate.hidden { display:none; }
@@ -142,20 +177,22 @@
   <a class="nav-brand" href="../index.html">✦ Travelomania</a>
   <div class="nav-links">
     <a href="../index.html">← All Trips</a>
+    <a href="#stay">Stay</a>
     <a href="#itinerary">Itinerary</a>
-    <a href="#highlights">Highlights</a>
+    <a href="#events">Events</a>
+    <a href="#photos">Photos</a>
   </div>
 </nav>
 
 <!-- Hero -->
 <div class="hero">
   <div class="hero-content">
-    <p class="hero-eyebrow">Ganguli & Friends · Weekend Getaway</p>
+    <p class="hero-eyebrow">Ganguli & Friends · Summer Getaway</p>
     <h1 class="hero-title">Atlantic <em>City</em></h1>
     <div class="hero-meta">
-      <span>🗓️ 2-day weekend</span>
+      <span>🗓️ Aug 8 – 10, 2026 · 3 days</span>
       <span>🌊 Jersey Shore, NJ</span>
-      <span>🎡 Boardwalk &amp; beach</span>
+      <span>🎡 Temple · Wildwood · Boardwalk</span>
     </div>
   </div>
   <svg class="hero-wave" viewBox="0 0 1440 52" xmlns="http://www.w3.org/2000/svg" preserveAspectRatio="none">
@@ -163,31 +200,33 @@
   </svg>
 </div>
 
-<!-- Overview -->
-<section>
+<!-- Stay -->
+<section id="stay">
   <div class="container">
-    <p class="section-label">The Plan</p>
-    <h2 class="section-title">A quick coastal escape</h2>
-    <div class="info-grid">
-      <div class="info-card">
-        <div class="ic-label">Duration</div>
-        <div class="ic-val">2 days</div>
-        <div class="ic-sub">A relaxed weekend</div>
+    <p class="section-label">Where We're Staying</p>
+    <h2 class="section-title">Two nights, two hotels</h2>
+    <div class="stay-grid">
+      <div class="stay-card">
+        <div class="stay-icon">🛏️</div>
+        <div>
+          <div class="stay-night">Night 1 · Sat, Aug 8</div>
+          <div class="stay-name">Comfort Inn &amp; Suites Mt. Holly – Westampton</div>
+          <div class="stay-addr">
+            📍 2024 Route 541, RD 1, Mount Holly, NJ 08060<br>
+            <a href="https://www.google.com/maps/search/?api=1&query=Comfort%20Inn%20%26%20Suites%20Westampton%20Mount%20Holly%202024%20NJ-541%20Mount%20Holly%20NJ%2008060" target="_blank" rel="noopener">View on map ↗</a>
+          </div>
+        </div>
       </div>
-      <div class="info-card">
-        <div class="ic-label">Day 1</div>
-        <div class="ic-val">Food &amp; Faith</div>
-        <div class="ic-sub">Saravana Bhavan · BAPS Temple</div>
-      </div>
-      <div class="info-card">
-        <div class="ic-label">Day 2</div>
-        <div class="ic-val">Boardwalk Day</div>
-        <div class="ic-sub">Beach, pier &amp; the strip</div>
-      </div>
-      <div class="info-card">
-        <div class="ic-label">Vibe</div>
-        <div class="ic-val">Easy &amp; scenic</div>
-        <div class="ic-sub">Great for the whole crew</div>
+      <div class="stay-card">
+        <div class="stay-icon">🎰</div>
+        <div>
+          <div class="stay-night">Night 2 · Sun, Aug 9</div>
+          <div class="stay-name">Caesars Atlantic City</div>
+          <div class="stay-addr">
+            📍 2100 Pacific Ave, Atlantic City, NJ 08401<br>
+            <a href="https://www.google.com/maps/search/?api=1&query=Caesars%20Atlantic%20City" target="_blank" rel="noopener">View on map ↗</a>
+          </div>
+        </div>
       </div>
     </div>
   </div>
@@ -207,31 +246,42 @@
         <div class="day-header">
           <div class="day-num"><span class="n">1</span><span class="lbl">Day</span></div>
           <div class="day-info">
-            <div class="day-date">Day One</div>
-            <div class="day-title">South Indian feast &amp; a visit to the temple</div>
+            <div class="day-date">Saturday, August 8</div>
+            <div class="day-title">Edison feast &amp; the temple</div>
           </div>
         </div>
         <div class="day-body">
           <ul class="act-list">
             <li>
+              <div class="act-time">9:00 AM</div>
+              <div class="act-content">
+                <div class="act-name">Start for Edison <span class="act-tag tag-drive">Drive</span></div>
+                <div class="act-note">Hit the road at 9 AM toward Edison, NJ — the heart of Central Jersey's Indian community along Oak Tree Road.</div>
+              </div>
+            </li>
+            <li>
               <div class="act-time">Lunch</div>
               <div class="act-content">
-                <div class="act-name">Saravana Bhavan <span class="act-tag tag-food">Food</span></div>
-                <div class="act-note">Kick things off with the legendary South Indian vegetarian spread — crispy dosas, fluffy idlis, filter coffee and thali. The perfect fuel before the temple.</div>
+                <div class="act-name">Lunch in Edison <span class="act-tag tag-food">Food</span></div>
+                <div class="act-note">Take your pick of Oak Tree Road's best:
+                  <a href="https://www.google.com/maps/search/?api=1&query=Saravana%20Bhavan%20Edison%20NJ" target="_blank" rel="noopener">Saravana Bhavan 📍</a> (South Indian veg) ·
+                  <a href="https://www.google.com/maps/search/?api=1&query=Moghul%20Restaurant%20Edison%20NJ" target="_blank" rel="noopener">Moghul 📍</a> ·
+                  <a href="https://www.google.com/maps/search/?api=1&query=Chand%20Palace%20Edison%20NJ" target="_blank" rel="noopener">Chand Palace 📍</a> (pure veg) ·
+                  <a href="https://www.google.com/maps/search/?api=1&query=Chowpatty%20Restaurant%20Iselin%20NJ" target="_blank" rel="noopener">Chowpatty 📍</a>.</div>
               </div>
             </li>
             <li>
               <div class="act-time">Afternoon</div>
               <div class="act-content">
-                <div class="act-name">BAPS Swaminarayan Temple <span class="act-tag tag-temple">Temple</span></div>
-                <div class="act-note">Darshan and a slow walk around the stunning hand-carved mandir. Peaceful, breathtaking architecture — dress modestly and leave plenty of time to take it all in.</div>
+                <div class="act-name">BAPS Swaminarayan Akshardham, Robbinsville <a class="maplink" href="https://www.google.com/maps/search/?api=1&query=BAPS%20Swaminarayan%20Akshardham%20Robbinsville%20NJ" target="_blank" rel="noopener">📍</a> <span class="act-tag tag-temple">Temple</span></div>
+                <div class="act-note">Darshan and a slow walk around the breathtaking hand-carved mandir in Robbinsville — one of the largest in the world. Dress modestly and leave plenty of time to take it all in.</div>
               </div>
             </li>
             <li>
               <div class="act-time">Evening</div>
               <div class="act-content">
-                <div class="act-name">Drive to Atlantic City <span class="act-tag tag-drive">Drive</span></div>
-                <div class="act-note">Cruise down toward the shore, check in, and catch the boardwalk lights coming on over the ocean.</div>
+                <div class="act-name">Check in — Comfort Inn &amp; Suites, Mt. Holly <a class="maplink" href="https://www.google.com/maps/search/?api=1&query=Comfort%20Inn%20%26%20Suites%20Westampton%20Mount%20Holly%202024%20NJ-541%20Mount%20Holly%20NJ%2008060" target="_blank" rel="noopener">📍</a> <span class="act-tag tag-drive">Stay</span></div>
+                <div class="act-note">Drive to Westampton and check in for the night — 2024 Route 541, RD 1, Mount Holly, NJ 08060. Rest up before the shore day.</div>
               </div>
             </li>
           </ul>
@@ -243,8 +293,59 @@
         <div class="day-header">
           <div class="day-num"><span class="n">2</span><span class="lbl">Day</span></div>
           <div class="day-info">
-            <div class="day-date">Day Two</div>
-            <div class="day-title">Atlantic City — boardwalk, beach &amp; the strip</div>
+            <div class="day-date">Sunday, August 9</div>
+            <div class="day-title">Wildwood boardwalk → Atlantic City</div>
+          </div>
+        </div>
+        <div class="day-body">
+          <ul class="act-list">
+            <li>
+              <div class="act-time">8:00 AM</div>
+              <div class="act-content">
+                <div class="act-name">Breakfast <span class="act-tag tag-food">Food</span></div>
+                <div class="act-note">Breakfast at 8 AM, then check out and hit the road for the shore.</div>
+              </div>
+            </li>
+            <li>
+              <div class="act-time">Morning</div>
+              <div class="act-content">
+                <div class="act-name">Wildwood Boardwalk <a class="maplink" href="https://www.google.com/maps/search/?api=1&query=Wildwood%20Boardwalk%203500%20Boardwalk%20Wildwood%20NJ%2008260" target="_blank" rel="noopener">📍</a> <span class="act-tag tag-view">Boardwalk</span></div>
+                <div class="act-note">Drive to the famous Wildwood Boardwalk (3500 Boardwalk, Wildwood, NJ 08260) — rides, arcades, wide free beaches, and Morey's Piers. Plan to spend about <strong>2 hours</strong> here.</div>
+              </div>
+            </li>
+            <li>
+              <div class="act-time">Lunch</div>
+              <div class="act-content">
+                <div class="act-name">Sandalwood Indian Kitchen <a class="maplink" href="https://www.google.com/maps/search/?api=1&query=Sandalwood%20Indian%20Kitchen%20Rio%20Grande%20NJ" target="_blank" rel="noopener">📍</a> <span class="act-tag tag-food">Food</span></div>
+                <div class="act-note">Indian lunch just off the island in Rio Grande — about <strong>10–15 min drive (~4 mi)</strong> from Wildwood beach.
+                  <a href="https://www.google.com/maps/dir/?api=1&origin=Wildwood%20Beach%20NJ&destination=Sandalwood%20Indian%20Kitchen%20Rio%20Grande%20NJ" target="_blank" rel="noopener">Directions from Wildwood beach ↗</a></div>
+              </div>
+            </li>
+            <li>
+              <div class="act-time">Afternoon</div>
+              <div class="act-content">
+                <div class="act-name">Check in — Caesars Atlantic City <a class="maplink" href="https://www.google.com/maps/search/?api=1&query=Caesars%20Atlantic%20City" target="_blank" rel="noopener">📍</a> <span class="act-tag tag-drive">Stay</span></div>
+                <div class="act-note">Head back up the shore (~45 min) to Atlantic City and check in to Caesars, right on the boardwalk.</div>
+              </div>
+            </li>
+            <li>
+              <div class="act-time">Evening</div>
+              <div class="act-content">
+                <div class="act-name">Atlantic City Boardwalk <a class="maplink" href="https://www.google.com/maps/search/?api=1&query=Atlantic%20City%20Boardwalk" target="_blank" rel="noopener">📍</a> <span class="act-tag tag-fun">Fun</span></div>
+                <div class="act-note">Stroll the world-famous boardwalk as the lights come on — Steel Pier, the shops at The Playground, arcades, saltwater taffy, and the ocean breeze.</div>
+              </div>
+            </li>
+          </ul>
+        </div>
+      </div>
+
+      <!-- Day 3 -->
+      <div class="day-card">
+        <div class="day-header">
+          <div class="day-num"><span class="n">3</span><span class="lbl">Day</span></div>
+          <div class="day-info">
+            <div class="day-date">Monday, August 10</div>
+            <div class="day-title">Beach morning &amp; head home</div>
           </div>
         </div>
         <div class="day-body">
@@ -252,28 +353,82 @@
             <li>
               <div class="act-time">Morning</div>
               <div class="act-content">
-                <div class="act-name">Boardwalk stroll &amp; the beach <span class="act-tag tag-view">Views</span></div>
-                <div class="act-note">Start with a walk along the world-famous boardwalk, toes in the sand, and the Atlantic breeze. Grab saltwater taffy and don't skip the Steel Pier.</div>
+                <div class="act-name">Morning at the beach <a class="maplink" href="https://www.google.com/maps/search/?api=1&query=Atlantic%20City%20Beach" target="_blank" rel="noopener">📍</a> <span class="act-tag tag-view">Beach</span></div>
+                <div class="act-note">Spend the morning on the Atlantic City beach — sand, surf, and one last dose of ocean before the drive back.</div>
               </div>
             </li>
             <li>
-              <div class="act-time">Afternoon</div>
+              <div class="act-time">Lunch</div>
               <div class="act-content">
-                <div class="act-name">Explore Atlantic City <span class="act-tag tag-fun">Fun</span></div>
-                <div class="act-note">Casinos and glittering resorts, the shops at The Playground, arcade games, and a bite along the way. Something for everyone in the crew.</div>
+                <div class="act-name">Indian lunch near the beach <span class="act-tag tag-food">Food</span></div>
+                <div class="act-note">Top-rated Indian spots near the AC boardwalk:
+                  <a href="https://www.google.com/maps/search/?api=1&query=Tandoori%20Bites%20Atlantic%20City%20NJ" target="_blank" rel="noopener">Tandoori Bites 📍</a> ·
+                  <a href="https://www.google.com/maps/search/?api=1&query=Namaste%20Indian%20Restaurant%20Atlantic%20City%20NJ" target="_blank" rel="noopener">Namaste 📍</a> ·
+                  <a href="https://www.google.com/maps/search/?api=1&query=Cinnamon%20Indian%20Cuisine%20Atlantic%20City%20NJ" target="_blank" rel="noopener">Cinnamon Indian Cuisine 📍</a>.</div>
               </div>
             </li>
             <li>
-              <div class="act-time">Sunset</div>
+              <div class="act-time">5:00 PM</div>
               <div class="act-content">
-                <div class="act-name">Ocean sunset &amp; head home <span class="act-tag tag-view">Views</span></div>
-                <div class="act-note">One last look at the water as the lights take over, then the easy drive back — full bellies and a phone full of photos.</div>
+                <div class="act-name">Head back home <span class="act-tag tag-drive">Drive</span></div>
+                <div class="act-note">Hit the road around 5 PM — full bellies, sandy shoes, and a phone full of photos.</div>
               </div>
             </li>
           </ul>
         </div>
       </div>
 
+    </div>
+  </div>
+</section>
+
+<hr class="section-divider">
+
+<!-- Local Events -->
+<section id="events">
+  <div class="container">
+    <p class="section-label">That Weekend</p>
+    <h2 class="section-title">Local Events · Aug 8–9</h2>
+    <div class="events-grid">
+      <div class="event-card">
+        <div class="event-date">Sat &amp; Sun · Atlantic City</div>
+        <div class="event-name">Boardwalk &amp; beach concerts</div>
+        <div class="event-desc">Summer weekends bring free beach concerts, buskers, and live music along the boardwalk. See what's on: <a href="https://www.visitatlanticcity.com/events/" target="_blank" rel="noopener">Visit Atlantic City events ↗</a></div>
+      </div>
+      <div class="event-card">
+        <div class="event-date">Sat &amp; Sun · Wildwood</div>
+        <div class="event-name">Morey's Piers &amp; boardwalk</div>
+        <div class="event-desc">Rides, waterparks, and regular summer-weekend fireworks over the Wildwoods. Check the calendar: <a href="https://wildwoodsnj.com/events/" target="_blank" rel="noopener">The Wildwoods events ↗</a></div>
+      </div>
+      <div class="event-card">
+        <div class="event-date">Sat · Boardwalk Hall / Hard Rock</div>
+        <div class="event-name">Concerts &amp; shows</div>
+        <div class="event-desc">Big-name acts play Boardwalk Hall and Hard Rock's Etess Arena all summer. Browse tickets: <a href="https://www.boardwalkhall.com/events" target="_blank" rel="noopener">Boardwalk Hall ↗</a></div>
+      </div>
+      <div class="event-card">
+        <div class="event-date">All weekend · NJ Shore</div>
+        <div class="event-name">Statewide event finder</div>
+        <div class="event-desc">Festivals, markets, and shore happenings across the Jersey Shore: <a href="https://visitnj.org/nj-events" target="_blank" rel="noopener">VisitNJ events ↗</a></div>
+      </div>
+    </div>
+    <p class="events-note">ℹ️ Note: these are the usual summer-weekend offerings and official calendars — specific listings for Aug 8–9, 2026 may not be posted yet, so confirm exact dates and times closer to the trip. (The Atlantic City and Wildwood airshows fall on <em>other</em> dates in 2026 — late May and September — not this weekend.)</p>
+  </div>
+</section>
+
+<hr class="section-divider">
+
+<!-- Photos -->
+<section id="photos">
+  <div class="container">
+    <p class="section-label">Memories</p>
+    <h2 class="section-title">Trip Photos</h2>
+    <div class="photos-band">
+      <div class="pb-icon">📸</div>
+      <div class="pb-text">
+        <div class="pb-title">Atlantic City 2026 — Shared Album</div>
+        <div class="pb-sub">Everyone's photos in one place. Add yours and browse the crew's shots from the temple, Wildwood, and the boardwalk.</div>
+      </div>
+      <a class="pb-btn" href="https://photos.google.com/album/AF1QipOqszQPJ65KIDRbCWkXLcJuYUwJlvfI6kPfbhjd" target="_blank" rel="noopener">Open album ↗</a>
     </div>
   </div>
 </section>
@@ -287,24 +442,24 @@
     <h2 class="section-title">Trip Highlights</h2>
     <div class="highlights-grid">
       <div class="highlight-card">
-        <div class="hc-icon">🍽️</div>
-        <div class="hc-title">Saravana Bhavan</div>
-        <div class="hc-desc">Iconic South Indian vegetarian — dosas, idli, and filter coffee done right.</div>
+        <div class="hc-icon">🛕</div>
+        <div class="hc-title">BAPS Akshardham, Robbinsville</div>
+        <div class="hc-desc">A serene, intricately carved mandir — one of the largest and most beautiful you'll ever visit.</div>
       </div>
       <div class="highlight-card">
-        <div class="hc-icon">🛕</div>
-        <div class="hc-title">BAPS Swaminarayan Temple</div>
-        <div class="hc-desc">A serene, intricately carved mandir — one of the most beautiful you'll ever visit.</div>
+        <div class="hc-icon">🍽️</div>
+        <div class="hc-title">Oak Tree Road, Edison</div>
+        <div class="hc-desc">Central Jersey's Indian food hub — Saravana Bhavan, Moghul, Chand Palace and more.</div>
+      </div>
+      <div class="highlight-card">
+        <div class="hc-icon">🎢</div>
+        <div class="hc-title">Wildwood Boardwalk</div>
+        <div class="hc-desc">Wide free beaches, Morey's Piers rides, arcades, and classic Jersey Shore fun.</div>
       </div>
       <div class="highlight-card">
         <div class="hc-icon">🎡</div>
-        <div class="hc-title">The Boardwalk</div>
-        <div class="hc-desc">Steel Pier rides, arcade games, saltwater taffy, and endless ocean views.</div>
-      </div>
-      <div class="highlight-card">
-        <div class="hc-icon">🌅</div>
-        <div class="hc-title">Beach &amp; Sunset</div>
-        <div class="hc-desc">Sand, surf, and a golden sunset over the Atlantic to close out the trip.</div>
+        <div class="hc-title">Atlantic City Boardwalk &amp; Beach</div>
+        <div class="hc-desc">Steel Pier, the shops at The Playground, saltwater taffy, and endless ocean views.</div>
       </div>
     </div>
   </div>
