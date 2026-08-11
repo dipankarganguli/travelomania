@@ -1,0 +1,294 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<link rel="icon" type="image/svg+xml" href="../../travelomania-favicon.svg">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Chicago · Printable Map</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;700&family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+<style>
+  *, *::before, *::after { box-sizing:border-box; margin:0; padding:0; }
+  :root {
+    --ocean:#1a6b8a; --ocean-dk:#0c3a50; --ocean-lt:#d6eef5;
+    --stone:#6b7c88; --ink:#1c2b33; --mist:#f0f4f6;
+    --lake:#cfe8f2; --land:#ffffff; --river:#7cc0dc;
+    --loop:#7a3b1e; --red:#c0392b; --blue:#1f6fc0; --bus:#7a4fa0;
+    --serif:'Playfair Display',Georgia,serif; --sans:'Inter',system-ui,sans-serif;
+  }
+  body { font-family:var(--sans); color:var(--ink); background:#e9edf0; -webkit-font-smoothing:antialiased; }
+
+  /* Toolbar (screen only) */
+  .toolbar { position:sticky; top:0; z-index:10; display:flex; align-items:center; justify-content:space-between; gap:1rem; background:var(--ocean-dk); color:#fff; padding:.7rem 1.2rem; }
+  .toolbar a { color:#cfe8f2; text-decoration:none; font-size:.85rem; font-weight:500; }
+  .toolbar .tb-actions { display:flex; gap:.6rem; align-items:center; }
+  .toolbar button { background:#fff; color:var(--ocean-dk); border:none; border-radius:7px; padding:.5rem 1.1rem; font-size:.85rem; font-weight:600; cursor:pointer; font-family:var(--sans); }
+  .toolbar .tb-hint { font-size:.72rem; opacity:.75; }
+
+  /* A4 sheet */
+  .sheet { width:210mm; min-height:297mm; margin:1.2rem auto; background:#fff; box-shadow:0 6px 30px rgba(0,0,0,.18); padding:9mm 9mm 7mm; }
+  .sheet-head { display:flex; align-items:flex-end; justify-content:space-between; border-bottom:2px solid var(--ocean-dk); padding-bottom:5px; margin-bottom:7px; }
+  .sheet-head h1 { font-family:var(--serif); font-size:19pt; color:var(--ocean-dk); line-height:1; }
+  .sheet-head .sh-sub { font-size:8pt; color:var(--stone); margin-top:3px; }
+  .sheet-head .sh-brand { font-family:var(--serif); font-size:10pt; color:var(--ocean); text-align:right; }
+
+  .layout { display:flex; gap:7px; }
+  .map-col { width:118mm; flex-shrink:0; }
+  .map-col svg { width:100%; height:auto; border:1px solid #d4dde2; border-radius:4px; display:block; }
+  .legend-col { flex:1; }
+  .legend-col h2 { font-size:8.5pt; text-transform:uppercase; letter-spacing:.06em; color:var(--ocean); border-bottom:1px solid #dce4e8; padding-bottom:3px; margin-bottom:5px; }
+  .lg-list { list-style:none; }
+  .lg-list li { display:flex; gap:5px; align-items:flex-start; padding:2.4px 0; border-bottom:1px dotted #e4eaed; }
+  .lg-num { flex-shrink:0; width:15px; height:15px; border-radius:50%; background:var(--ocean); color:#fff; font-size:8pt; font-weight:700; display:flex; align-items:center; justify-content:center; margin-top:1px; }
+  .lg-num.hotel { background:var(--red); }
+  .lg-body { flex:1; }
+  .lg-name { font-size:8pt; font-weight:600; line-height:1.15; }
+  .lg-meta { font-size:7pt; color:var(--stone); line-height:1.2; }
+  .lg-meta b { color:var(--ocean-dk); font-weight:600; }
+
+  .cta-key { margin-top:8px; border-top:2px solid var(--ocean-dk); padding-top:6px; }
+  .cta-key h2 { font-size:8.5pt; text-transform:uppercase; letter-spacing:.06em; color:var(--ocean); margin-bottom:5px; }
+  .key-grid { display:grid; grid-template-columns:1fr 1fr; gap:4px 16px; }
+  .key-item { display:flex; align-items:center; gap:6px; font-size:7.5pt; color:var(--ink); }
+  .key-swatch { flex-shrink:0; width:26px; height:0; border-top-width:3px; border-top-style:solid; }
+  .key-dot { flex-shrink:0; width:11px; height:11px; border-radius:50%; }
+  .key-sq { flex-shrink:0; width:10px; height:10px; border:1.5px solid var(--loop); background:#fff; }
+  .bus-badge { flex-shrink:0; display:inline-flex; align-items:center; justify-content:center; min-width:20px; height:14px; padding:0 3px; background:var(--bus); color:#fff; font-size:7pt; font-weight:700; border-radius:3px; }
+  .foot { font-size:6.8pt; color:var(--stone); margin-top:6px; line-height:1.35; }
+
+  @media print {
+    body { background:#fff; }
+    .no-print { display:none !important; }
+    .sheet { width:auto; min-height:auto; margin:0; box-shadow:none; padding:0; }
+    @page { size:A4 portrait; margin:9mm; }
+  }
+
+  /* Password gate */
+  #gate { position:fixed; inset:0; z-index:1000; background:linear-gradient(150deg,var(--ocean-dk),#1a6b8a 60%,#2896b0); display:flex; align-items:center; justify-content:center; padding:1.5rem; }
+  #gate.hidden { display:none; }
+  .gate-card { background:#fff; border-radius:16px; box-shadow:0 20px 60px rgba(0,0,0,.3); padding:2.2rem 2rem; max-width:340px; width:100%; text-align:center; }
+  .gate-icon { font-size:2.2rem; margin-bottom:.5rem; }
+  .gate-title { font-family:var(--serif); font-size:1.4rem; color:var(--ocean-dk); margin-bottom:.4rem; }
+  .gate-sub { font-size:.82rem; color:var(--stone); margin-bottom:1.2rem; }
+  .gate-form { display:flex; gap:.5rem; }
+  .gate-form input { flex:1; padding:.55rem .8rem; border:1px solid rgba(26,107,138,.25); border-radius:8px; font-size:.95rem; font-family:var(--sans); }
+  .gate-form button { background:var(--ocean); color:#fff; border:none; padding:.55rem 1.1rem; border-radius:8px; font-weight:500; cursor:pointer; font-family:var(--sans); }
+  .gate-wrong { font-size:.76rem; color:#c0392b; margin-top:.7rem; min-height:1rem; visibility:hidden; }
+  .gate-wrong.show { visibility:visible; }
+</style>
+</head>
+<body>
+
+<!-- Password gate -->
+<div id="gate" class="no-print">
+  <div class="gate-card">
+    <div class="gate-icon">🔒</div>
+    <div class="gate-title">Chicago Map</div>
+    <div class="gate-sub">This page is private. Enter the password to view the map.</div>
+    <div class="gate-form">
+      <input type="password" id="gate-pw" placeholder="Password" autocomplete="off">
+      <button type="button" id="gate-btn">Unlock</button>
+    </div>
+    <div class="gate-wrong" id="gate-wrong">Incorrect password. Try again.</div>
+  </div>
+</div>
+
+<div class="toolbar no-print">
+  <a href="../index.html">← Back to Chicago</a>
+  <div class="tb-actions">
+    <span class="tb-hint">Tip: print at 100% scale, A4, background graphics on</span>
+    <button onclick="window.print()">🖨️ Print / Save as PDF</button>
+  </div>
+</div>
+
+<div class="sheet">
+  <div class="sheet-head">
+    <div>
+      <h1>Chicago — Downtown Map</h1>
+      <div class="sh-sub">Itinerary stops · distances from hotel · CTA train &amp; bus · Aug 19–22, 2026</div>
+    </div>
+    <div class="sh-brand">✦ Travelomania</div>
+  </div>
+
+  <div class="layout">
+    <div class="map-col">
+      <svg id="map" viewBox="0 0 600 789" xmlns="http://www.w3.org/2000/svg"></svg>
+    </div>
+    <div class="legend-col">
+      <h2>Itinerary Stops</h2>
+      <ul class="lg-list" id="legend"></ul>
+    </div>
+  </div>
+
+  <div class="cta-key">
+    <h2>CTA &amp; Map Key</h2>
+    <div class="key-grid">
+      <div class="key-item"><span class="key-sq"></span> The Loop 'L' (elevated) — Brown/Green/Orange/Pink/Purple</div>
+      <div class="key-item"><span class="key-swatch" style="border-top-color:var(--red)"></span> Red Line (State St subway)</div>
+      <div class="key-item"><span class="key-swatch" style="border-top-color:var(--blue)"></span> Blue Line → O'Hare (from Jackson/Clark)</div>
+      <div class="key-item"><span class="key-dot" style="background:var(--ocean-dk)"></span> CTA train station</div>
+      <div class="key-item"><span class="key-swatch" style="border-top-color:var(--bus);border-top-style:dotted;border-top-width:3px"></span> Key bus corridor</div>
+      <div class="key-item"><span class="key-dot" style="background:var(--ocean)"></span> Itinerary stop &nbsp;·&nbsp; <span class="key-dot" style="background:var(--red);margin-left:2px"></span> Hotel</div>
+      <div class="key-item"><span class="bus-badge">146</span> Museum Campus ↔ Michigan Ave ↔ Navy Pier</div>
+      <div class="key-item"><span class="bus-badge">3</span> Michigan Ave · <span class="bus-badge" style="margin-left:4px">29</span> State→Navy Pier · <span class="bus-badge" style="margin-left:4px">124</span> Union Stn→Navy Pier</div>
+    </div>
+    <p class="foot">Distances are straight-line ("as the crow flies") from the Travelodge by Wyndham Downtown Chicago; walking distances run a bit longer on the street grid. Map is a simplified schematic — not to exact scale. O'Hare (ORD) is ~17 mi NW, off-map, reached by the Blue Line or UberXL (~45–60 min).</p>
+  </div>
+</div>
+
+<script>
+  // ---- Geographic projection (downtown Chicago) ----
+  var latN = 41.9040, latS = 41.8590, lonW = -87.6440, lonE = -87.5990;
+  var M = 24, W = 552, H = 741; // margin + draw area (viewBox 600 x 789)
+  function px(lon){ return M + (lon - lonW)/(lonE - lonW) * W; }
+  function py(lat){ return M + (latN - lat)/(latN - latS) * H; }
+
+  // ---- Itinerary stops ----
+  var PLACES = [
+    {n:1,  name:"Travelodge by Wyndham Downtown Chicago", sub:"Your hotel · base for the trip", lat:41.8746, lon:-87.6256, dist:"—", cta:"Harrison (Red)", hotel:true},
+    {n:2,  name:"Millennium Park / Cloud Gate (The Bean)", lat:41.8827, lon:-87.6233, dist:"0.6 mi", cta:"Washington/Wabash"},
+    {n:3,  name:"Grant Park", lat:41.8762, lon:-87.6203, dist:"0.3 mi", cta:"Adams/Wabash", ox:-22, oy:16},
+    {n:4,  name:"Buckingham Fountain", lat:41.8758, lon:-87.6189, dist:"0.4 mi", cta:"Adams/Wabash", ox:16, oy:2},
+    {n:5,  name:"Art Institute of Chicago", lat:41.8796, lon:-87.6237, dist:"0.4 mi", cta:"Adams/Wabash", ox:-22, oy:0},
+    {n:6,  name:"Willis Tower Skydeck", lat:41.8789, lon:-87.6359, dist:"0.6 mi", cta:"Quincy"},
+    {n:7,  name:"Magnificent Mile (Water Tower)", lat:41.8977, lon:-87.6244, dist:"1.6 mi", cta:"Grand (Red)"},
+    {n:8,  name:"360 CHICAGO (John Hancock)", lat:41.8989, lon:-87.6229, dist:"1.7 mi", cta:"Chicago (Red)", ox:16, oy:-2},
+    {n:9,  name:"Architecture River Cruise / Riverwalk", lat:41.8882, lon:-87.6236, dist:"0.9 mi", cta:"State/Lake"},
+    {n:10, name:"Navy Pier / FlyOver Chicago", lat:41.8917, lon:-87.6086, dist:"1.5 mi", cta:"Grand (Red) + bus 29/124"},
+    {n:11, name:"Ohio Street Beach", lat:41.8926, lon:-87.6120, dist:"1.4 mi", cta:"Grand (Red)", ox:-20, oy:-6},
+    {n:12, name:"Shedd Aquarium", lat:41.8676, lon:-87.6140, dist:"0.8 mi", cta:"Roosevelt + bus 146", ox:18, oy:4},
+    {n:13, name:"Field Museum", lat:41.8663, lon:-87.6169, dist:"0.7 mi", cta:"Roosevelt + bus 146"},
+    {n:14, name:"Chicago Cultural Center", lat:41.8837, lon:-87.6247, dist:"0.6 mi", cta:"Washington/Wabash", ox:-22, oy:-4},
+    {n:15, name:"Maggie Daley Park", lat:41.8827, lon:-87.6190, dist:"0.6 mi", cta:"Washington/Wabash", ox:22, oy:2},
+    {n:16, name:"Revival Food Hall / State St shops", lat:41.8797, lon:-87.6308, dist:"0.4 mi", cta:"Quincy / Jackson", ox:-18, oy:6}
+  ];
+
+  // ---- CTA train stations ----
+  var STATIONS = [
+    {name:"Grand", lat:41.8917, lon:-87.6283},
+    {name:"State/Lake", lat:41.8853, lon:-87.6278},
+    {name:"Washington/Wabash", lat:41.8827, lon:-87.6262},
+    {name:"Adams/Wabash", lat:41.8797, lon:-87.6262},
+    {name:"Quincy", lat:41.8785, lon:-87.6335},
+    {name:"Jackson", lat:41.8781, lon:-87.6278},
+    {name:"Harrison", lat:41.8740, lon:-87.6278},
+    {name:"Roosevelt", lat:41.8676, lon:-87.6270}
+  ];
+
+  function el(tag, attrs, txt){
+    var e = document.createElementNS("http://www.w3.org/2000/svg", tag);
+    for (var k in attrs) e.setAttribute(k, attrs[k]);
+    if (txt != null) e.textContent = txt;
+    return e;
+  }
+  var svg = document.getElementById('map');
+  function add(e){ svg.appendChild(e); return e; }
+
+  // Background land
+  add(el('rect', {x:0, y:0, width:600, height:789, fill:'#ffffff'}));
+
+  // ---- Lake Michigan ----
+  var shore = [[41.9040,-87.6120],[41.8965,-87.6118],[41.8925,-87.6108],[41.8882,-87.6112],
+    [41.8820,-87.6100],[41.8760,-87.6092],[41.8695,-87.6086],[41.8672,-87.6068],
+    [41.8625,-87.6074],[41.8590,-87.6080]];
+  var lakePts = shore.map(function(p){ return px(p[1])+','+py(p[0]); });
+  lakePts.push(px(-87.5990)+','+py(41.8590));
+  lakePts.push(px(-87.5990)+','+py(41.9040));
+  add(el('polygon', {points:lakePts.join(' '), fill:'var(--lake)'}));
+  add(el('text', {x:px(-87.603), y:py(41.879), fill:'#5b93ab', 'font-size':13, 'font-style':'italic', 'font-weight':600, 'text-anchor':'middle', transform:'rotate(90 '+px(-87.603)+' '+py(41.879)+')'}, 'LAKE MICHIGAN'));
+
+  // Navy Pier (juts into lake)
+  add(el('rect', {x:px(-87.6086), y:py(41.8923), width:px(-87.6008)-px(-87.6086), height:6, fill:'#e7d9b8', stroke:'#c9b892', 'stroke-width':.5}));
+
+  // ---- Chicago River ----
+  var riverMain = [[41.8895,-87.6112],[41.8888,-87.6236],[41.8885,-87.6340],[41.8862,-87.6372]];
+  add(el('polyline', {points:riverMain.map(function(p){return px(p[1])+','+py(p[0]);}).join(' '), fill:'none', stroke:'var(--river)', 'stroke-width':5, 'stroke-linejoin':'round', opacity:.85}));
+  var riverS = [[41.8862,-87.6372],[41.8790,-87.6382],[41.8700,-87.6410]];
+  add(el('polyline', {points:riverS.map(function(p){return px(p[1])+','+py(p[0]);}).join(' '), fill:'none', stroke:'var(--river)', 'stroke-width':4.5, 'stroke-linejoin':'round', opacity:.85}));
+  var riverN = [[41.8885,-87.6340],[41.8980,-87.6352]];
+  add(el('polyline', {points:riverN.map(function(p){return px(p[1])+','+py(p[0]);}).join(' '), fill:'none', stroke:'var(--river)', 'stroke-width':4.5, opacity:.85}));
+  add(el('text', {x:px(-87.6300), y:py(41.8898)-3, fill:'#4f9bb5', 'font-size':8, 'font-style':'italic', 'text-anchor':'middle'}, 'Chicago River'));
+
+  // ---- Faint street hints ----
+  function street(lat1,lon1,lat2,lon2){ add(el('line',{x1:px(lon1),y1:py(lat1),x2:px(lon2),y2:py(lat2),stroke:'#eef2f4','stroke-width':1})); }
+  // a few verticals & horizontals
+  [-87.638,-87.632,-87.6278,-87.6244,-87.618].forEach(function(lo){ street(41.902,lo,41.860,lo); });
+  [41.898,41.892,41.8846,41.879,41.8676].forEach(function(la){ street(la,-87.642,la,-87.607); });
+  add(el('text', {x:px(-87.6244)-2, y:py(41.8995), fill:'#aab6bd', 'font-size':6.5, 'text-anchor':'middle', transform:'rotate(90 '+(px(-87.6244)-2)+' '+py(41.8995)+')'}, 'Michigan Ave'));
+
+  // ---- The Loop 'L' rectangle ----
+  var lx1=px(-87.6339), lx2=px(-87.6262), ly1=py(41.8858), ly2=py(41.8768);
+  add(el('rect', {x:lx1, y:ly1, width:lx2-lx1, height:ly2-ly1, fill:'none', stroke:'var(--loop)', 'stroke-width':3, rx:5}));
+  add(el('text', {x:(lx1+lx2)/2, y:(ly1+ly2)/2, fill:'var(--loop)', 'font-size':7.5, 'font-weight':700, 'text-anchor':'middle', opacity:.7}, "THE LOOP 'L'"));
+
+  // ---- Red Line (State St) ----
+  add(el('line', {x1:px(-87.6278), y1:py(41.9030), x2:px(-87.6278), y2:py(41.8600), stroke:'var(--red)', 'stroke-width':3}));
+
+  // ---- Blue Line arrow to O'Hare ----
+  add(el('line', {x1:px(-87.6278), y1:py(41.8781), x2:px(-87.6420), y2:py(41.8990), stroke:'var(--blue)', 'stroke-width':3}));
+  var bx=px(-87.6420), by=py(41.8990);
+  add(el('polygon', {points:(bx)+','+(by)+' '+(bx+11)+','+(by+2)+' '+(bx+4)+','+(by+10), fill:'var(--blue)'}));
+  add(el('text', {x:bx+4, y:by-4, fill:'var(--blue)', 'font-size':7.5, 'font-weight':700}, 'Blue Line → O’Hare'));
+
+  // ---- Bus 146 corridor (Museum Campus ↔ Michigan Ave ↔ Navy Pier) ----
+  var b146 = [[41.8663,-87.6169],[41.8676,-87.6244],[41.8790,-87.6244],[41.8846,-87.6244],[41.8905,-87.6210],[41.8917,-87.6110]];
+  add(el('polyline', {points:b146.map(function(p){return px(p[1])+','+py(p[0]);}).join(' '), fill:'none', stroke:'var(--bus)', 'stroke-width':2.4, 'stroke-dasharray':'2,3', 'stroke-linejoin':'round'}));
+  // 146 badges
+  [[41.8730,-87.6244],[41.8895,-87.6170]].forEach(function(p){
+    add(el('rect', {x:px(p[1])-9, y:py(p[0])-6, width:18, height:12, rx:2.5, fill:'var(--bus)'}));
+    add(el('text', {x:px(p[1]), y:py(p[0])+3, fill:'#fff', 'font-size':7.5, 'font-weight':700, 'text-anchor':'middle'}, '146'));
+  });
+
+  // ---- Train stations ----
+  STATIONS.forEach(function(s){
+    add(el('rect', {x:px(s.lon)-3.4, y:py(s.lat)-3.4, width:6.8, height:6.8, fill:'#fff', stroke:'var(--ocean-dk)', 'stroke-width':1.6, rx:1}));
+    add(el('text', {x:px(s.lon)+6, y:py(s.lat)+3, fill:'var(--ocean-dk)', 'font-size':6.2, 'font-weight':600}, s.name));
+  });
+
+  // ---- Destination markers (with optional offset + leader) ----
+  PLACES.forEach(function(p){
+    var tx = px(p.lon), ty = py(p.lat);
+    var mx = tx + (p.ox||0), my = ty + (p.oy||0);
+    if (p.ox || p.oy){ add(el('line', {x1:tx, y1:ty, x2:mx, y2:my, stroke:'#9fb4bd', 'stroke-width':.8})); add(el('circle',{cx:tx,cy:ty,r:1.6,fill:'#9fb4bd'})); }
+    add(el('circle', {cx:mx, cy:my, r:9.5, fill:(p.hotel?'var(--red)':'var(--ocean)'), stroke:'#fff', 'stroke-width':1.6}));
+    add(el('text', {x:mx, y:my+3.4, fill:'#fff', 'font-size':9.5, 'font-weight':700, 'text-anchor':'middle'}, p.n));
+  });
+
+  // ---- Scale bar (0.5 mi ≈ 119 px) ----
+  var sbx=40, sby=760, sbw=(0.5*238.6);
+  add(el('line', {x1:sbx, y1:sby, x2:sbx+sbw, y2:sby, stroke:'#333', 'stroke-width':2}));
+  add(el('line', {x1:sbx, y1:sby-4, x2:sbx, y2:sby+4, stroke:'#333', 'stroke-width':2}));
+  add(el('line', {x1:sbx+sbw, y1:sby-4, x2:sbx+sbw, y2:sby+4, stroke:'#333', 'stroke-width':2}));
+  add(el('text', {x:sbx+sbw/2, y:sby-6, fill:'#333', 'font-size':8, 'text-anchor':'middle'}, '0.5 mile'));
+
+  // ---- North arrow ----
+  add(el('circle', {cx:565, cy:45, r:15, fill:'#fff', stroke:'#333', 'stroke-width':1}));
+  add(el('polygon', {points:'565,33 570,50 565,45 560,50', fill:'#333'}));
+  add(el('text', {x:565, y:63, fill:'#333', 'font-size':8, 'font-weight':700, 'text-anchor':'middle'}, 'N'));
+
+  // ---- Legend list ----
+  var lg = document.getElementById('legend');
+  PLACES.forEach(function(p){
+    var li = document.createElement('li');
+    li.innerHTML = '<span class="lg-num'+(p.hotel?' hotel':'')+'">'+p.n+'</span>'+
+      '<span class="lg-body"><span class="lg-name">'+p.name+'</span>'+
+      '<span class="lg-meta"><b>'+(p.hotel?'Base':p.dist+' from hotel')+'</b> · CTA: '+p.cta+'</span></span>';
+    lg.appendChild(li);
+  });
+
+  // ---- Password gate (shares session with the Chicago page) ----
+  (function () {
+    var GATE_PW='x', GATE_KEY='chicago-unlocked';
+    var gate=document.getElementById('gate'), input=document.getElementById('gate-pw'),
+        btn=document.getElementById('gate-btn'), wrong=document.getElementById('gate-wrong');
+    function openGate(){ gate.classList.add('hidden'); document.body.style.overflow=''; }
+    function check(){ if(input.value.trim()===GATE_PW){ try{sessionStorage.setItem(GATE_KEY,'1');}catch(e){} openGate(); } else { wrong.classList.add('show'); input.value=''; input.focus(); } }
+    btn.addEventListener('click', check);
+    input.addEventListener('keydown', function(e){ if(e.key==='Enter'){ e.preventDefault(); check(); } });
+    var unlocked=false; try{ unlocked=sessionStorage.getItem(GATE_KEY)==='1'; }catch(e){}
+    if(unlocked){ openGate(); } else { document.body.style.overflow='hidden'; input.focus(); }
+  })();
+</script>
+
+</body>
+</html>
