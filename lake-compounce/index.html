@@ -1,0 +1,404 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<link rel="icon" type="image/svg+xml" href="../travelomania-favicon.svg">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Lake Compounce · Travelomania</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,700;1,400&family=Inter:wght@300;400;500;600&display=swap" rel="stylesheet">
+<style>
+  *, *::before, *::after { box-sizing:border-box; margin:0; padding:0; }
+  :root {
+    --ocean:#2f7d4f; --ocean-lt:#dbeee2; --ocean-dk:#1f4d33;
+    --stone:#6b7c88; --ink:#1c2b33;
+    --mist:#eef4f0; --gold:#c4882a; --gold-lt:#fdf3e0; --white:#fff;
+    --saffron:#e07b1a; --saffron-lt:#fdeede;
+    --serif:'Playfair Display',Georgia,serif;
+    --sans:'Inter',system-ui,sans-serif;
+    --radius:10px; --shadow:0 2px 16px rgba(31,77,51,.10);
+  }
+  html { scroll-behavior:smooth; }
+  body { font-family:var(--sans); color:var(--ink); background:var(--white); -webkit-font-smoothing:antialiased; }
+
+  /* Nav */
+  nav { position:sticky; top:0; z-index:100; background:rgba(255,255,255,.93); backdrop-filter:blur(12px); border-bottom:1px solid rgba(31,77,51,.14); display:flex; align-items:center; justify-content:space-between; padding:0 1.5rem; height:56px; gap:1rem; }
+  .nav-brand { font-family:var(--serif); font-size:1rem; color:var(--ocean-dk); text-decoration:none; }
+  .nav-links { display:flex; gap:1.2rem; align-items:center; }
+  .nav-links a { font-size:.8rem; color:var(--stone); text-decoration:none; font-weight:500; transition:color .15s; }
+  .nav-links a:hover { color:var(--ocean); }
+
+  /* Hero */
+  .hero { position:relative; min-height:60vh; display:flex; flex-direction:column; justify-content:flex-end; background:linear-gradient(150deg,var(--ocean-dk) 0%,#2f7d4f 55%,#5cab6f 100%); overflow:hidden; }
+  .hero::before { content:''; position:absolute; inset:0; background:radial-gradient(ellipse 60% 55% at 22% 82%, rgba(255,255,255,.06), transparent), radial-gradient(ellipse 40% 60% at 82% 18%, rgba(224,123,26,.14), transparent); }
+  .hero-content { position:relative; z-index:2; padding:3rem 3rem 3.5rem; max-width:900px; }
+  .hero-eyebrow { font-size:.7rem; font-weight:600; letter-spacing:.18em; text-transform:uppercase; color:rgba(219,238,226,.75); margin-bottom:.9rem; }
+  .hero-title { font-family:var(--serif); font-size:clamp(2.6rem,6vw,4.6rem); font-weight:400; line-height:1.05; color:#fff; margin-bottom:1.2rem; }
+  .hero-title em { font-style:italic; color:#bfe6cd; }
+  .hero-meta { display:flex; flex-wrap:wrap; gap:1.2rem; font-size:.88rem; color:rgba(255,255,255,.8); }
+  .hero-meta span { display:flex; align-items:center; gap:.4rem; }
+  .hero-wave { display:block; width:100%; position:relative; z-index:2; }
+
+  /* Layout */
+  .container { max-width:860px; margin:0 auto; padding:0 1.5rem; }
+  section { padding:3.5rem 0; }
+  .section-label { font-size:.72rem; font-weight:600; letter-spacing:.14em; text-transform:uppercase; color:var(--ocean); margin-bottom:.6rem; }
+  .section-title { font-family:var(--serif); font-size:1.85rem; font-weight:400; color:var(--ocean-dk); margin-bottom:1.8rem; line-height:1.2; }
+  .section-divider { border:none; height:1px; background:linear-gradient(to right,transparent,rgba(31,77,51,.15),transparent); margin:0; }
+
+  /* Info cards */
+  .info-grid { display:grid; grid-template-columns:repeat(auto-fit,minmax(195px,1fr)); gap:1.1rem; }
+  .info-card { border:1px solid rgba(31,77,51,.15); border-radius:var(--radius); padding:1.1rem 1.3rem; background:var(--white); box-shadow:var(--shadow); }
+  .info-card .ic-label { font-size:.68rem; font-weight:600; letter-spacing:.12em; text-transform:uppercase; color:var(--ocean); margin-bottom:.4rem; }
+  .info-card .ic-val { font-size:.95rem; font-weight:500; color:var(--ink); line-height:1.4; }
+  .info-card .ic-sub { font-size:.78rem; color:var(--stone); margin-top:.3rem; line-height:1.5; }
+  .info-card a { color:var(--ocean); text-decoration:none; }
+  .info-card a:hover { text-decoration:underline; }
+
+  /* Stay card */
+  .stay-card { display:flex; gap:1rem; align-items:flex-start; border:1px solid rgba(31,77,51,.15); border-radius:var(--radius); padding:1.2rem 1.4rem; background:var(--white); box-shadow:var(--shadow); }
+  .stay-icon { font-size:2rem; line-height:1; flex-shrink:0; }
+  .stay-name { font-size:1.05rem; font-weight:600; color:var(--ink); }
+  .stay-addr { font-size:.82rem; color:var(--stone); margin-top:.35rem; line-height:1.5; }
+  .stay-addr a { color:var(--ocean); text-decoration:none; }
+  .stay-addr a:hover { text-decoration:underline; }
+
+  /* Day cards */
+  .days { display:flex; flex-direction:column; gap:1.5rem; }
+  .day-card { border:1px solid rgba(31,77,51,.14); border-radius:var(--radius); overflow:hidden; background:var(--white); box-shadow:var(--shadow); transition:box-shadow .2s; }
+  .day-card:hover { box-shadow:0 4px 28px rgba(31,77,51,.14); }
+  .day-header { display:grid; grid-template-columns:88px 1fr; background:var(--ocean-dk); color:#fff; }
+  .day-num { background:var(--ocean); display:flex; flex-direction:column; align-items:center; justify-content:center; padding:1.1rem .8rem; font-family:var(--serif); }
+  .day-num .n { font-size:1.9rem; line-height:1; font-weight:700; }
+  .day-num .lbl { font-size:.6rem; letter-spacing:.1em; text-transform:uppercase; opacity:.72; }
+  .day-info { padding:1rem 1.3rem; }
+  .day-date { font-size:.75rem; opacity:.6; font-weight:300; }
+  .day-title { font-size:1.02rem; font-weight:500; margin-top:.2rem; line-height:1.3; }
+  .day-body { padding:1.3rem; }
+  .act-list { list-style:none; display:flex; flex-direction:column; gap:.8rem; }
+  .act-list li { display:flex; gap:.9rem; align-items:flex-start; padding-bottom:.8rem; border-bottom:1px solid var(--mist); }
+  .act-list li:last-child { border-bottom:none; padding-bottom:0; }
+  .act-time { font-size:.72rem; font-weight:600; color:var(--ocean); min-width:64px; margin-top:.2rem; }
+  .act-content { flex:1; }
+  .act-name { font-weight:500; font-size:.93rem; }
+  .act-note { font-size:.82rem; color:var(--stone); margin-top:.18rem; line-height:1.45; }
+  .act-note a { color:var(--ocean); text-decoration:none; }
+  .act-note a:hover { text-decoration:underline; }
+  .maplink { color:var(--ocean); text-decoration:none; font-weight:500; }
+  .maplink:hover { text-decoration:underline; }
+  .act-tag { display:inline-block; font-size:.65rem; font-weight:600; letter-spacing:.06em; text-transform:uppercase; padding:2px 7px; border-radius:20px; margin-left:.5rem; vertical-align:middle; }
+  .tag-drive { background:#ede8f0; color:#5a3a7a; }
+  .tag-fun { background:#fce3ef; color:#a01e5a; }
+  .tag-food { background:var(--gold-lt); color:#8a5a1a; }
+  .tag-view { background:var(--ocean-lt); color:#1f4d33; }
+  .tag-camp { background:#e3efe6; color:#2a6840; }
+
+  /* Photos band */
+  .photos-band { display:flex; align-items:center; gap:1.2rem; flex-wrap:wrap; background:linear-gradient(135deg,var(--ocean-dk),var(--ocean)); border-radius:var(--radius); padding:1.6rem 1.8rem; color:#fff; }
+  .photos-band .pb-icon { font-size:2.4rem; }
+  .photos-band .pb-text { flex:1; min-width:200px; }
+  .photos-band .pb-title { font-family:var(--serif); font-size:1.3rem; margin-bottom:.3rem; }
+  .photos-band .pb-sub { font-size:.85rem; opacity:.82; line-height:1.5; }
+  .photos-band .pb-btn { background:#fff; color:var(--ocean-dk); text-decoration:none; font-weight:600; font-size:.88rem; padding:.65rem 1.3rem; border-radius:8px; white-space:nowrap; }
+  .photos-band .pb-btn:hover { background:var(--ocean-lt); }
+
+  footer { text-align:center; padding:2.5rem 1.5rem; font-size:.8rem; color:var(--stone); border-top:1px solid rgba(31,77,51,.1); background:var(--white); line-height:1.8; }
+  footer a { color:var(--ocean); text-decoration:none; }
+  footer a:hover { text-decoration:underline; }
+  .footer-heart { color:#e05a5a; }
+
+  @media(max-width:640px) {
+    nav { padding:0 1rem; }
+    .hero-content { padding:2.2rem 1.4rem 2.6rem; }
+    .container { padding:0 1.1rem; }
+    section { padding:2.6rem 0; }
+    .day-header { grid-template-columns:70px 1fr; }
+  }
+
+  /* Password gate */
+  #gate { position:fixed; inset:0; z-index:1000; background:linear-gradient(150deg,var(--ocean-dk) 0%,#2f7d4f 55%,#5cab6f 100%); display:flex; align-items:center; justify-content:center; padding:1.5rem; }
+  #gate.hidden { display:none; }
+  .gate-card { background:var(--white); border-radius:16px; box-shadow:0 20px 60px rgba(0,0,0,.3); padding:2.4rem 2.2rem; max-width:360px; width:100%; text-align:center; }
+  .gate-icon { font-size:2.4rem; margin-bottom:.6rem; }
+  .gate-title { font-family:var(--serif); font-size:1.5rem; color:var(--ocean-dk); margin-bottom:.4rem; }
+  .gate-sub { font-size:.85rem; color:var(--stone); line-height:1.5; margin-bottom:1.4rem; }
+  .gate-form { display:flex; gap:.5rem; }
+  .gate-form input { flex:1; padding:.6rem .9rem; border:1px solid rgba(31,77,51,.25); border-radius:8px; font-size:.95rem; font-family:var(--sans); }
+  .gate-form input:focus { outline:2px solid var(--ocean); outline-offset:1px; border-color:transparent; }
+  .gate-form button { background:var(--ocean); color:#fff; border:none; padding:.6rem 1.2rem; border-radius:8px; font-size:.9rem; font-weight:500; cursor:pointer; font-family:var(--sans); transition:background .15s; }
+  .gate-form button:hover { background:var(--ocean-dk); }
+  .gate-wrong { font-size:.78rem; color:#c0392b; margin-top:.8rem; min-height:1rem; visibility:hidden; }
+  .gate-wrong.show { visibility:visible; }
+</style>
+
+  <!-- Microsoft Clarity -->
+  <script type="text/javascript">(function(c,l,a,r,i,t,y){c[a]=c[a]||function(){(c[a].q=c[a].q||[]).push(arguments)};t=l.createElement(r);t.async=1;t.src="https://www.clarity.ms/tag/"+i;y=l.getElementsByTagName(r)[0];y.parentNode.insertBefore(t,y)})(window,document,"clarity","script","xcll8onspw");</script>
+  <!-- Google Analytics -->
+  <script async src="https://www.googletagmanager.com/gtag/js?id=G-VH9D51QJJS"></script>
+  <script>window.dataLayer=window.dataLayer||[];function gtag(){dataLayer.push(arguments);}gtag('js',new Date());gtag('config','G-VH9D51QJJS');</script>
+</head>
+<body>
+
+<!-- Password gate -->
+<div id="gate">
+  <div class="gate-card">
+    <div class="gate-icon">🔒</div>
+    <div class="gate-title">Lake Compounce Trip</div>
+    <div class="gate-sub">This trip is private. Enter the password to view the itinerary.</div>
+    <div class="gate-form">
+      <input type="password" id="gate-pw" placeholder="Password" autocomplete="off">
+      <button type="button" id="gate-btn">Unlock</button>
+    </div>
+    <div class="gate-wrong" id="gate-wrong">Incorrect password. Try again.</div>
+  </div>
+</div>
+
+<!-- Nav -->
+<nav>
+  <a class="nav-brand" href="../index.html">✦ Travelomania</a>
+  <div class="nav-links">
+    <a href="../index.html">← All Trips</a>
+    <a href="#park">The Park</a>
+    <a href="#itinerary">Itinerary</a>
+    <a href="#photos">Photos</a>
+  </div>
+</nav>
+
+<!-- Hero -->
+<div class="hero">
+  <div class="hero-content">
+    <p class="hero-eyebrow">Ganguli & Friends · Camping Weekend</p>
+    <h1 class="hero-title">Lake <em>Compounce</em></h1>
+    <div class="hero-meta">
+      <span>🗓️ 1 night · 2 days</span>
+      <span>⛺ Camping + amusement park</span>
+      <span>📍 Bristol, Connecticut</span>
+    </div>
+  </div>
+  <svg class="hero-wave" viewBox="0 0 1440 52" xmlns="http://www.w3.org/2000/svg" preserveAspectRatio="none">
+    <path d="M0 52 C360 8 720 44 1080 18 C1260 6 1380 38 1440 22 L1440 52 Z" fill="#fff"/>
+  </svg>
+</div>
+
+<!-- The Park -->
+<section id="park">
+  <div class="container">
+    <p class="section-label">The Park</p>
+    <h2 class="section-title">America's oldest amusement park</h2>
+    <div class="info-grid">
+      <div class="info-card">
+        <div class="ic-label">Tickets</div>
+        <div class="ic-val">~$45–55 / person</div>
+        <div class="ic-sub">Cheaper online · kids &amp; juniors discounted · Crocodile Cove water park included. <a href="https://www.lakecompounce.com/" target="_blank" rel="noopener">Buy tickets ↗</a></div>
+      </div>
+      <div class="info-card">
+        <div class="ic-label">Hours</div>
+        <div class="ic-val">Opens ~11:00 AM</div>
+        <div class="ic-sub">Seasonal — summer &amp; weekend hours vary; check the park calendar before you go.</div>
+      </div>
+      <div class="info-card">
+        <div class="ic-label">Location</div>
+        <div class="ic-val">Bristol, CT</div>
+        <div class="ic-sub">186 Enterprise Dr, Bristol, CT 06010 · <a href="https://www.google.com/maps/search/?api=1&query=Lake%20Compounce%20186%20Enterprise%20Dr%20Bristol%20CT%2006010" target="_blank" rel="noopener">View on map ↗</a></div>
+      </div>
+      <div class="info-card">
+        <div class="ic-label">Drive from Albany</div>
+        <div class="ic-val">~2.5–3 hrs</div>
+        <div class="ic-sub">~130 mi via I-90 E → I-84 E. <a href="https://www.google.com/maps/dir/?api=1&origin=Albany%2C%20NY&destination=Lake%20Compounce%20Bristol%20CT" target="_blank" rel="noopener">Directions ↗</a></div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<hr class="section-divider">
+
+<!-- Stay -->
+<section id="stay">
+  <div class="container">
+    <p class="section-label">Where We're Staying</p>
+    <h2 class="section-title">Camping on-site</h2>
+    <div class="stay-card">
+      <div class="stay-icon">⛺</div>
+      <div>
+        <div class="stay-name">Lake Compounce Campground</div>
+        <div class="stay-addr">
+          📍 On-site at Lake Compounce, Bristol, CT — tents welcome, walkable to the park gate.<br>
+          <a href="https://www.google.com/maps/search/?api=1&query=Lake%20Compounce%20Campground%20Bristol%20CT" target="_blank" rel="noopener">View on map ↗</a>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<hr class="section-divider">
+
+<!-- Itinerary -->
+<section id="itinerary">
+  <div class="container">
+    <p class="section-label">Day by Day</p>
+    <h2 class="section-title">The Itinerary</h2>
+    <div class="days">
+
+      <!-- Day 1 -->
+      <div class="day-card">
+        <div class="day-header">
+          <div class="day-num"><span class="n">1</span><span class="lbl">Day</span></div>
+          <div class="day-info">
+            <div class="day-date">Day One</div>
+            <div class="day-title">Drive out, set up camp &amp; ride the coasters</div>
+          </div>
+        </div>
+        <div class="day-body">
+          <ul class="act-list">
+            <li>
+              <div class="act-time">9:00 AM</div>
+              <div class="act-content">
+                <div class="act-name">Depart Albany <span class="act-tag tag-drive">Drive</span></div>
+                <div class="act-note">Hit the road at 9 AM for Lake Compounce (~2.5–3 hrs). <a href="https://www.google.com/maps/dir/?api=1&origin=Albany%2C%20NY&destination=Lake%20Compounce%20Bristol%20CT" target="_blank" rel="noopener">Directions from Albany ↗</a></div>
+              </div>
+            </li>
+            <li>
+              <div class="act-time">~12:00 PM</div>
+              <div class="act-content">
+                <div class="act-name">Set up the tents <a class="maplink" href="https://www.google.com/maps/search/?api=1&query=Lake%20Compounce%20Campground%20Bristol%20CT" target="_blank" rel="noopener">📍</a> <span class="act-tag tag-camp">Camp</span></div>
+                <div class="act-note">Check in at the campground, pitch the tents, and get the site sorted before the fun starts.</div>
+              </div>
+            </li>
+            <li>
+              <div class="act-time">Afternoon</div>
+              <div class="act-content">
+                <div class="act-name">Amusement park with the kids <a class="maplink" href="https://www.google.com/maps/search/?api=1&query=Lake%20Compounce%20186%20Enterprise%20Dr%20Bristol%20CT%2006010" target="_blank" rel="noopener">📍</a> <span class="act-tag tag-fun">Fun</span></div>
+                <div class="act-note">Turn the kids loose at Lake Compounce — coasters, the classic Wildcat, the trolley, and Crocodile Cove water park.<br>🎟️ <strong>~$45–55 per person</strong> at the gate (cheaper online; kids/juniors discounted). 🕐 Opens <strong>~11 AM</strong>; hours are seasonal — check the calendar. <a href="https://www.lakecompounce.com/" target="_blank" rel="noopener">Tickets &amp; hours ↗</a></div>
+              </div>
+            </li>
+            <li>
+              <div class="act-time">Evening</div>
+              <div class="act-content">
+                <div class="act-name">Grill &amp; mutton by the fire <span class="act-tag tag-food">Food</span></div>
+                <div class="act-note">Back at camp — fire up the grill for a mutton feast, unwind around the campfire, and let the kids toast marshmallows.</div>
+              </div>
+            </li>
+          </ul>
+        </div>
+      </div>
+
+      <!-- Day 2 -->
+      <div class="day-card">
+        <div class="day-header">
+          <div class="day-num"><span class="n">2</span><span class="lbl">Day</span></div>
+          <div class="day-info">
+            <div class="day-date">Day Two</div>
+            <div class="day-title">Camp breakfast, pack up &amp; a stop on the way home</div>
+          </div>
+        </div>
+        <div class="day-body">
+          <ul class="act-list">
+            <li>
+              <div class="act-time">Morning</div>
+              <div class="act-content">
+                <div class="act-name">Breakfast in the camp <span class="act-tag tag-food">Food</span></div>
+                <div class="act-note">A relaxed camp breakfast — coffee on the fire, eggs and leftovers from last night.</div>
+              </div>
+            </li>
+            <li>
+              <div class="act-time">By 12:00 PM</div>
+              <div class="act-content">
+                <div class="act-name">Wrap up the tents &amp; check out <span class="act-tag tag-camp">Camp</span></div>
+                <div class="act-note">Pack up the tents, clear the site, and be on the road by noon.</div>
+              </div>
+            </li>
+            <li>
+              <div class="act-time">Afternoon</div>
+              <div class="act-content">
+                <div class="act-name">Nearby sightseeing <span class="act-tag tag-view">Explore</span></div>
+                <div class="act-note">Break up the drive with a stop near Bristol:
+                  <a href="https://www.google.com/maps/search/?api=1&query=New%20England%20Carousel%20Museum%20Bristol%20CT" target="_blank" rel="noopener">New England Carousel Museum 📍</a> ·
+                  <a href="https://www.google.com/maps/search/?api=1&query=American%20Clock%20and%20Watch%20Museum%20Bristol%20CT" target="_blank" rel="noopener">American Clock &amp; Watch Museum 📍</a> ·
+                  <a href="https://www.google.com/maps/search/?api=1&query=Heublein%20Tower%20Talcott%20Mountain%20State%20Park%20Simsbury%20CT" target="_blank" rel="noopener">Heublein Tower / Talcott Mountain 📍</a> (scenic hike) ·
+                  <a href="https://www.google.com/maps/search/?api=1&query=Mark%20Twain%20House%20Hartford%20CT" target="_blank" rel="noopener">Mark Twain House, Hartford 📍</a>.</div>
+              </div>
+            </li>
+            <li>
+              <div class="act-time">Night</div>
+              <div class="act-content">
+                <div class="act-name">Reach Albany <span class="act-tag tag-drive">Drive</span></div>
+                <div class="act-note">Cruise back home (~2.5–3 hrs) and roll into Albany by night — tired kids, full hearts, and a phone full of photos.</div>
+              </div>
+            </li>
+          </ul>
+        </div>
+      </div>
+
+    </div>
+  </div>
+</section>
+
+<hr class="section-divider">
+
+<!-- Photos -->
+<section id="photos">
+  <div class="container">
+    <p class="section-label">Memories</p>
+    <h2 class="section-title">Trip Photos</h2>
+    <div class="photos-band">
+      <div class="pb-icon">📸</div>
+      <div class="pb-text">
+        <div class="pb-title">Lake Compounce — Shared Album</div>
+        <div class="pb-sub">Everyone's photos in one place. Add yours and browse the crew's shots from the campsite, the coasters, and the campfire.</div>
+      </div>
+      <a class="pb-btn" href="https://photos.app.goo.gl/24fVDmyfazsP3c7k8" target="_blank" rel="noopener">Open album ↗</a>
+    </div>
+  </div>
+</section>
+
+<footer>
+  <p>
+    Travelomania &nbsp;·&nbsp; Made with <span class="footer-heart">♥</span> by Dipankar
+    &nbsp;·&nbsp; <a href="../index.html">All Trips</a>
+    &nbsp;·&nbsp; Hosted on GitHub Pages
+  </p>
+</footer>
+
+<script>
+  // ── Simple client-side password gate ──────────────────────
+  (function () {
+    var GATE_PW = 'x';
+    var GATE_KEY = 'lake-compounce-unlocked';
+    var gate = document.getElementById('gate');
+    var input = document.getElementById('gate-pw');
+    var btn = document.getElementById('gate-btn');
+    var wrong = document.getElementById('gate-wrong');
+
+    function openGate() {
+      gate.classList.add('hidden');
+      document.body.style.overflow = '';
+    }
+    function checkGate() {
+      if (input.value.trim() === GATE_PW) {
+        try { sessionStorage.setItem(GATE_KEY, '1'); } catch (e) {}
+        openGate();
+      } else {
+        wrong.classList.add('show');
+        input.value = '';
+        input.focus();
+      }
+    }
+
+    btn.addEventListener('click', checkGate);
+    input.addEventListener('keydown', function (e) {
+      if (e.key === 'Enter') { e.preventDefault(); checkGate(); }
+    });
+
+    var unlocked = false;
+    try { unlocked = sessionStorage.getItem(GATE_KEY) === '1'; } catch (e) {}
+    if (unlocked) {
+      openGate();
+    } else {
+      document.body.style.overflow = 'hidden';
+      input.focus();
+    }
+  })();
+</script>
+
+</body>
+</html>
