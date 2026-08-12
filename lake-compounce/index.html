@@ -93,6 +93,14 @@
   .tag-view { background:var(--ocean-lt); color:#1f4d33; }
   .tag-camp { background:#e3efe6; color:#2a6840; }
 
+  /* Travelers */
+  .travelers-grid { display:grid; grid-template-columns:repeat(auto-fit,minmax(190px,1fr)); gap:.8rem; }
+  .traveler { display:flex; align-items:center; gap:.8rem; border:1px solid rgba(31,77,51,.14); border-radius:var(--radius); padding:.65rem .9rem; background:var(--white); box-shadow:var(--shadow); }
+  .tr-avatar { width:46px; height:46px; border-radius:50%; overflow:hidden; background:var(--ocean-lt); flex-shrink:0; box-shadow:0 2px 8px rgba(31,77,51,.18); display:flex; align-items:center; justify-content:center; color:var(--ocean-dk); font-weight:700; font-size:1.05rem; }
+  .tr-avatar img { width:100%; height:100%; object-fit:cover; object-position:top center; display:block; }
+  .tr-name { font-size:.9rem; font-weight:600; color:var(--ink); }
+  .tr-sub { font-size:.7rem; color:var(--ocean); margin-top:.1rem; font-weight:600; }
+
   /* Photos band */
   .photos-band { display:flex; align-items:center; gap:1.2rem; flex-wrap:wrap; background:linear-gradient(135deg,var(--ocean-dk),var(--ocean)); border-radius:var(--radius); padding:1.6rem 1.8rem; color:#fff; }
   .photos-band .pb-icon { font-size:2.4rem; }
@@ -160,6 +168,7 @@
     <a href="../index.html">← All Trips</a>
     <a href="#park">The Park</a>
     <a href="#itinerary">Itinerary</a>
+    <a href="#crew">Crew</a>
     <a href="#photos">Photos</a>
   </div>
 </nav>
@@ -170,8 +179,9 @@
     <p class="hero-eyebrow">Ganguli & Friends · Camping Weekend</p>
     <h1 class="hero-title">Lake <em>Compounce</em></h1>
     <div class="hero-meta">
-      <span>🗓️ 1 night · 2 days</span>
+      <span>🗓️ Sep 5 – 6, 2026 · 2 days</span>
       <span>⛺ Camping + amusement park</span>
+      <span>👥 17 travelers</span>
       <span>📍 Bristol, Connecticut</span>
     </div>
   </div>
@@ -188,8 +198,8 @@
     <div class="info-grid">
       <div class="info-card">
         <div class="ic-label">Tickets</div>
-        <div class="ic-val">~$45–55 / person</div>
-        <div class="ic-sub">Cheaper online · kids &amp; juniors discounted · Crocodile Cove water park included. <a href="https://www.lakecompounce.com/" target="_blank" rel="noopener">Buy tickets ↗</a></div>
+        <div class="ic-val">$36.99 / person</div>
+        <div class="ic-sub">Crocodile Cove water park included. <a href="https://www.lakecompounce.com/" target="_blank" rel="noopener">Buy tickets ↗</a></div>
       </div>
       <div class="info-card">
         <div class="ic-label">Hours</div>
@@ -244,7 +254,7 @@
         <div class="day-header">
           <div class="day-num"><span class="n">1</span><span class="lbl">Day</span></div>
           <div class="day-info">
-            <div class="day-date">Day One</div>
+            <div class="day-date">Saturday, September 5</div>
             <div class="day-title">Drive out, set up camp &amp; ride the coasters</div>
           </div>
         </div>
@@ -268,7 +278,7 @@
               <div class="act-time">Afternoon</div>
               <div class="act-content">
                 <div class="act-name">Amusement park with the kids <a class="maplink" href="https://www.google.com/maps/search/?api=1&query=Lake%20Compounce%20186%20Enterprise%20Dr%20Bristol%20CT%2006010" target="_blank" rel="noopener">📍</a> <span class="act-tag tag-fun">Fun</span></div>
-                <div class="act-note">Turn the kids loose at Lake Compounce — coasters, the classic Wildcat, the trolley, and Crocodile Cove water park.<br>🎟️ <strong>~$45–55 per person</strong> at the gate (cheaper online; kids/juniors discounted). 🕐 Opens <strong>~11 AM</strong>; hours are seasonal — check the calendar. <a href="https://www.lakecompounce.com/" target="_blank" rel="noopener">Tickets &amp; hours ↗</a></div>
+                <div class="act-note">Turn the kids loose at Lake Compounce — coasters, the classic Wildcat, the trolley, and Crocodile Cove water park.<br>🎟️ <strong>$36.99 per person</strong>. 🕐 Opens <strong>~11 AM</strong>; hours are seasonal — check the calendar. <a href="https://www.lakecompounce.com/" target="_blank" rel="noopener">Tickets &amp; hours ↗</a></div>
               </div>
             </li>
             <li>
@@ -287,7 +297,7 @@
         <div class="day-header">
           <div class="day-num"><span class="n">2</span><span class="lbl">Day</span></div>
           <div class="day-info">
-            <div class="day-date">Day Two</div>
+            <div class="day-date">Sunday, September 6</div>
             <div class="day-title">Camp breakfast, pack up &amp; a stop on the way home</div>
           </div>
         </div>
@@ -330,6 +340,36 @@
       </div>
 
     </div>
+  </div>
+</section>
+
+<hr class="section-divider">
+
+<!-- Crew -->
+<section id="crew">
+  <div class="container">
+    <p class="section-label">The Crew</p>
+    <h2 class="section-title">Who's Going · 17 travelers</h2>
+    <div class="travelers-grid">
+      <div class="traveler"><div class="tr-avatar"><img src="../thousand-islands/crew/Dipankar.jpg" alt="Dipankar" loading="lazy"></div><div><div class="tr-name">Dipankar</div></div></div>
+      <div class="traveler"><div class="tr-avatar"><img src="../thousand-islands/crew/Monalisa.jpg" alt="Monalisa" loading="lazy"></div><div><div class="tr-name">Monalisa</div></div></div>
+      <div class="traveler"><div class="tr-avatar"><img src="../thousand-islands/crew/Payel__2_.jpg" alt="Payel" loading="lazy"></div><div><div class="tr-name">Payel</div></div></div>
+      <div class="traveler"><div class="tr-avatar"><img src="../thousand-islands/crew/Tanmay.jpg" alt="Tanmay" loading="lazy"></div><div><div class="tr-name">Tanmay</div></div></div>
+      <div class="traveler"><div class="tr-avatar"><img src="../thousand-islands/crew/Goutam.jpg" alt="Goutam" loading="lazy"></div><div><div class="tr-name">Goutam</div></div></div>
+      <div class="traveler"><div class="tr-avatar"><img src="../thousand-islands/crew/Shikha.jpg" alt="Shikha" loading="lazy"></div><div><div class="tr-name">Shikha</div></div></div>
+      <div class="traveler"><div class="tr-avatar"><img src="../thousand-islands/crew/SUJIT.jpeg" alt="Sujit" loading="lazy"></div><div><div class="tr-name">Sujit</div></div></div>
+      <div class="traveler"><div class="tr-avatar"><img src="../thousand-islands/crew/Anita.jpeg" alt="Anita" loading="lazy"></div><div><div class="tr-name">Anita</div></div></div>
+      <div class="traveler"><div class="tr-avatar"><img src="../thousand-islands/crew/Tanu__2_.jpg" alt="Tanu" loading="lazy"></div><div><div class="tr-name">Tanu</div></div></div>
+      <div class="traveler"><div class="tr-avatar"><img src="../thousand-islands/crew/Ruma.jpg" alt="Ruma" loading="lazy"></div><div><div class="tr-name">Ruma</div></div></div>
+      <div class="traveler"><div class="tr-avatar"><img src="../thousand-islands/crew/Deba_Prasad_Ganguli.jpg" alt="Deba Prasad" loading="lazy"></div><div><div class="tr-name">Deba Prasad</div></div></div>
+      <div class="traveler"><div class="tr-avatar"><img src="../thousand-islands/crew/Deeparjo__2_.jpg" alt="Deeparjo" loading="lazy"></div><div><div class="tr-name">Deeparjo</div></div></div>
+      <div class="traveler"><div class="tr-avatar"><img src="../thousand-islands/crew/Tiya.jpg" alt="Tiya" loading="lazy"></div><div><div class="tr-name">Tiya</div></div></div>
+      <div class="traveler"><div class="tr-avatar"><img src="../thousand-islands/crew/Tojo.jpg" alt="Tojo" loading="lazy"></div><div><div class="tr-name">Tojo</div></div></div>
+      <div class="traveler"><div class="tr-avatar"><img src="../thousand-islands/crew/Dravin.jpg" alt="Dravin" loading="lazy"></div><div><div class="tr-name">Dravin</div></div></div>
+      <div class="traveler"><div class="tr-avatar"><img src="crew/Saurav.jpg" alt="Saurav" loading="lazy" onerror="this.parentNode.textContent='S';"></div><div><div class="tr-name">Saurav</div><div class="tr-sub">✨ New this trip</div></div></div>
+      <div class="traveler"><div class="tr-avatar"><img src="crew/Meenakshi.jpg" alt="Meenakshi" loading="lazy" onerror="this.parentNode.textContent='M';"></div><div><div class="tr-name">Meenakshi</div><div class="tr-sub">✨ New this trip</div></div></div>
+    </div>
+    <p style="font-size:.8rem;color:var(--stone);margin-top:1rem;line-height:1.6;">The full Thousand Islands crew, plus Saurav &amp; Meenakshi joining for this one.</p>
   </div>
 </section>
 
