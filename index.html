@@ -33,6 +33,12 @@
   .nav-links a { font-size:.82rem; color:var(--stone); text-decoration:none; font-weight:500; transition:color .15s; }
   .nav-links a:hover { color:var(--river); }
   .nav-pill { background:var(--river); color:#fff !important; padding:.32rem .9rem; border-radius:20px; font-size:.78rem !important; }
+
+  /* Quick links */
+  .quicklinks { display:flex; flex-wrap:wrap; align-items:center; gap:.5rem; margin-bottom:2.4rem; }
+  .quicklinks .ql-label { font-size:.7rem; font-weight:700; letter-spacing:.14em; text-transform:uppercase; color:var(--river); margin-right:.25rem; }
+  .quicklinks a { display:inline-flex; align-items:center; gap:.35rem; font-size:.82rem; font-weight:500; color:var(--river-dk); text-decoration:none; background:var(--river-lt); border:1px solid rgba(26,107,138,.18); padding:.4rem .85rem; border-radius:20px; transition:background .15s,color .15s; }
+  .quicklinks a:hover { background:var(--river); color:#fff; }
   .nav-pill:hover { background:var(--river-dk) !important; color:#fff !important; }
 
   /* ── Hero ────────────────────────────────────────────── */
@@ -202,6 +208,16 @@
 </div>
 
 <main>
+
+  <!-- Quick links to every trip -->
+  <div class="quicklinks">
+    <span class="ql-label">Jump to a trip</span>
+    <a href="lake-compounce/index.html">⛺ Lake Compounce</a>
+    <a href="chicago/index.html">🌆 Chicago</a>
+    <a href="atlantic-city/index.html">🎡 Atlantic City</a>
+    <a href="acadia/">🏔️ Acadia</a>
+    <a href="thousand-islands/index.html">🏝️ Thousand Islands</a>
+  </div>
 
   <!-- ── Upcoming Trips ─────────────────────────────────── -->
   <div>
