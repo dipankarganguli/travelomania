@@ -170,6 +170,15 @@
   .tr-name { font-size:.92rem; font-weight:600; color:var(--ink); }
   .tr-sub { font-size:.72rem; color:var(--stone); margin-top:.1rem; }
 
+  /* Photos band */
+  .photos-band { display:flex; align-items:center; gap:1.2rem; flex-wrap:wrap; background:linear-gradient(135deg,var(--ocean-dk),var(--ocean)); border-radius:var(--radius); padding:1.6rem 1.8rem; color:#fff; }
+  .photos-band .pb-icon { font-size:2.4rem; }
+  .photos-band .pb-text { flex:1; min-width:200px; }
+  .photos-band .pb-title { font-family:var(--serif); font-size:1.3rem; margin-bottom:.3rem; }
+  .photos-band .pb-sub { font-size:.85rem; opacity:.82; line-height:1.5; }
+  .photos-band .pb-btn { background:#fff; color:var(--ocean-dk); text-decoration:none; font-weight:600; font-size:.88rem; padding:.65rem 1.3rem; border-radius:8px; white-space:nowrap; }
+  .photos-band .pb-btn:hover { background:var(--ocean-lt); }
+
   /* Password gate */
   #gate { position:fixed; inset:0; z-index:1000; background:linear-gradient(150deg,var(--ocean-dk) 0%,#1a6b8a 55%,#2896b0 100%); display:flex; align-items:center; justify-content:center; padding:1.5rem; }
   #gate.hidden { display:none; }
@@ -232,6 +241,7 @@
     <a href="#food">Food</a>
     <a href="#stay">Stay</a>
     <a href="#travelers">Travelers</a>
+    <a href="#photos">Photos</a>
   </div>
 </nav>
 
@@ -616,6 +626,24 @@
       <div class="traveler"><div class="tr-avatar"><img src="../thousand-islands/crew/Ruma.jpg" alt="Ruma Gangopadhyay" loading="lazy"></div><div><div class="tr-name">Ruma Gangopadhyay</div><div class="tr-sub">Traveler 4</div></div></div>
       <div class="traveler"><div class="tr-avatar"><img src="../thousand-islands/crew/Shikha.jpg" alt="Shikha Patra Samaddar" loading="lazy"></div><div><div class="tr-name">Shikha Patra Samaddar</div><div class="tr-sub">Traveler 5</div></div></div>
       <div class="traveler"><div class="tr-avatar"><img src="../thousand-islands/crew/Deeparjo__2_.jpg" alt="Deeparjo Ganguli" loading="lazy"></div><div><div class="tr-name">Deeparjo Ganguli</div><div class="tr-sub">Traveler 6</div></div></div>
+    </div>
+  </div>
+</section>
+
+<hr class="section-divider">
+
+<!-- Photos -->
+<section id="photos">
+  <div class="container">
+    <p class="section-label">Memories</p>
+    <h2 class="section-title">Trip Photos</h2>
+    <div class="photos-band">
+      <div class="pb-icon">📸</div>
+      <div class="pb-text">
+        <div class="pb-title">Chicago 2026 — Shared Album</div>
+        <div class="pb-sub">Everyone's photos in one place — the Bean, the river cruise, Navy Pier, the Skydeck and more. Add yours and browse the crew's shots.</div>
+      </div>
+      <a class="pb-btn" href="https://photos.google.com/share/AF1QipOQScAt6Jxc8PgkBvXiy9fikm-nqGvMVv1vrRpp_QWnFSV5hsfrjQP1pGoSGz_DLA?key=clVGLTZFVG8tUW9OWi1RWFREN2taOGNlbGUwRWFn" target="_blank" rel="noopener">Open album ↗</a>
     </div>
   </div>
 </section>
