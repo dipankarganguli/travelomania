@@ -179,6 +179,15 @@
   .photos-band .pb-btn { background:#fff; color:var(--ocean-dk); text-decoration:none; font-weight:600; font-size:.88rem; padding:.65rem 1.3rem; border-radius:8px; white-space:nowrap; }
   .photos-band .pb-btn:hover { background:var(--ocean-lt); }
 
+  /* Story band */
+  .story-band { display:flex; align-items:center; gap:1.2rem; flex-wrap:wrap; background:linear-gradient(135deg,#6a4a12,#c4882a); border-radius:var(--radius); padding:1.5rem 1.7rem; color:#fff; text-decoration:none; box-shadow:var(--shadow); transition:box-shadow .2s; }
+  .story-band:hover { box-shadow:0 6px 26px rgba(196,136,42,.3); }
+  .story-band .stb-icon { font-size:2.2rem; }
+  .story-band .stb-text { flex:1; min-width:200px; }
+  .story-band .stb-title { font-family:var(--serif); font-size:1.25rem; margin-bottom:.25rem; }
+  .story-band .stb-sub { font-size:.85rem; opacity:.9; line-height:1.5; }
+  .story-band .stb-btn { background:#fff; color:#8a5a1a; font-weight:600; font-size:.88rem; padding:.6rem 1.25rem; border-radius:8px; white-space:nowrap; }
+
   /* Password gate */
   #gate { position:fixed; inset:0; z-index:1000; background:linear-gradient(150deg,var(--ocean-dk) 0%,#1a6b8a 55%,#2896b0 100%); display:flex; align-items:center; justify-content:center; padding:1.5rem; }
   #gate.hidden { display:none; }
@@ -236,6 +245,7 @@
   <a class="nav-brand" href="../index.html">✦ Travelomania</a>
   <div class="nav-links">
     <a href="../index.html">← All Trips</a>
+    <a href="story/index.html">Story</a>
     <a href="#flights">Flights</a>
     <a href="#itinerary">Itinerary</a>
     <a href="#food">Food</a>
@@ -302,6 +312,20 @@
     <div class="trip-note">
       Based on your flights and hotel, you'll have <strong>3 full sightseeing days</strong> (Wednesday afternoon, Thursday, Friday) and <strong>Saturday morning until about 2:30 PM</strong> before heading to ORD. Your hotel, <strong>Travelodge by Wyndham Downtown Chicago</strong>, is in an excellent location within walking distance of Grant Park, Millennium Park, and the Art Institute.
     </div>
+  </div>
+</section>
+
+<!-- Trip story -->
+<section id="story" style="padding-top:0;">
+  <div class="container">
+    <a class="story-band" href="story/index.html">
+      <span class="stb-icon">📖</span>
+      <span class="stb-text">
+        <span class="stb-title">ছ’জনের চার দিন — the trip story</span>
+        <span class="stb-sub">A day-by-day travelogue of our four days in Chicago — read it in বাংলা or English.</span>
+      </span>
+      <span class="stb-btn">Read the story ↗</span>
+    </a>
   </div>
 </section>
 

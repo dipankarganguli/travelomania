@@ -1,0 +1,641 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<link rel="icon" type="image/svg+xml" href="../../travelomania-favicon.svg">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Chicago · Trip Story</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,700;1,400&family=Inter:wght@300;400;500;600&family=Noto+Serif+Bengali:wght@400;500;600&display=swap" rel="stylesheet">
+<style>
+  *, *::before, *::after { box-sizing:border-box; margin:0; padding:0; }
+  :root {
+    --ocean:#1a6b8a; --ocean-lt:#d6eef5; --ocean-dk:#0c3a50;
+    --stone:#6b7c88; --ink:#1c2b33; --mist:#f0f4f6; --white:#fff;
+    --serif:'Playfair Display',Georgia,serif;
+    --sans:'Inter',system-ui,sans-serif;
+    --bengali:'Noto Serif Bengali','Inter',system-ui,sans-serif;
+    --radius:10px; --shadow:0 2px 16px rgba(26,107,138,.10);
+  }
+  html { scroll-behavior:smooth; }
+  body { font-family:var(--sans); color:var(--ink); background:var(--white); -webkit-font-smoothing:antialiased; }
+
+  nav { position:sticky; top:0; z-index:100; background:rgba(255,255,255,.93); backdrop-filter:blur(12px); border-bottom:1px solid rgba(26,107,138,.14); display:flex; align-items:center; justify-content:space-between; padding:0 1.5rem; height:56px; gap:1rem; }
+  .nav-brand { font-family:var(--serif); font-size:1rem; color:var(--ocean-dk); text-decoration:none; }
+  .nav-links a { font-size:.8rem; color:var(--stone); text-decoration:none; font-weight:500; }
+  .nav-links a:hover { color:var(--ocean); }
+
+  .hero { background:linear-gradient(150deg,var(--ocean-dk) 0%,#1a6b8a 55%,#2896b0 100%); padding:3.2rem 1.5rem 3.4rem; text-align:center; }
+  .hero-eyebrow { font-size:.7rem; font-weight:600; letter-spacing:.18em; text-transform:uppercase; color:rgba(214,238,245,.72); margin-bottom:.8rem; }
+  .hero h1 { font-family:var(--bengali); font-size:clamp(1.7rem,4.5vw,2.9rem); font-weight:600; color:#fff; line-height:1.25; margin-bottom:.5rem; }
+  .hero .hero-en { font-family:var(--serif); font-style:italic; font-size:1.05rem; color:rgba(255,255,255,.82); }
+
+  .container { max-width:720px; margin:0 auto; padding:2.2rem 1.5rem 3.5rem; }
+
+  .lang-toggle { display:flex; justify-content:center; gap:.5rem; margin-bottom:2rem; }
+  .lang-toggle button { font-family:var(--sans); font-size:.86rem; font-weight:600; padding:.5rem 1.3rem; border-radius:22px; border:1.5px solid rgba(26,107,138,.3); background:var(--white); color:var(--ocean); cursor:pointer; transition:all .15s; }
+  .lang-toggle button.active { background:var(--ocean); color:#fff; border-color:var(--ocean); }
+  .lang-toggle button:hover:not(.active) { background:var(--ocean-lt); }
+
+  .story { font-size:1.06rem; line-height:1.9; color:#2a3a44; }
+  .story p { margin-bottom:1.25rem; }
+  .story strong { color:var(--ocean-dk); font-weight:600; }
+  .story .story-hr { border:none; height:0; text-align:center; margin:2.2rem 0; }
+  .story .story-hr::before { content:'✦ ✦ ✦'; color:rgba(26,107,138,.4); font-size:.7rem; letter-spacing:.5em; }
+  #story-bn { font-family:var(--bengali); }
+  #story-bn p { line-height:2.05; }
+  #story-en { display:none; }
+
+  footer { text-align:center; padding:2.5rem 1.5rem; font-size:.8rem; color:var(--stone); border-top:1px solid rgba(26,107,138,.1); background:var(--white); line-height:1.8; }
+  footer a { color:var(--ocean); text-decoration:none; }
+
+  /* Password gate */
+  #gate { position:fixed; inset:0; z-index:1000; background:linear-gradient(150deg,var(--ocean-dk) 0%,#1a6b8a 55%,#2896b0 100%); display:flex; align-items:center; justify-content:center; padding:1.5rem; }
+  #gate.hidden { display:none; }
+  .gate-card { background:var(--white); border-radius:16px; box-shadow:0 20px 60px rgba(0,0,0,.3); padding:2.4rem 2.2rem; max-width:360px; width:100%; text-align:center; }
+  .gate-icon { font-size:2.4rem; margin-bottom:.6rem; }
+  .gate-title { font-family:var(--serif); font-size:1.5rem; color:var(--ocean-dk); margin-bottom:.4rem; }
+  .gate-sub { font-size:.85rem; color:var(--stone); line-height:1.5; margin-bottom:1.4rem; }
+  .gate-form { display:flex; gap:.5rem; }
+  .gate-form input { flex:1; padding:.6rem .9rem; border:1px solid rgba(26,107,138,.25); border-radius:8px; font-size:.95rem; font-family:var(--sans); }
+  .gate-form button { background:var(--ocean); color:#fff; border:none; padding:.6rem 1.2rem; border-radius:8px; font-size:.9rem; font-weight:500; cursor:pointer; font-family:var(--sans); }
+  .gate-wrong { font-size:.78rem; color:#c0392b; margin-top:.8rem; min-height:1rem; visibility:hidden; }
+  .gate-wrong.show { visibility:visible; }
+</style>
+</head>
+<body>
+
+<div id="gate">
+  <div class="gate-card">
+    <div class="gate-icon">🔒</div>
+    <div class="gate-title">Chicago Story</div>
+    <div class="gate-sub">This page is private. Enter the password to read the story.</div>
+    <div class="gate-form">
+      <input type="password" id="gate-pw" placeholder="Password" autocomplete="off">
+      <button type="button" id="gate-btn">Unlock</button>
+    </div>
+    <div class="gate-wrong" id="gate-wrong">Incorrect password. Try again.</div>
+  </div>
+</div>
+
+<nav>
+  <a class="nav-brand" href="../index.html">✦ Travelomania</a>
+  <div class="nav-links">
+    <a href="../index.html">← Back to Chicago</a>
+  </div>
+</nav>
+
+<div class="hero">
+  <p class="hero-eyebrow">Chicago · Aug 19–22, 2026 · Trip Story</p>
+  <h1>ছ’জনের চার দিন — শিকাগোর পথে পথে</h1>
+  <div class="hero-en">Six of Us, Four Days, and Chicago</div>
+</div>
+
+<div class="container">
+  <div class="lang-toggle">
+    <button id="btn-bn" class="active" onclick="setLang('bn')">বাংলা</button>
+    <button id="btn-en" onclick="setLang('en')">English</button>
+  </div>
+
+  <article id="story-bn" class="story">
+      <p>কিছু কিছু বেড়ানো শেষ হয়ে যাওয়ার পরেও যেন শেষ হয় না। বাড়ি ফিরে সুটকেস গুছিয়ে রাখা হয়ে যায়, জামাকাপড় ধুয়ে আলমারিতে উঠে যায়, দৈনন্দিন জীবন আবার নিজের ছন্দে ফিরে আসে—তবু মাঝেমধ্যেই কোনও একটা দৃশ্য হঠাৎ চোখের সামনে ভেসে ওঠে। কোনও নদীর জলে শহরের আলোর প্রতিফলন, কোনও মিউজিয়ামের বিশাল ডাইনোসর, ১০৩ তলা থেকে দেখা সন্ধের শহর, কিংবা নীল আকাশের নীচে Lake Michigan-এর অসীম জলরাশি।</p>
+      <p>আমাদের চার দিনের শিকাগো সফরটা ঠিক তেমনই।</p>
+      <p>আমরা ছ’জন—আমি, আমার স্ত্রী মোনালিসা, ছেলে দীপার্জো, আমার বাবা-মা আর আমার শাশুড়ি। বুধবার থেকে শনিবার—চার দিনের ছোট্ট সফর। ইউনাইটেড এয়ারলাইন্সে বেশ ভাল দামে টিকিট পাওয়া গিয়েছিল, তাই বেশ কিছুদিন আগেই সব বুক করে রেখেছিলাম।</p>
+      <p>বুধবার সকাল ৮টা ১০-এর ফ্লাইট। ফলে আমাদের শিকাগো অভিযান শুরু হল ভোর থাকতে থাকতেই।</p>
+      <p>আগে থেকেই গুগলে খোঁজ নিয়ে ঠিক করেছিলাম অ্যালবানি এয়ারপোর্টের economy parking lot-এ গাড়ি রেখে সেখান থেকে shuttle ধরে terminal-এ যাব। প্রথমে ভেবেছিলাম সবাইকে এয়ারপোর্টে নামিয়ে দিয়ে আমি একা গাড়ি পার্ক করতে ফিরে যাব, তারপর shuttle ধরে আবার আসব। পরে মনে হল, এত ঝামেলার দরকার কী? সবাই মিলে সরাসরি parking lot-এ গিয়ে একসঙ্গেই shuttle ধরা যাক।</p>
+      <p>সিদ্ধান্তটা দারুণ কাজে দিল।</p>
+      <p>গাড়ি রেখে মিনিট পাঁচেকের মধ্যেই shuttle এল, আর আরও মিনিট পাঁচেকের মধ্যে আমরা এয়ারপোর্টে। সকাল তখন প্রায় সওয়া ছ’টা। এত ভোর বলে এয়ারপোর্টেও তেমন ভিড় নেই। Security পেরিয়ে গেটে পৌঁছে বেশ খানিকটা নিশ্চিন্ত হলাম।</p>
+      <p>এরপর ইউনাইটেডের ফ্লাইটে শিকাগোর উদ্দেশে যাত্রা। ফ্লাইট একেবারে মসৃণ, সময়মতোই পৌঁছে গেলাম O’Hare-এ।</p>
+      <p>কিন্তু শিকাগোয় নেমেই প্রথম পরীক্ষা।</p>
+      <p>CTA Blue Line ধরতে হাঁটা যেন আর শেষ হয় না! লাগেজ নিয়ে কুড়ি মিনিটেরও বেশি হাঁটার পর অবশেষে ট্রেনের নাগাল পেলাম। তারপর Blue Line ধরে সোজা Jackson।</p>
+      <p>আমাদের হোটেল ছিল ডাউনটাউনের Travelodge by Wyndham। আবার সেদিনের প্রথম গন্তব্য Art Institute of Chicago-ও Jackson থেকে খুব দূরে নয়। মা আর শাশুড়ির বয়সের কথা মাথায় রেখে ঠিক হল, তাঁদের লাগেজ নিয়ে হোটেল পর্যন্ত টেনে নিয়ে যাওয়ার কোনও অর্থ নেই। তাই মোনালিসা মা আর শাশুড়িকে নিয়ে Art Institute-এর দিকে চলে গেল। আমি, বাবা আর দীপার্জো লাগেজ নিয়ে গেলাম হোটেলে।</p>
+      <p>তখনও check-in-এর সময় হয়নি। কাজেই luggage room-এ ব্যাগপত্র জমা রেখে আমরা তিনজন আবার হাঁটা দিলাম Art Institute-এর দিকে।</p>
+      <p>সেটাই বোধহয় সফরের প্রথম ভুল সিদ্ধান্ত!</p>
+      <p>দূরত্ব এক মাইলেরও কম। অন্য কোনও দিন হলে দিব্যি হেঁটে যাওয়া যেত। কিন্তু সেদিন শিকাগো বেশ গরম এবং আর্দ্র। তার সঙ্গে ভোরে ঘুম থেকে ওঠা, এয়ারপোর্ট, ফ্লাইট, লাগেজ নিয়ে হাঁটা—সব মিলিয়ে সেই এক মাইলের কম পথও যেন কয়েক মাইল বলে মনে হচ্ছিল। পরে মনে হয়েছিল, একটা বাস ধরে নিলেই বুদ্ধিমানের কাজ হত।</p>
+      <p>তবে গণপরিবহন নিয়ে আর একটা সিদ্ধান্ত অসাধারণ কাজে দিয়েছিল। আমরা প্রত্যেকের জন্য ১৫ ডলারের তিন দিনের CTA pass কিনেছিলাম। বাস এবং ট্রেনে unlimited ride। পরের কয়েক দিনে বুঝেছিলাম, গোটা সফরের সবচেয়ে লাভজনক সিদ্ধান্তগুলোর মধ্যে এটা একটা।</p>
+      <p>দুপুর একটা নাগাদ আমরা সবাই Art Institute of Chicago-তে ঢুকলাম।</p>
+      <p>আর ঢুকেই ক্লান্তির কথা কিছুক্ষণের জন্য ভুলে গেলাম।</p>
+      <p>বিশাল সংগ্রহশালা। একটার পর একটা gallery, যুগের পর যুগের শিল্পকর্ম। বিশেষ করে মধ্যযুগীয় শিল্পের সংগ্রহ দেখে মুগ্ধ না হয়ে উপায় নেই। শত শত বছর আগের মানুষের শিল্পবোধ, ধর্ম, জীবনযাপন, সৌন্দর্যের ধারণা—সব যেন সেই সব ছবি আর শিল্পবস্তুর মধ্যে জমাট বেঁধে রয়েছে।</p>
+      <p>কিন্তু Art Institute এমন একটা জায়গা, যেখানে তিন ঘণ্টা আসলে কিছুই নয়।</p>
+      <p>দেখতে দেখতে কখন যে বিকেল চারটে বেজে গেল, বুঝতেই পারিনি। ততক্ষণে অবশ্য শরীরের শক্তিও প্রায় নিঃশেষ।</p>
+      <p>এদিকে দিনের দ্বিতীয় আকর্ষণ তখনও বাকি—Chicago Architecture River Cruise।</p>
+      <p>শিকাগোর পাঁচটি attraction দেখার জন্য আমি আগে থেকেই CityPASS কিনে রেখেছিলাম। Art Institute-এ আলাদা করে সময় বুক করার দরকার ছিল না, কিন্তু Architecture River Cruise-এর জন্য reservation ছিল। প্রথমে বুক করেছিলাম বিকেল ৫টা ৪৫। Art Institute থেকে বেরিয়ে বুঝলাম, সেই সময়ে পৌঁছনো বেশ চাপের হয়ে যাবে। তাই ফোন থেকেই booking বদলে ৬টা ৪৫ করে দিলাম।</p>
+      <p>এবার আর হাঁটার বীরত্ব দেখানো নয়।</p>
+      <p>কিছুটা হেঁটে bus stop-এ গিয়ে CTA বাস ধরে পৌঁছে গেলাম Navy Pier। সেখান থেকেই শুরু হল ৭৫ মিনিটের Architecture River Cruise—আর প্রথম দিনের সমস্ত ক্লান্তি সত্ত্বেও সেটাই হয়ে উঠল সফরের অন্যতম সেরা অভিজ্ঞতা।</p>
+      <p>শিকাগো নদীর বুক দিয়ে নৌকা এগিয়ে চলেছে, আর সঙ্গে থাকা guide একের পর এক বহুতল দেখিয়ে তাদের ইতিহাস, স্থাপত্যশৈলী আর শহরের বিবর্তনের গল্প বলে চলেছেন। রাস্তা থেকে শিকাগোর বাড়িগুলো দেখার সঙ্গে নদীর বুক থেকে দেখার বিস্তর তফাত। কোথাও পুরনো স্থাপত্যের ছাপ, কোথাও আধুনিক কাচ-ইস্পাতের আকাশছোঁয়া নির্মাণ। নদীর ধারে মানুষ হাঁটছে, কেউ সাইকেল চালাচ্ছে, কোথাও restaurant-এ জমে উঠেছে সন্ধের আড্ডা।</p>
+      <p>আমরা যখন যাত্রা শুরু করেছিলাম, তখনও আকাশে যথেষ্ট আলো। তারপর নৌকা যত এগিয়েছে, দিনের আলো তত ফিকে হয়েছে।</p>
+      <p>আর ফেরার সময় শিকাগো যেন সম্পূর্ণ অন্য শহর।</p>
+      <p>চারদিকে অন্ধকার, আর তার মধ্যে একে একে জ্বলে উঠেছে নদীর দু’ধারের বহুতলের অসংখ্য আলো। কাচের দেওয়ালে আলোর প্রতিফলন, নীচে কালো নদীর জলে সেই আলোর ছায়া—দিনের বেলা দেখা শহরটা মুহূর্তের মধ্যে যেন উৎসবের সাজ পরে নিয়েছে।</p>
+      <p>সারাদিনের ক্লান্তির মধ্যেও সেই দৃশ্য থেকে চোখ সরানো কঠিন।</p>
+      <p>Cruise শেষ হতে হতে রাত। Navy Pier থেকে আবার বাস ধরে State Street আর Harrison Street-এর মোড়ের কাছে নামলাম। সেখান থেকে হোটেল মিনিট দুয়েকের হাঁটা।</p>
+      <p>কিন্তু এতক্ষণে বাইরে গিয়ে রাতের খাবার খোঁজার মতো শক্তি কারও নেই।</p>
+      <p>তাই ফেরার পথেই ফোন থেকে DoorDash না Uber Eats—এখন আর ঠিক মনে নেই—একটা app-এ Maharaja Indian নামে একটি ভারতীয় restaurant থেকে রাতের খাবার order করে দিয়েছিলাম। চিকেন, পনির, garlic naan আর ভাত।</p>
+      <p>হিসেবটাও বেশ মিলে গেল। আমরা হোটেলে পৌঁছতে পৌঁছতেই প্রায় খাবার এসে হাজির।</p>
+      <p>সারাদিনের ঘোরাঘুরির পর হোটেলের ঘরে বসে সেই ভারতীয় খাবারই তখন রাজভোজের মতো লাগছিল।</p>
+      <p>খাওয়া শেষ করে একটা ভাল গরম জলের shower। তারপর বিছানায় গা এলিয়ে দিতেই ঘুম।</p>
+      <p>প্রথম দিনেই যেন দু’দিনের ভ্রমণ গুঁজে দিয়েছি।</p>
+      <hr class="story-hr">
+      <p>পরদিন সকাল ছ’টা নাগাদ ঘুম ভাঙল।</p>
+      <p>Travelodge-এ আমাদের দুটো ঘর নেওয়া ছিল। একটায় আমি, মোনালিসা আর দীপার্জো; অন্যটায় বাবা-মা আর শাশুড়ি। প্রতিটি ঘরেই দুটো করে double bed, ফলে ছ’জনের থাকার ব্যবস্থা বেশ আরামদায়ক।</p>
+      <p>হোটেলটা একেবারে downtown-এ বলে booking-এর সময়ই আমি পিছনের দিকের ঘর চেয়েছিলাম। রাস্তার আওয়াজ কম, সরাসরি সকালের আলোও আসে না। পিছনটা অন্যান্য উঁচু বাড়ি আর হোটেলে ঘেরা, তাই দিনের বেলাতেও বেশ অন্ধকার। শহরের প্রাণকেন্দ্রে থেকেও ঘরের মধ্যে একটা শান্ত পরিবেশ।</p>
+      <p>প্রথম রাতের ঘুমটা তাই বেশ ভালই হয়েছিল।</p>
+      <p>সকাল ছ’টায় ঘুম ভাঙলেও সঙ্গে সঙ্গে বিছানা ছাড়লাম না। কিছুক্ষণ আলস্য করে শুয়ে থেকে গরম জলে স্নান করে তৈরি হলাম।</p>
+      <p>তারপর রাস্তার ওপারের Dunkin'।</p>
+      <p>অ্যাভোকাডো স্যান্ডউইচ, egg-cheese croissant, tiramisu mocha cold brew—সব মিলিয়ে জমকালো প্রাতরাশ। সঙ্গে একটা black coffee-ও অর্ডার করেছিলাম।</p>
+      <p>সমস্যা হল, টাকা দিয়ে coffee-টা কাউন্টারের উপরেই রেখে চলে এলাম!</p>
+      <p>সকালের প্রথম ছোটখাটো ক্ষতি।</p>
+      <p>তবে তার চেয়ে মজার ঘটনা অপেক্ষা করছিল Dunkin'-এর ভিতরে। সেদিন ওদের Customer Appreciation Day। একটা fortune wheel বসানো হয়েছে—ঘোরালে নানা পুরস্কার।</p>
+      <p>আমরাও সুযোগ ছাড়লাম না।</p>
+      <p>মোনালিসার ভাগ্যে জুটল Dunkin'-এর একটা coffee mug। আর আমি আর দীপার্জো পেলাম দুটো free donut।</p>
+      <p>বেড়াতে বেরিয়ে এমন অপ্রত্যাশিত ছোটখাটো ঘটনাগুলোই বোধহয় পরে বেশি মনে থাকে।</p>
+      <p>প্রাতরাশের পর গন্তব্য Shedd Aquarium।</p>
+      <p>CTA pass সঙ্গে। Bus stop-এ গিয়ে বাসে উঠে পড়লাম।</p>
+      <p>তারপরেই বোঝা গেল—বাস ঠিক, দিক ভুল!</p>
+      <p>Driver যখন শুনলেন আমরা Shedd Aquarium যেতে চাই, বুঝিয়ে দিলেন আমরা উল্টো দিকে চলেছি। অগত্যা বাস থেকে নেমে রাস্তা পেরিয়ে বিপরীত দিকের stop-এ দাঁড়িয়ে আবার সেই route-এরই উল্টো দিকের বাস ধরতে হল।</p>
+      <p>আমাদের এমনিতেই ঠাসা কর্মসূচি। খানিকটা সময় নষ্ট হল ঠিকই, কিন্তু বেড়াতে বেরিয়ে সব কিছু ঘড়ির কাঁটা মেনে চলবে, তা-ই বা কে বলেছে?</p>
+      <p>শেষ পর্যন্ত ঠিক বাস ধরে পৌঁছে গেলাম Museum Campus-এর Shedd Aquarium-এ।</p>
+      <p>তারপর যেন বাইরের পৃথিবীটাই বদলে গেল।</p>
+      <p>একটার পর একটা বিশাল aquarium, বিচিত্র সামুদ্রিক প্রাণী, রংবেরঙের মাছ—চার-পাঁচ ঘণ্টা কোথা দিয়ে কেটে গেল বোঝাই গেল না। দীপার্জো তো মুগ্ধ, আমরাও কম নই।</p>
+      <p>সবচেয়ে বেশি মনে থেকে গেল beluga whale। বিশাল সাদা শরীর নিয়ে জলের মধ্যে তাদের অবলীলায় ভেসে বেড়ানো দেখলে চোখ সরানো কঠিন। Penguins-দের কাণ্ডকারখানাও কম আকর্ষণীয় নয়। তার সঙ্গে একটা 3D movie-ও দেখা হল।</p>
+      <p>বেরোতে বেরোতে বিকেল প্রায় সাড়ে চারটে-পাঁচটা।</p>
+      <p>এবার বাসে চেপে Millennium Park।</p>
+      <p>মজার ব্যাপার হল, আগের দিন আমরা Art Institute ঘুরেছি, অথচ তখন বুঝতেই পারিনি Millennium Park সেখান থেকে কতটা কাছে! এলাকার ভূগোল একটু পরিষ্কার হওয়ার পর মনে হচ্ছিল—আরে, এ তো প্রায় পাশেই!</p>
+      <p>Millennium Park-এ প্রথম গন্তব্য অবশ্যই বিখ্যাত <strong>Cloud Gate</strong>, যাকে সবাই বলে <strong>The Bean</strong>।</p>
+      <p>শিকাগোয় এসে The Bean-এর সামনে ছবি না তুললে বোধহয় একটা অবশ্যকর্তব্য অসম্পূর্ণ থেকে যায়। পালিশ-করা ধাতব পৃষ্ঠে আকাশ, শহরের বহুতল আর সামনে দাঁড়ানো মানুষের বাঁকাচোরা প্রতিফলন—ছবিতে যতবারই দেখা থাক, সামনে দাঁড়িয়ে দেখার মজাই আলাদা।</p>
+      <p>আমরাও ছবি তুললাম। তারপর একটু বসে বিশ্রাম, সঙ্গে টুকটাক খাওয়াদাওয়া।</p>
+      <p>সেখান থেকে একটা bridge ধরে হাঁটতে হাঁটতে প্রথমে ঠিক করেছিলাম Buckingham Fountain পর্যন্ত যাব। কিছুটা যাওয়ার পর মনে হল, এই মুহূর্তে দূরত্বটা অযথা বেশি হয়ে যাচ্ছে। Fountain-টা আমাদের হোটেলের দিক থেকেই সুবিধাজনক। তাই পরিকল্পনা বদলে ফিরে এলাম Millennium Park-এর দিকে।</p>
+      <p>এরপর Crown Fountain।</p>
+      <p>ততক্ষণে সন্ধে নেমে এসেছে। ঘড়িতে প্রায় সাড়ে সাতটা। সারাদিন aquarium-এ হাঁটা, তারপর Millennium Park—পা এবার জানান দিতে শুরু করেছে যে তারও সহ্যের সীমা আছে।</p>
+      <p>Michigan Avenue দিয়ে বাস ধরে ফেরার পথে Grant Park-এ একটা dance festival চলছিল। আলো, গান, নাচ আর মানুষের ভিড়—কিছুক্ষণ দাঁড়িয়ে দেখলাম।</p>
+      <p>এখানেই আমাদের দলটা দু’ভাগ হয়ে গেল।</p>
+      <p>বাবা-মা সারাদিনের পর যথেষ্ট ক্লান্ত, তাই তাঁরা হোটেলে ফিরে গেলেন। কিন্তু Buckingham Fountain এখনও আমাদের দেখা হয়নি। আমি, মোনালিসা, দীপার্জো আর শাশুড়ি ঠিক করলাম—এত কাছে এসে বাদ দেওয়া যাবে না।</p>
+      <p>আমরা চারজন চললাম Buckingham Fountain দেখতে।</p>
+      <p>রাতের বিশাল fountain, চারপাশের আলো, আর তার কাছেই Lake Michigan-এর বিস্তীর্ণ জলরাশি—শহরের মাঝখানে দাঁড়িয়েও সেখানে একটা আশ্চর্য খোলা অনুভূতি। বেশ কিছুক্ষণ কাটালাম, ছবি তুললাম, চারপাশটা উপভোগ করলাম।</p>
+      <p>তারপর হোটেল।</p>
+      <p>বাবার জন্য ভারতীয় খাবার—ভাত আর সবজির তরকারি—নিয়ে এসেছিলাম। আর আমরা গেলাম আমাদের হোটেলের বিল্ডিংয়েই থাকা একটি Thai restaurant-এ। খাবার বেশ ভাল। রাত ৯টা ৪৫ নাগাদ restaurant বন্ধ হওয়ার সময় আমরাও উঠে পড়লাম।</p>
+      <p>তারপর গরম জলে স্নান এবং সোজা বিছানা।</p>
+      <p>দ্বিতীয় দিনও উসুল।</p>
+      <hr class="story-hr">
+      <p>তৃতীয় দিনের সকালটা অবশ্য অতটা ঝরঝরে ভাবে শুরু হল না।</p>
+      <p>ঘুম খারাপ হয়নি, কিন্তু পরপর দু’দিনের ধকল শরীরে এমন ভাবে জমে ছিল যে মনে হচ্ছিল, আর একটু গভীর ঘুম হলে মন্দ হত না। বিছানা ছাড়তে ছাড়তে সকাল আটটা।</p>
+      <p>ঘড়ির দিকে তাকিয়ে মনে হল—এবার তাড়াতাড়ি না করলে চলবে না।</p>
+      <p>তাড়াহুড়ো করে গরম জলে স্নান, তৈরি হওয়া—শেষ পর্যন্ত সোয়া ন’টার মধ্যে মোটামুটি প্রস্তুত। তারপর আবার সেই পরিচিত Dunkin'। Egg-cheese croissant sandwich আর coffee। আগের দিনের প্রাতরাশই এত ভাল লেগেছিল যে নতুন করে পরীক্ষা-নিরীক্ষার দরকার বোধ করলাম না।</p>
+      <p>দ্বিতীয় দিনের মতো তৃতীয় দিনেও গন্তব্য Museum Campus। তবে এবার Shedd Aquarium নয়—<strong>Field Museum</strong>।</p>
+      <p>সকাল এগারোটা নাগাদ পৌঁছে গেলাম।</p>
+      <p>ভেতরে ঢুকেই বোঝা গেল, আজও পায়ের উপর যথেষ্ট অত্যাচার অপেক্ষা করছে।</p>
+      <p>তিনতলা জুড়ে বিশাল সংগ্রহ। ডাইনোসরের জীবাশ্ম থেকে প্রাগৈতিহাসিক পৃথিবী, প্রাচীন সভ্যতা থেকে মানুষের বিবর্তন, আফ্রিকার হাতি থেকে পৃথিবীর নানা প্রান্তের অসংখ্য প্রাণীর taxidermy—কোনটা ছেড়ে কোনটা দেখব, সেটাই সমস্যা।</p>
+      <p>তবে Field Museum-এ এসে প্রথম লক্ষ্য স্থির—<strong>SUE</strong>।</p>
+      <p>পৃথিবীর সবচেয়ে বিখ্যাত Tyrannosaurus rex জীবাশ্মগুলোর একটি। জীবাশ্মটির আবিষ্কারক Sue Hendrickson-এর নামেই তার নাম SUE।</p>
+      <p>আমাদের CityPASS-এর সঙ্গে একটা show এবং একটা বিশেষ exhibition দেখার সুযোগ ছিল। Show-এর সময় বেলা ১১টা ৫০ নাগাদ। হাতে মিনিট পঁয়তাল্লিশ আছে দেখে প্রথমে মনে হয়েছিল, অনেকটা দেখে ফেলব।</p>
+      <p>সে ধারণা দ্রুত ভুল প্রমাণিত হল।</p>
+      <p>SUE-কে ঘিরে অংশটাই এত বড় এবং আকর্ষণীয় যে দেখতে দেখতে সময় কোথা দিয়ে চলে যাচ্ছিল বুঝতে পারছিলাম না। শেষ পর্যন্ত মাঝপথেই দেখা বন্ধ করে প্রায় ছুটতে ছুটতে theater-এ ফিরতে হল।</p>
+      <p>সেখানে SUE-কে নিয়েই পনেরো-কুড়ি মিনিটের একটা ছোট ছবি—কী ভাবে Sue Hendrickson দক্ষিণ ডাকোটায় জীবাশ্মটি খুঁজে পেয়েছিলেন, সেই আবিষ্কারের গল্প।</p>
+      <p>তারপর নীচের তলায় প্রাচীন মিশরের ইতিহাস, মাটির নীচের জগৎ, aerodynamics-সহ আরও কয়েকটি বৈজ্ঞানিক প্রদর্শনী ঘুরে দেখলাম।</p>
+      <p>এরপর আবার ফিরে গেলাম ডাইনোসর আর পৃথিবীর বিবর্তনের ইতিহাসের দিকে।</p>
+      <p>কোটি কোটি বছর ধরে পৃথিবীর পরিবর্তন, প্রাণের বিবর্তন, ডাইনোসরদের আধিপত্য, mass extinction, তারপর ধীরে ধীরে আজকের পৃথিবীর সৃষ্টি—একটা museum-এর কয়েকটা ঘরের মধ্যে যেন অকল্পনীয় দীর্ঘ সময়ের মধ্যে দিয়ে হেঁটে যাওয়া।</p>
+      <p>তারপর চিনের ইতিহাসের gallery।</p>
+      <p>এতক্ষণে পেটও জানান দিতে শুরু করেছে যে ইতিহাস আর জীবাশ্ম দিয়ে দুপুরের খিদে মেটে না।</p>
+      <p>Museum cafeteria-য় মধ্যাহ্নভোজ হল। খাবারটা অবশ্য Field Museum-এর বাকি অভিজ্ঞতার মতো স্মরণীয় নয়—মোটামুটি পেট ভরল, এই পর্যন্ত।</p>
+      <p>খাওয়ার পর আমরা একটু ভাগ হয়ে গেলাম। আমি গেলাম প্রাচীন আমেরিকার ইতিহাস দেখতে, আর দীপার্জোর আগ্রহ বেশি প্রাণীদের বিভাগে।</p>
+      <p>তারপর আবার gallery থেকে gallery।</p>
+      <p>এত বড় museum যে একটা সময়ের পর চোখ দেখতে চাইলেও পা আর কোমর প্রতিবাদ শুরু করে। কিন্তু সামনে নতুন একটা gallery দেখলেই আবার মনে হয়—এতটা যখন এসেছি, এটাও দেখে যাই!</p>
+      <p>এভাবেই দেখতে দেখতে বিকেল পাঁচটা।</p>
+      <p>Museum বন্ধ হওয়ার মাত্র পাঁচ মিনিট আগে আমরা বেরোলাম।</p>
+      <p>ততক্ষণে পা আর কোমর দুটোই বেশ ভাল রকম জানান দিচ্ছে—আজকের মতো অনেক হয়েছে।</p>
+      <p>কিন্তু মন তখনও বলছে—না, এখনও হয়নি।</p>
+      <p>কারণ তৃতীয় দিনের সবচেয়ে রোমাঞ্চকর অভিজ্ঞতাটা তখনও বাকি।</p>
+      <p><strong>Willis Tower Skydeck।</strong></p>
+      <p>Field Museum-এর কাছাকাছি সেদিন একটা বড় অনুষ্ঠান চলছিল। তার জন্য আশপাশের বেশ কিছু gate এবং রাস্তা বন্ধ। ফলে bus stop-এ পৌঁছতেই প্রায় এক মাইল হাঁটতে হল।</p>
+      <p>সারাদিন Field Museum ঘোরার পরে সেই এক মাইল যে ঠিক কতটা লম্বা হতে পারে, সেদিন বেশ ভাল করেই বুঝেছিলাম!</p>
+      <p>অবশেষে বাস ধরে পৌঁছলাম Willis Tower।</p>
+      <p>আমাদের Skydeck booking সন্ধে সাড়ে সাতটায়। হাতে কিছুটা সময় ছিল, তাই নীচের Starbucks-এ বসে coffee আর টুকটাক খাবার দিয়ে শরীরটাকে একটু চাঙ্গা করে নিলাম।</p>
+      <p>তারপর lift-এ উঠে সোজা <strong>১০৩ তলা</strong>।</p>
+      <p>এক সময় পৃথিবীর সর্বোচ্চ বহুতল ছিল এই ভবন। আজ সেই রেকর্ড আর নেই, কিন্তু ১০৩ তলায় উঠে জানলার বাইরে তাকালে রেকর্ডের কথা আর বিশেষ মনে থাকে না।</p>
+      <p>নীচে গোটা শিকাগো।</p>
+      <p>চারদিকে যত দূর চোখ যায় শহর ছড়িয়ে রয়েছে। একদিকে Lake Michigan-এর বিশাল বিস্তার, অন্যদিকে অসংখ্য রাস্তা, বাড়ি, বহুতল—সব যেন কোনও বিশাল নকশার অংশ।</p>
+      <p>আর আমাদের সময়টাও একেবারে ঠিক হয়েছিল।</p>
+      <p>যখন উপরে উঠলাম, তখনও দিনের আলো রয়েছে। প্রথমে দিনের শিকাগো দেখলাম। তারপর ধীরে ধীরে আলো নরম হল, সন্ধে নামতে শুরু করল। আকাশের রং বদলাতে বদলাতে এক সময় চারপাশ অন্ধকার।</p>
+      <p>তারপর নীচের শহরটা একে একে আলো জ্বালাতে শুরু করল।</p>
+      <p>একই জায়গা থেকে দিনের আলো, গোধূলি আর রাত—শিকাগোর তিনটে আলাদা রূপ।</p>
+      <p>কিন্তু Skydeck-এর আসল পরীক্ষা তখনও বাকি।</p>
+      <p><strong>The Ledge।</strong></p>
+      <p>বিল্ডিংয়ের গা ছাড়িয়ে বাইরে বেরিয়ে থাকা কাচের ছোট্ট বাক্স। মেঝেটাও স্বচ্ছ কাচের। তার উপর দাঁড়িয়ে নীচে তাকালে পায়ের তলায় ১০৩ তলার শূন্যতা।</p>
+      <p>আর আমার উচ্চতায় ভয় আছে।</p>
+      <p>প্রথমে ব্যাপারটা দেখে মনের মধ্যে যে প্রবল উৎসাহ জেগেছিল, তা বলা যাবে না!</p>
+      <p>তবু এত দূর এসে পিছিয়ে যাব?</p>
+      <p>শেষ পর্যন্ত সাহস সঞ্চয় করে উঠে পড়লাম কাচের উপর। প্রথম কয়েক মুহূর্ত শরীর যেন কিছুতেই বিশ্বাস করতে চাইছে না যে পায়ের নীচে মেঝে আছে। চোখ বলছে—নীচে কিছু নেই!</p>
+      <p>তারপর একটু একটু করে ভয় কাটল।</p>
+      <p>ছবি তুললাম।</p>
+      <p>এবং আশ্চর্যের ব্যাপার—একবার নয়, <strong>দু’বার</strong> গেলাম!</p>
+      <p>The Ledge-এ যাওয়ার জন্য বড় লাইন ছিল। আমাদের CityPASS-এর দ্রুত প্রবেশের সুবিধা থাকায় অপেক্ষাটা অনেক কমে গেল। দ্বিতীয়বারও গিয়ে বেশ কিছু দারুণ ছবি তুললাম।</p>
+      <p>উচ্চতায় ভয় পাওয়া মানুষটির পক্ষে ১০৩ তলার বাইরে কাচের বাক্সে দু’বার দাঁড়ানো—নিজের হিসাবে এটাও সেদিনের একটা ছোটখাটো বিজয়।</p>
+      <p>Skydeck থেকে বেরোনোর পর এবার সত্যিই শক্তি প্রায় শেষ।</p>
+      <p>বাস ধরে হোটেলের দিকে ফিরলাম। কিন্তু সেখানে অপেক্ষা করছিল নতুন সমস্যা—রাতের খাবার।</p>
+      <p>অনেক রাত হয়ে গিয়েছে। আশপাশের বেশির ভাগ restaurant বন্ধ। App দিয়ে খাবার order করার চেষ্টা করেও লাভ হল না। শেষ আশা Panda Express। খোঁজ নিয়ে মনে হয়েছিল তখনও খোলা থাকার কথা।</p>
+      <p>গিয়ে দেখি—দরজা বন্ধ!</p>
+      <p>শেষ পর্যন্ত হোটেলের কাছেই একটা wings-এর দোকান চোখে পড়ল। ভাবলাম, যা পাওয়া যায় আজ সেটাই খাওয়া যাক।</p>
+      <p>আর সেই বাধ্যতামূলক সিদ্ধান্তটাই হয়ে গেল রাতের চমক।</p>
+      <p>Sauce-এ মাখানো chicken দিয়ে তৈরি sandwich নিলাম। খাবার নিয়ে হোটেলের ঘরে ফিরে সবাই মিলে খেতে বসে দেখি—দারুণ!</p>
+      <p>আমরা তো পছন্দ করলামই, এমনকি বাবারও বেশ ভাল লাগল।</p>
+      <p>বেড়ানোর মজাটা বোধহয় এখানেই। সব কিছু আগে থেকে পরিকল্পনা করা যায় না। কখনও ভুল দিকের বাসে উঠতে হয়, কখনও এক মাইল বাড়তি হাঁটতে হয়, কখনও পছন্দের restaurant বন্ধ হয়ে যায়। আর তারপর কোনও অচেনা ছোট্ট দোকানের sandwich-ই দিনের শেষ সুখস্মৃতি হয়ে থেকে যায়।</p>
+      <p>খাওয়া শেষ করে আবার গরম জলে স্নান। তারপর বিছানা।</p>
+      <p>চোখ বন্ধ করার আগে মনে হল—আগামীকাল আর একটা সম্পূর্ণ বেড়ানোর দিন নয়।</p>
+      <p>কালই অ্যালবানিতে ফেরার পালা।</p>
+      <hr class="story-hr">
+      <p>শিকাগোয় আমাদের শেষ রাতে ঘুমটা হল সবচেয়ে ভাল।</p>
+      <p>সকাল সাতটা-সোয়া সাতটা নাগাদ ঘুম ভাঙল। শরীরটাও বেশ তরতাজা। গত তিন দিনে হাঁটাহাঁটি কম হয়নি, কিন্তু শেষ দিনের সকালে যেন শরীরও বুঝে গিয়েছিল—আজ আর একটা গোটা দিন যুদ্ধ করতে হবে না।</p>
+      <p>তবু সকালের চেনা রুটিন একই। গরম জলে স্নান, তৈরি হওয়া। শুধু একটা তফাত—আজ hotel থেকে check-out করতে হবে।</p>
+      <p>আগের রাতেই বেশির ভাগ গোছগাছ সেরে রেখেছিলাম। ঘর প্রায় ফাঁকা। তবু শেষ সকালে toothbrush থেকে charger—কিছু না কিছু বাইরে থেকেই যায়। সেগুলো গুছিয়ে, ঘরটা আর একবার দেখে, suitcase বন্ধ করতে করতে সকাল সোয়া ন’টা।</p>
+      <p>চার দিন ধরে যে ঘরটা শিকাগোয় আমাদের অস্থায়ী ঠিকানা হয়ে উঠেছিল, এবার তাকে বিদায় জানানোর পালা।</p>
+      <p>Travelodge-এর একটা সুবিধা আমাদের খুব কাজে লেগেছিল। Check-out করার পরেও luggage room-এ ব্যাগ রেখে দেওয়া যায়। বিকেল পর্যন্ত ঘর রাখার জন্য অযথা অতিরিক্ত টাকা দেওয়ার কোনও মানে হয় না। তাই suitcase-গুলো হোটেলে জমা রেখে বেরিয়ে পড়লাম শিকাগোয় আমাদের শেষ কয়েক ঘণ্টা উপভোগ করতে।</p>
+      <p>প্রথম গন্তব্য অবশ্য নতুন কিছু নয়।</p>
+      <p>রাস্তার ওপারের পরিচিত Dunkin'।</p>
+      <p>চার দিনে এই Dunkin' যেন আমাদের সকালের রুটিনের অংশ হয়ে গিয়েছিল। শেষ দিন আর সেখানে বসে খাওয়ার সময় নেই। তাই সবার পছন্দ হয়ে যাওয়া egg-cheese croissant sandwich আর coffee নিয়ে বেরিয়ে পড়লাম।</p>
+      <p>আজ সময়ের হিসেব খুব গুরুত্বপূর্ণ।</p>
+      <p>আমাদের ফেরার ফ্লাইট বিকেল ৫টা ১৮-তে। অন্তত ঘণ্টা দুয়েক আগে O’Hare-এ পৌঁছতে হলে তিনটের মধ্যে এয়ারপোর্টে থাকা দরকার। সেই হিসেব থেকে উল্টো দিকে অঙ্ক কষে ঠিক করলাম—দুপুর দুটোর মধ্যে Jackson থেকে Blue Line ধরতেই হবে। অর্থাৎ একটা-দেড়টার মধ্যে downtown-এ ফিরে আসা চাই।</p>
+      <p>হাতে কয়েক ঘণ্টা।</p>
+      <p>আর সেই কয়েক ঘণ্টার জন্য আমরা বেছে নিলাম <strong>Navy Pier</strong>।</p>
+      <p>২৯ নম্বর CTA বাস ধরে পৌঁছে গেলাম। প্রথম দিন Architecture River Cruise ধরতে এসে বাইরের দিকটা কিছুটা দেখা হয়েছিল। কিন্তু ভিতরটা ভাল করে ঘোরা হয়নি।</p>
+      <p>Navy Pier-এর ভিতরে ঢুকেই বোঝা যায়, জায়গাটা যেন নিজেই একটা ছোটখাটো শহর। দোকান, খাবারের জায়গা, cafeteria, souvenir shop, নানা attraction—চারদিকে মানুষের আনাগোনা।</p>
+      <p>আমরা অবশ্য প্রথমে গোটা building পেরিয়ে সোজা বাইরে চলে গেলাম।</p>
+      <p>সামনে <strong>Lake Michigan</strong>।</p>
+      <p>ঝকঝকে রোদ। মাথার উপর পরিষ্কার নীল আকাশ। তার নীচে যত দূর চোখ যায় নীল জল। পাশে বিশাল Ferris wheel, নানা ride, আর লেকের ধার দিয়ে প্রশস্ত হাঁটার পথ।</p>
+      <p>প্রথম দিনের সন্ধ্যার Navy Pier আর শেষ দিনের এই উজ্জ্বল সকালের Navy Pier যেন একই জায়গার দুটো সম্পূর্ণ আলাদা চেহারা।</p>
+      <p>আমরা লেকের ধার ধরে হাঁটলাম। চারপাশে পর্যটকের ভিড়, সবাই ছবি তুলছে, কেউ বসে জল দেখছে, কেউ পরিবার নিয়ে ঘুরছে। কোনও তাড়া নেই, অথচ গোটা জায়গাটার মধ্যে একটা প্রাণবন্ত ছুটির মেজাজ।</p>
+      <p>আমরাও ছবি তুললাম প্রচুর।</p>
+      <p>বাইরে মিনিট তিরিশ-পঁয়তাল্লিশ কাটানোর পর গরমটা বেশ চড়ে উঠল। তাই আবার ভিতরে ফিরে এলাম। কিছুক্ষণ souvenir shopping হল।</p>
+      <p>তারপর দুপুরের খাবার।</p>
+      <p>বাবা অন্য একটি দোকান থেকে sandwich নিলেন। আমরা গেলাম Potbelly-তে। অ্যালবানিতে Potbelly নেই। আমি আগে Atlanta আর Phoenix-এ খেয়েছি, তাই ইচ্ছে ছিল দীপার্জোকেও একবার খাওয়াই।</p>
+      <p>শেষ দিনের শেষ শিকাগো-lunch-টাও বেশ জমে গেল।</p>
+      <p>কিন্তু ঘড়ি এবার মনে করিয়ে দিচ্ছে—ছুটি শেষ।</p>
+      <p>আবার ২৯ নম্বর বাসে উঠলাম। মা আর শাশুড়িকে যতটা সম্ভব কম হাঁটাতে চেয়েছিলাম, তাই ফেরার পথটাও সেই অনুযায়ী ঠিক করলাম। হোটেলে ফিরে luggage room থেকে ব্যাগপত্র সংগ্রহ করলাম।</p>
+      <p>চার দিন আগে যে suitcase-গুলো নিয়ে এই হোটেলে ঢুকেছিলাম, সেগুলো আবার হাতে উঠে এল।</p>
+      <p>পার্থক্য শুধু, এবার সঙ্গে কিছু souvenir আর অসংখ্য স্মৃতি।</p>
+      <p>এরপর বাসে Jackson CTA station।</p>
+      <p>দুপুর দুটো-পাঁচ নাগাদ আমরা সবাই Blue Line-এ উঠে পড়লাম। হিসেব প্রায় একেবারে ঠিক।</p>
+      <p>প্রায় পঁয়তাল্লিশ মিনিট পরে O’Hare।</p>
+      <p>প্রথম দিন এয়ারপোর্টে নেমে CTA খুঁজতে অনেকটা হাঁটতে হয়েছিল। ফেরার দিনে আমরা একটু বেশি অভিজ্ঞ শিকাগো-যাত্রী। আগেই খোঁজ নিয়ে জেনে নিয়েছিলাম, বিশাল O’Hare-এর terminal-গুলোর মধ্যে যাতায়াতের জন্য Airport Transit System বা ATS রয়েছে।</p>
+      <p>কাজেই আর অযথা হাঁটা নয়। Blue Line থেকে নেমে ATS ধরে আমাদের প্রয়োজনীয় terminal-এর দিকে চলে গেলাম।</p>
+      <p>এতক্ষণ সব কিছুই ঘড়ি ধরে সুন্দর ভাবে চলছিল।</p>
+      <p>তারপর শুরু হল ফেরার দিনের আসল নাটক।</p>
+      <p>Security-তে বেশ ভিড়। কোনও রকমে সব মিটিয়ে ভিতরে ঢুকে দেখি—আমাদের ফ্লাইট delay করছে।</p>
+      <p>প্রথমে প্রায় এক ঘণ্টা।</p>
+      <p>সমস্যা হল, আমাদের সরাসরি অ্যালবানি যাওয়ার ফ্লাইট নয়। Detroit-এ connecting flight ধরতে হবে। মূল পরিকল্পনায় সেখানে প্রায় দু’ঘণ্টার layover ছিল। এক ঘণ্টা delay মানে হাতে আর মোটামুটি এক ঘণ্টা।</p>
+      <p>তখনও ভাবলাম—ঠিক আছে, হয়ে যাবে।</p>
+      <p>তারপর আরও delay।</p>
+      <p>মিনিটের পর মিনিট যোগ হতে হতে মোট দেরি প্রায় এক ঘণ্টা কুড়ি মিনিট।</p>
+      <p>এবার সত্যিই চিন্তা শুরু হল।</p>
+      <p>Detroit-এ নেমে connecting flight ধরা যাবে তো?</p>
+      <p>চার দিনের সফর এত সুন্দর ভাবে শেষ করে এসে শেষ মুহূর্তে Detroit-এ আটকে পড়তে হবে না তো?</p>
+      <p>ফ্লাইটে বসেও মাথার মধ্যে সেই অঙ্ক।</p>
+      <p>Detroit-এ নামার পর আর সময় নষ্ট করার সুযোগ নেই। দরকারে দৌড়তে হবে।</p>
+      <p>এবং সত্যিই কিছুটা ছুটতে হল।</p>
+      <p>তবে Detroit Airport-এর express tram আমাদের উদ্ধার করল। বিশাল terminal-এর এক প্রান্ত থেকে অন্য প্রান্তে যাওয়ার সময় অনেকটাই কমে গেল।</p>
+      <p>শেষ পর্যন্ত—</p>
+      <p><strong>পেরেছি!</strong></p>
+      <p>Connecting flight তখনও রয়েছে।</p>
+      <p>ছ’জনকে নিয়ে ঠিক সময়ে gate-এ পৌঁছে প্লেনে উঠতে পারার পর যে স্বস্তিটা হল, সেটা বোধহয় সারাদিনের কোনও sightseeing-এর আনন্দের চেয়ে কম নয়।</p>
+      <p>তারপর আর কোনও নাটক নয়।</p>
+      <p>শেষ ফ্লাইটটা একেবারে নির্বিঘ্ন।</p>
+      <p>রাত এগারোটা নাগাদ আমরা অ্যালবানিতে নামলাম।</p>
+      <p>চার দিন আগে এই এয়ারপোর্ট থেকেই শুরু হয়েছিল আমাদের যাত্রা। তখন সামনে ছিল অজানা চারটে দিন। এবার সেই একই জায়গায় দাঁড়িয়ে আমাদের সঙ্গে রয়েছে Art Institute, Chicago River, Shedd Aquarium, The Bean, Buckingham Fountain, Field Museum, SUE, Willis Tower, The Ledge, Navy Pier—আর তাদের মাঝখানে ছড়িয়ে থাকা কত ছোট ছোট ঘটনা।</p>
+      <p>এয়ারপোর্ট থেকে আবার সেই পরিচিত shuttle।</p>
+      <p>Economy parking lot-এ পৌঁছে চার দিন পর নিজের গাড়িটাকে ফিরে পেলাম। লাগেজ তুলে সবাই গাড়িতে বসলাম।</p>
+      <p>রাতের রাস্তা শান্ত।</p>
+      <p>প্রায় সাড়ে এগারোটায় বাড়ি পৌঁছলাম।</p>
+      <p>শিকাগো সফর শেষ।</p>
+      <p>কিন্তু সত্যিই কি শেষ?</p>
+      <p>চার দিনের একটা ভ্রমণ কাগজে লিখলে খুব বেশি সময় মনে হয় না। অথচ সেই চার দিনের মধ্যে কত গল্প জমে গেল!</p>
+      <p>কখনও ভুল দিকের বাসে উঠে পড়েছি। কখনও গরমে হাঁটতে হাঁটতে মনে হয়েছে, বাস ধরলেই ভাল হত। কখনও Dunkin'-এ coffee কিনে কাউন্টারেই ফেলে এসেছি, আবার সেখানেই ভাগ্যচক্র ঘুরিয়ে mug আর free donut জিতেছি। কখনও বেলুগার জলের মধ্যে ভেসে যাওয়া দেখেছি, কখনও কোটি কোটি বছর আগের পৃথিবীতে ফিরে গিয়ে SUE-এর সামনে দাঁড়িয়েছি। কখনও শিকাগো নদীর বুক থেকে আলোয় সেজে ওঠা শহর দেখেছি, আবার কখনও ১০৩ তলার কাচের মেঝেতে দাঁড়িয়ে নিজের উচ্চতার ভয়কে হারিয়েছি। কোনও রাতে ভারতীয় খাবার ঘরে পৌঁছে গিয়েছে ঠিক সময়ে, কোনও রাতে সব restaurant বন্ধ হয়ে যাওয়ার পর অচেনা wings-এর দোকানের sandwich-ই হয়ে উঠেছে অপ্রত্যাশিত আনন্দ।</p>
+      <p>আর শেষ সকালে Lake Michigan-এর ধারে দাঁড়িয়ে সেই নীল আকাশ আর নীল জল দেখতে দেখতে হয়তো তখনও পুরোপুরি উপলব্ধি করিনি—এই চারটে দিন কতটা মূল্যবান হয়ে থাকবে।</p>
+      <p>কারণ এই সফরের সবচেয়ে বড় কথা কোনও museum নয়, কোনও আকাশছোঁয়া বহুতল নয়, কোনও বিখ্যাত tourist attraction-ও নয়।</p>
+      <p>সবচেয়ে বড় কথা—<strong>আমরা ছ’জন একসঙ্গে ছিলাম।</strong></p>
+      <p>আমি, মোনালিসা, দীপার্জো, বাবা-মা আর শাশুড়ি।</p>
+      <p>একসঙ্গে ভোরের ফ্লাইট ধরেছি। বাস-ট্রেনে ঘুরেছি। ভুল করেছি। ক্লান্ত হয়েছি। একে অপরের জন্য অপেক্ষা করেছি। কখনও পরিকল্পনা বদলেছি। কখনও হেসেছি। একসঙ্গে খেয়েছি। শত শত ছবি তুলেছি।</p>
+      <p>বাবা-মায়েদের সঙ্গে নিয়ে এমন একটা সফর করতে পারাটাই হয়তো এই চার দিনের সবচেয়ে মূল্যবান প্রাপ্তি।</p>
+      <p>এই বছরের আমাদের সেরা ভ্রমণগুলোর কথা যখনই মনে পড়বে, শিকাগো নিঃসন্দেহে তাদের মধ্যে একেবারে প্রথম সারিতে থাকবে।</p>
+      <p>এই সফরের কয়েকশো ছবি ধীরে ধীরে আমার ওয়েবসাইটে উঠবে। আজ থেকে দশ বছর পরে হয়তো কোনও এক অলস বিকেলে সেই ছবিগুলো আবার খুলে বসব।</p>
+      <p>কোনও ছবিতে থাকবে অ্যালবানির ভোর।</p>
+      <p>কোনওটায় Chicago River-এর জলে রাতের আলোর প্রতিফলন।</p>
+      <p>কোনওটায় দীপার্জোর সঙ্গে Shedd Aquarium-এর স্মৃতি।</p>
+      <p>কোনওটায় The Bean-এর বাঁকানো আয়নায় আমাদের ছ’জনের পৃথিবী।</p>
+      <p>কোনওটায় SUE।</p>
+      <p>কোনওটায় ১০৩ তলার The Ledge-এ দাঁড়িয়ে ভয় আর আনন্দ মেশানো মুখ।</p>
+      <p>আর কোনও ছবির পিছনে থাকবে Lake Michigan-এর অসীম নীল।</p>
+      <p>সময়ের সঙ্গে ছবিগুলো পুরনো হবে।</p>
+      <p>শিকাগোর চেহারাও হয়তো বদলাবে।</p>
+      <p>আমরাও বদলে যাব।</p>
+      <p>কিন্তু ছ’জনের একসঙ্গে কাটানো সেই চারটে দিন—</p>
+      <p><strong>স্মৃতিতে থেকে যাবে চিরকাল।</strong></p>
+  </article>
+
+  <article id="story-en" class="story">
+      <p>Some trips do not really end when you return home.</p>
+      <p>The suitcases get unpacked, the clothes go back into the closets, and everyday life slowly resumes its usual rhythm. Yet every so often, a particular image comes rushing back—a city reflected in the water at dusk, a gigantic dinosaur skeleton, Chicago glowing from 103 floors above the ground, or the deep blue of Lake Michigan under an impossibly clear sky.</p>
+      <p>Our four-day Chicago trip is one of those journeys.</p>
+      <p>There were six of us: me, my wife Mona Lisa, our son Diparjo, my parents, and my mother-in-law. Four days—from Wednesday to Saturday. We had booked the trip well in advance and had found a very good fare on United Airlines.</p>
+      <p>Our flight on Wednesday was at 8:10 in the morning, so the Chicago adventure began before sunrise.</p>
+      <p>I had looked up the options on Google and decided that the easiest way would be to leave our car at the economy parking lot at Albany Airport and take the shuttle to the terminal. At first, I thought I would drop everyone at the airport, drive back to the parking lot by myself, and then take the shuttle back. Later I realized that there was no reason to make things complicated. We could simply park the car and take the shuttle together.</p>
+      <p>That turned out to be the right decision.</p>
+      <p>We parked, waited only about five minutes for the shuttle, and within another five minutes we were at the airport. It was around 6:15 a.m., and the airport was relatively quiet. We went through security, reached the gate, and waited to board.</p>
+      <p>The United flight was smooth, comfortable, and on time.</p>
+      <p>Then came our first Chicago challenge.</p>
+      <p>After landing at O'Hare, we walked—and walked—and walked—to find the CTA Blue Line. With our luggage, it took more than twenty minutes. Eventually we reached the train, boarded the Blue Line, and got off at Jackson.</p>
+      <p>Our hotel was a Travelodge by Wyndham in downtown Chicago. Interestingly, Jackson was also reasonably close to our first sightseeing destination, the Art Institute of Chicago.</p>
+      <p>Because of my mother's and mother-in-law's age, we decided not to make them drag their luggage all the way to the hotel and then back again. Mona Lisa took the two of them directly toward the Art Institute, while my father, Diparjo, and I took the luggage to the hotel.</p>
+      <p>It was too early to check in, so we left the bags in the hotel's luggage room and went back to join the others.</p>
+      <p>That walk to the Art Institute was probably our first bad decision of the trip.</p>
+      <p>The distance was less than a mile. On another day, it would have been perfectly reasonable to walk. But that Wednesday was hot and somewhat humid, and we were already tired from waking up before dawn, traveling to the airport, flying, and carrying luggage around. By the time we arrived, I was already thinking that taking a bus would have been a much better idea.</p>
+      <p>One decision, however, turned out to be excellent. We had bought three-day CTA passes for $15 per person, giving us unlimited rides on Chicago's buses and trains. Over the next few days, we realized just how useful that decision had been.</p>
+      <p>Around 1 p.m., we finally entered the Art Institute of Chicago.</p>
+      <p>And for a while, we forgot all about our exhaustion.</p>
+      <p>The museum was enormous. Gallery after gallery, century after century of art. The medieval collections were particularly fascinating. Standing in front of works created hundreds of years ago, it was impossible not to think about the people who created them—their beliefs, their daily lives, their idea of beauty, and the world they knew.</p>
+      <p>But the Art Institute is the kind of place where three hours feels like nothing.</p>
+      <p>Before we knew it, it was nearly 4 p.m., and much of our energy was gone.</p>
+      <p>Yet the day's second major attraction was still waiting: the Chicago Architecture River Cruise.</p>
+      <p>I had purchased a CityPASS covering five attractions. The Art Institute did not require a timed reservation, but the architecture cruise did. I had originally booked the 5:45 p.m. sailing. As we were leaving the museum, it became clear that we might not make it in time, so I changed the reservation to 6:45.</p>
+      <p>This time, we decided not to be heroic about walking.</p>
+      <p>We walked to a bus stop, caught a CTA bus, and made our way to Navy Pier, where the river cruise began.</p>
+      <p>The 75-minute Architecture River Cruise became one of the highlights of our entire trip.</p>
+      <p>The boat moved along the Chicago River while the guide explained the history and architecture of the extraordinary buildings surrounding us. From the river, Chicago's architecture looked completely different from the way it appeared from the streets. There were historic buildings beside modern glass-and-steel towers, people walking and cycling along the riverfront, and restaurants beginning to fill up as evening approached.</p>
+      <p>When the cruise began, there was still plenty of daylight.</p>
+      <p>By the time we returned, it was dark.</p>
+      <p>And Chicago had transformed.</p>
+      <p>The towers along the river were lit up, their lights reflecting against the dark water. What had looked like a great architectural city during the day now looked almost magical. We were exhausted, but it was hard to look away.</p>
+      <p>After the cruise, we caught a bus back toward the hotel, getting off near State Street and Harrison Street, only a couple of minutes from the hotel.</p>
+      <p>By then, nobody had the energy to go looking for dinner.</p>
+      <p>So somewhere along the way back, I ordered dinner through either DoorDash or Uber Eats—I honestly don't remember which—from a restaurant called Maharaja Indian. We ordered chicken, paneer, garlic naan, and rice.</p>
+      <p>The timing could not have been better. The food arrived almost exactly when we reached the hotel.</p>
+      <p>After a full day of travel, walking, museums, trains, buses, and a river cruise, that Indian dinner felt like a feast.</p>
+      <p>We ate, took a long warm shower, and collapsed into bed.</p>
+      <p>The first day had already felt like two days packed into one.</p>
+      <hr class="story-hr">
+      <p>The next morning, I woke up around 6 a.m.</p>
+      <p>Our hotel arrangement was comfortable: one room for me, Mona Lisa, and Diparjo, and another for my parents and mother-in-law. Each room had two double beds, which worked very well for the six of us.</p>
+      <p>Because the hotel was right in downtown, I had requested rooms toward the back, away from the street. That meant less noise and less direct sunlight in the morning. The back side of the hotel was surrounded by other buildings and hotels, so it remained surprisingly dark even during the day.</p>
+      <p>It made for a good night's sleep.</p>
+      <p>Even though I woke up at six, I stayed in bed for a while. I was feeling much better than the night before. Then came another warm shower, getting ready, and our now-familiar walk across the street to Dunkin'.</p>
+      <p>We ordered avocado sandwiches, egg-and-cheese croissant sandwiches, a tiramisu mocha cold brew, and coffee. I also ordered a black coffee.</p>
+      <p>I paid for it.</p>
+      <p>And then forgot to take it.</p>
+      <p>It stayed on the counter.</p>
+      <p>That was the first small mishap of the morning.</p>
+      <p>But Dunkin' had another surprise for us. It was Customer Appreciation Day, and the store had a fortune wheel with different prizes.</p>
+      <p>We decided to try our luck.</p>
+      <p>Mona Lisa won a Dunkin' coffee mug. Diparjo and I each won a free donut.</p>
+      <p>It was a small thing, but those unexpected little moments often become the memories that stay with you.</p>
+      <p>After breakfast, we headed toward the Shedd Aquarium.</p>
+      <p>We had our CTA passes, so public transportation was easy. We got to the bus stop and boarded a bus.</p>
+      <p>Then we discovered the bus was going in the wrong direction.</p>
+      <p>When the driver heard that we were trying to get to Shedd Aquarium, he explained the problem. We got off, crossed the road, and waited for a bus going in the opposite direction.</p>
+      <p>Our schedule was already packed, so we lost some time. But on a trip like this, not everything can go according to plan.</p>
+      <p>Eventually we reached Museum Campus and entered Shedd Aquarium.</p>
+      <p>The outside world seemed to disappear.</p>
+      <p>There were enormous aquariums, colorful fish, and an astonishing variety of marine life. We spent four to five hours there, and the time simply disappeared.</p>
+      <p>Diparjo loved it.</p>
+      <p>We all did.</p>
+      <p>The beluga whales were probably the highlight. Watching those enormous white animals glide effortlessly through the water was mesmerizing. The penguins were just as entertaining, and we also watched a 3D movie.</p>
+      <p>By the time we left, it was around 4:30 or 5 p.m.</p>
+      <p>We took a bus toward Millennium Park.</p>
+      <p>One funny thing we realized later was that Millennium Park is actually very close to the Art Institute, even though we had not realized that on our first day.</p>
+      <p>Our first stop was the famous <strong>Cloud Gate</strong>, better known as <strong>The Bean</strong>.</p>
+      <p>Going to Chicago without taking pictures at The Bean would somehow feel incomplete. Its polished surface reflects the skyline, the sky, the people around it, and everything seems to bend and curve across its surface.</p>
+      <p>Of course, we took lots of pictures.</p>
+      <p>Then we sat for a while, had some snacks, and rested.</p>
+      <p>We walked across a bridge and initially planned to continue toward Buckingham Fountain. After walking for a while, though, we decided it was getting too far. Since the fountain was much closer to our hotel, we turned back toward Millennium Park.</p>
+      <p>We then spent some time at Crown Fountain.</p>
+      <p>By that point, it was around 7:30 p.m. We had already spent hours walking through the aquarium and the park, and our legs were beginning to make their opinions known.</p>
+      <p>On the way back, we noticed a dance festival taking place in Grant Park. Music, lights, dancing, people everywhere. We stopped for a while to watch.</p>
+      <p>That was when our group split up.</p>
+      <p>My parents were tired and decided to return to the hotel. But Buckingham Fountain was still on our list.</p>
+      <p>So I, Mona Lisa, Diparjo, and my mother-in-law decided to go.</p>
+      <p>Buckingham Fountain at night was beautiful. The enormous fountain, the lights around it, and Lake Michigan right nearby created a wonderful atmosphere. We stayed for a while, took pictures, and enjoyed the view.</p>
+      <p>Then we finally headed back to the hotel.</p>
+      <p>For my father, I had picked up some Indian food—rice and vegetable curry. The rest of us went to a Thai restaurant in the same building as our hotel.</p>
+      <p>The food was good, and after such a long day it was convenient not to have to travel anywhere else. We left around 9:45 p.m., roughly when the restaurant was closing.</p>
+      <p>Back to the room.</p>
+      <p>Warm shower.</p>
+      <p>Bed.</p>
+      <p>Another successful day in Chicago.</p>
+      <hr class="story-hr">
+      <p>The third morning was not quite as restful.</p>
+      <p>I had slept reasonably well, but after two consecutive days of intense walking and sightseeing, I felt that I could have used a little more deep sleep. I finally got out of bed around 8 a.m.</p>
+      <p>That meant there was no time to waste.</p>
+      <p>Quick shower, get dressed, and by about 9:15 I was ready.</p>
+      <p>Then, once again, Dunkin'.</p>
+      <p>By now the egg-and-cheese croissant sandwich had become our unofficial Chicago breakfast. We picked up the sandwiches, some coffee, and headed out.</p>
+      <p>The destination was once again Museum Campus.</p>
+      <p>But this time it was <strong>Field Museum</strong>.</p>
+      <p>We arrived around 11 a.m.</p>
+      <p>The museum was enormous—three floors of fossils, ancient civilizations, scientific exhibits, animals, and natural history.</p>
+      <p>We immediately headed for one of its most famous attractions:</p>
+      <p><strong>SUE.</strong></p>
+      <p>SUE is one of the world's most famous Tyrannosaurus rex fossils, named after Sue Hendrickson, the person who discovered it in South Dakota.</p>
+      <p>Our CityPASS included a show as well as a special exhibition. The show was scheduled for around 11:50 a.m., leaving us about 45 minutes to explore.</p>
+      <p>We quickly learned that 45 minutes was nowhere near enough.</p>
+      <p>The SUE exhibit was so large and interesting that we lost track of time. Eventually we had to pull ourselves away and practically rush back to the theater.</p>
+      <p>The short film told the story of SUE and the discovery of the fossil. It lasted roughly 15 to 20 minutes and gave us a fascinating look at how the discovery happened.</p>
+      <p>Afterward, we continued exploring.</p>
+      <p>We saw exhibits on ancient Egypt, underground environments, aerodynamics, and many other topics. Then we returned to the sections covering dinosaurs and the evolution of Earth.</p>
+      <p>That part of the museum was particularly fascinating—the development of life on Earth, the rise of the dinosaurs, mass extinction, the evolution of humans, and the transformation of the planet over unimaginable stretches of time.</p>
+      <p>We also visited the China history section.</p>
+      <p>Eventually, however, our stomachs reminded us that history and fossils do not count as lunch.</p>
+      <p>We ate at the museum cafeteria. The food was acceptable, but definitely not one of the highlights of the trip.</p>
+      <p>After lunch, we split up again. I went to explore the Ancient Americas section, while Diparjo spent more time in the animal exhibits.</p>
+      <p>Then came more galleries.</p>
+      <p>And more walking.</p>
+      <p>And more walking.</p>
+      <p>At some point, your eyes still want to see another exhibit, while your back and legs begin asking why you are doing this to them.</p>
+      <p>But every time we saw another interesting gallery, the thought was the same:</p>
+      <p>We've come this far. We might as well see this one too.</p>
+      <p>That is how we ended up leaving the museum about five minutes before its 5 p.m. closing time.</p>
+      <p>Our backs and legs hurt.</p>
+      <p>Our spirits were still high.</p>
+      <p>Because the biggest adventure of the day was still waiting.</p>
+      <p><strong>Willis Tower Skydeck.</strong></p>
+      <p>There was a large event taking place near Field Museum that day, and several entrances and streets had been closed. As a result, we had to walk roughly a mile to reach a bus stop.</p>
+      <p>After spending the entire day in a huge museum, that extra mile felt particularly long.</p>
+      <p>Eventually, we reached Willis Tower.</p>
+      <p>Our Skydeck reservation was at 7:30 p.m. Since we had some time, we stopped at the Starbucks on the first floor, had coffee and some snacks, and tried to recover a little.</p>
+      <p>Then we took the elevator to the <strong>103rd floor</strong>.</p>
+      <p>Willis Tower was once the tallest building in the world. It no longer holds that distinction, but standing 103 floors above the ground makes records feel irrelevant.</p>
+      <p>Chicago stretched out below us.</p>
+      <p>There was Lake Michigan on one side, streets and buildings in every direction, and an enormous city laid out like a giant map.</p>
+      <p>And once again, our timing worked out beautifully.</p>
+      <p>When we arrived, it was still daylight.</p>
+      <p>Then the light gradually softened.</p>
+      <p>Dusk arrived.</p>
+      <p>And eventually the city below began to glow.</p>
+      <p>We saw Chicago from the 103rd floor in daylight, in the fading light of evening, and finally at night with the city lit up beneath us.</p>
+      <p>But the real test was still ahead.</p>
+      <p><strong>The Ledge.</strong></p>
+      <p>A glass box extending outside the building, with a transparent floor beneath you.</p>
+      <p>Look down, and there are 103 floors of empty space.</p>
+      <p>I am afraid of heights.</p>
+      <p>So my first reaction was not exactly one of overwhelming enthusiasm.</p>
+      <p>But after coming all this way, I didn't want to back out.</p>
+      <p>I gathered my courage and stepped onto the glass.</p>
+      <p>For the first few moments, every instinct in my body was screaming that there was nothing underneath me.</p>
+      <p>Then, slowly, the fear eased.</p>
+      <p>We took pictures.</p>
+      <p>And somehow, I went out there twice.</p>
+      <p>There was a long line for The Ledge, but our CityPASS included expedited access, which helped. We got some fantastic photographs, and standing on a glass platform 103 floors above Chicago twice felt like a small personal victory.</p>
+      <p>After the Skydeck, we were truly exhausted.</p>
+      <p>We caught a bus back toward the hotel.</p>
+      <p>Then came the problem of dinner.</p>
+      <p>It was late, and most of the restaurants nearby were closing. I tried ordering through the apps, but many of the places were already shutting down.</p>
+      <p>Our next hope was Panda Express.</p>
+      <p>It was supposed to be open.</p>
+      <p>It wasn't.</p>
+      <p>The doors were closed.</p>
+      <p>Finally, we found a small wings restaurant very close to the hotel and decided to give it a try.</p>
+      <p>That last-minute decision turned into another pleasant surprise.</p>
+      <p>We ordered sandwiches with chicken tossed in different sauces. The food was delicious. Everyone liked it—even my father, who enjoyed it more than we expected.</p>
+      <p>We took the food back to the room and had dinner together.</p>
+      <p>Warm shower.</p>
+      <p>Bed.</p>
+      <p>And the realization that tomorrow was not another full day in Chicago.</p>
+      <p>Tomorrow, we were going home.</p>
+      <hr class="story-hr">
+      <p>The fourth morning began with the best sleep of the trip.</p>
+      <p>I woke up around 7:00 or 7:15 a.m. and felt surprisingly refreshed.</p>
+      <p>The morning routine was familiar by now: shower, get dressed, and prepare to leave.</p>
+      <p>Only this time, we had to check out.</p>
+      <p>We had done most of the packing the night before. The room was almost empty. There were just a few final things to put back into the suitcases—chargers, toiletries, and the little things that always seem to escape the first round of packing.</p>
+      <p>By around 9:15, we were ready.</p>
+      <p>Four days earlier, this room had been the beginning of our Chicago adventure.</p>
+      <p>Now it was time to leave.</p>
+      <p>The hotel had one feature that worked perfectly for us. Even after check-out, guests could leave their luggage in the luggage room. There was no reason to pay extra for a late check-out when we would be out exploring anyway.</p>
+      <p>So we checked out, left the luggage with the hotel, and headed across the street to Dunkin' for what had become our traditional breakfast.</p>
+      <p>Same egg-and-cheese croissant sandwiches.</p>
+      <p>Same coffee.</p>
+      <p>But this time there was no sitting around. We picked everything up and left.</p>
+      <p>Our flight was at 5:18 p.m. We wanted to be at O'Hare by about 3 p.m., which meant we needed to catch the train from Jackson around 2. So we worked backward and planned to return to the hotel around 1:00 or 1:30.</p>
+      <p>That left us only a few hours for one final Chicago experience.</p>
+      <p>We chose <strong>Navy Pier</strong>.</p>
+      <p>We took the number 29 CTA bus, which brought us to Navy Pier in roughly 15 to 25 minutes.</p>
+      <p>We had seen some of Navy Pier's exterior on the first day before the architecture cruise, but this time we wanted to explore the inside.</p>
+      <p>The building was lively and full of activity—shops, restaurants, cafeterias, attractions, souvenir stores, and people everywhere.</p>
+      <p>But before doing any shopping, we walked through the building and went outside to the lake.</p>
+      <p>And there it was:</p>
+      <p><strong>Lake Michigan.</strong></p>
+      <p>Bright sunshine.</p>
+      <p>Blue sky.</p>
+      <p>Blue water stretching into the distance.</p>
+      <p>There was the enormous Ferris wheel, various rides, and a long walkway beside the lake. People were taking pictures everywhere. Families were walking around. The whole place had a wonderful vacation atmosphere.</p>
+      <p>We spent about 30 to 45 minutes outside, taking pictures and simply enjoying the surroundings.</p>
+      <p>Eventually the heat drove us back inside.</p>
+      <p>We did some souvenir shopping and then stopped for lunch.</p>
+      <p>My father ate at another sandwich place, while the rest of us went to <strong>Potbelly</strong>.</p>
+      <p>There is no Potbelly in Albany, and I had eaten there before in Atlanta and Phoenix. I wanted Diparjo to try it as well.</p>
+      <p>So our final Chicago lunch became another small part of our shared collection of memories.</p>
+      <p>But the clock was ticking.</p>
+      <p>Vacation time was over.</p>
+      <p>We took the number 29 bus back toward the hotel. I did not want my mother and mother-in-law walking more than necessary, so we got off near State Street and Harrison, just as we had done before.</p>
+      <p>We collected our luggage from the hotel and headed to Jackson.</p>
+      <p>Four days earlier, those suitcases had been full of clothes and anticipation.</p>
+      <p>Now they carried souvenirs, dirty laundry, and memories.</p>
+      <p>Around 2:05 p.m., all six of us boarded the Blue Line.</p>
+      <p>About 45 minutes later, we reached O'Hare.</p>
+      <p>On our arrival day, we had spent a long time figuring out how to navigate the airport. On our final day, we were slightly more experienced Chicago travelers.</p>
+      <p>We had learned about O'Hare's <strong>Airport Transit System, or ATS</strong>, which connects the terminals.</p>
+      <p>So instead of walking endlessly, we used the ATS to get to our terminal.</p>
+      <p>Everything was going according to plan.</p>
+      <p>Until it wasn't.</p>
+      <p>Security was busy, but we eventually got through.</p>
+      <p>Then we looked at the flight information.</p>
+      <p>The flight was delayed.</p>
+      <p>At first, it was about an hour.</p>
+      <p>That was a problem because we had a connection in Detroit. Our original layover there had been about two hours. Now it was closer to one.</p>
+      <p>We were still hopeful.</p>
+      <p>Then another delay was added.</p>
+      <p>Eventually, the total delay was about an hour and twenty minutes.</p>
+      <p>Now the question was no longer whether we would be late.</p>
+      <p>It was whether we would make our connecting flight at all.</p>
+      <p>We had come so close to completing the trip perfectly. The last thing we wanted was to get stranded in Detroit.</p>
+      <p>When we landed, there was no time to waste.</p>
+      <p>We had to move fast.</p>
+      <p>And yes, we had to run.</p>
+      <p>Fortunately, Detroit Airport has an express tram system, which made the transfer much faster than it otherwise would have been.</p>
+      <p>And finally—</p>
+      <p><strong>we made it.</strong></p>
+      <p>The connecting flight was still there.</p>
+      <p>We reached the gate, boarded, and finally relaxed.</p>
+      <p>The last flight was smooth.</p>
+      <p>We arrived in Albany around 11 p.m.</p>
+      <p>Four days earlier, that same airport had been the starting point of our adventure. Now we were standing in the same place again, except this time we carried four days' worth of experiences with us.</p>
+      <p>We took the familiar shuttle back to the economy parking lot.</p>
+      <p>Our car was still there.</p>
+      <p>We loaded the luggage, everyone got in, and we started the drive home.</p>
+      <p>We reached home at around 11:35 p.m.</p>
+      <p>And just like that, the Chicago trip was over.</p>
+      <p>Or perhaps it wasn't.</p>
+      <p>Because some trips remain long after the suitcase is empty.</p>
+      <p>Over four days, we had seen museums and skyscrapers, rivers and lakes, animals and dinosaurs, modern architecture and ancient civilizations. We had made wrong turns on buses, walked farther than we intended, forgotten coffee on counters, won a coffee mug and free donuts, eaten Indian food in a hotel room, discovered a surprisingly delicious wings restaurant, stood on a glass platform 103 floors above the ground, and watched Chicago transform from daylight to dusk to night.</p>
+      <p>But the best part of the trip was not the Art Institute.</p>
+      <p>It was not Shedd Aquarium.</p>
+      <p>It was not Field Museum, Millennium Park, the River Cruise, Navy Pier, or Willis Tower.</p>
+      <p>It was the six of us.</p>
+      <p>Me, Mona Lisa, Diparjo, my parents, and my mother-in-law.</p>
+      <p>We caught early flights together. We rode buses and trains together. We got tired together. We made mistakes together. We waited for one another. We changed plans. We laughed. We ate. We took hundreds of photographs.</p>
+      <p>And most importantly, we were together.</p>
+      <p>Being able to take a trip like this with our parents is perhaps the greatest memory we brought home from Chicago.</p>
+      <p>Of all the trips we have taken this year, Chicago will undoubtedly remain one of the best.</p>
+      <p>There are hundreds of photographs from those four days, and many of them will eventually make their way onto my website.</p>
+      <p>Years from now, perhaps one quiet afternoon, I will open those photographs again.</p>
+      <p>One image will bring back the early morning at Albany Airport.</p>
+      <p>Another will bring back the lights along the Chicago River.</p>
+      <p>Another will remind us of the beluga whales at Shedd Aquarium.</p>
+      <p>Another will show our reflections in The Bean.</p>
+      <p>There will be SUE.</p>
+      <p>There will be The Ledge, with that mixture of fear and excitement on our faces.</p>
+      <p>And somewhere there will be Lake Michigan under that endless blue sky.</p>
+      <p>The photographs will age.</p>
+      <p>Chicago will change.</p>
+      <p>We will change, too.</p>
+      <p>But those four days we shared as six people—</p>
+      <p><strong>will remain with us forever.</strong></p>
+  </article>
+</div>
+
+<footer>
+  <p>
+    Travelomania &nbsp;·&nbsp; Made with <span style="color:#e05a5a">♥</span> by Dipankar
+    &nbsp;·&nbsp; <a href="../index.html">Chicago</a>
+    &nbsp;·&nbsp; <a href="../../index.html">All Trips</a>
+  </p>
+</footer>
+
+<script>
+  function setLang(l){
+    var bn = l === 'bn';
+    document.getElementById('story-bn').style.display = bn ? 'block' : 'none';
+    document.getElementById('story-en').style.display = bn ? 'none' : 'block';
+    document.getElementById('btn-bn').classList.toggle('active', bn);
+    document.getElementById('btn-en').classList.toggle('active', !bn);
+    try { localStorage.setItem('chicago-story-lang', l); } catch(e) {}
+    window.scrollTo({ top: 0 });
+  }
+  (function(){
+    var saved = 'bn';
+    try { saved = localStorage.getItem('chicago-story-lang') || 'bn'; } catch(e) {}
+    setLang(saved);
+  })();
+
+  // Password gate (shares session with the Chicago page)
+  (function () {
+    var GATE_PW = 'x', GATE_KEY = 'chicago-unlocked';
+    var gate = document.getElementById('gate'), input = document.getElementById('gate-pw'),
+        btn = document.getElementById('gate-btn'), wrong = document.getElementById('gate-wrong');
+    function openGate(){ gate.classList.add('hidden'); document.body.style.overflow=''; }
+    function check(){ if(input.value.trim()===GATE_PW){ try{sessionStorage.setItem(GATE_KEY,'1');}catch(e){} openGate(); } else { wrong.classList.add('show'); input.value=''; input.focus(); } }
+    btn.addEventListener('click', check);
+    input.addEventListener('keydown', function(e){ if(e.key==='Enter'){ e.preventDefault(); check(); } });
+    var unlocked=false; try{ unlocked = sessionStorage.getItem(GATE_KEY)==='1'; }catch(e){}
+    if(unlocked){ openGate(); } else { document.body.style.overflow='hidden'; input.focus(); }
+  })();
+</script>
+
+</body>
+</html>
