@@ -1,0 +1,471 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<link rel="icon" type="image/svg+xml" href="../../travelomania-favicon.svg">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Lake Compounce · Trip Story</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,700;1,400&family=Inter:wght@300;400;500;600&family=Noto+Serif+Bengali:wght@400;500;600&display=swap" rel="stylesheet">
+<style>
+  *, *::before, *::after { box-sizing:border-box; margin:0; padding:0; }
+  :root {
+    --ocean:#2f7d4f; --ocean-lt:#dbeee2; --ocean-dk:#1f4d33;
+    --stone:#6b7c88; --ink:#1c2b33; --mist:#eef4f0; --white:#fff;
+    --serif:'Playfair Display',Georgia,serif;
+    --sans:'Inter',system-ui,sans-serif;
+    --bengali:'Noto Serif Bengali','Inter',system-ui,sans-serif;
+    --radius:10px; --shadow:0 2px 16px rgba(31,77,51,.10);
+  }
+  html { scroll-behavior:smooth; }
+  body { font-family:var(--sans); color:var(--ink); background:var(--white); -webkit-font-smoothing:antialiased; }
+
+  nav { position:sticky; top:0; z-index:100; background:rgba(255,255,255,.93); backdrop-filter:blur(12px); border-bottom:1px solid rgba(31,77,51,.14); display:flex; align-items:center; justify-content:space-between; padding:0 1.5rem; height:56px; gap:1rem; }
+  .nav-brand { font-family:var(--serif); font-size:1rem; color:var(--ocean-dk); text-decoration:none; }
+  .nav-links a { font-size:.8rem; color:var(--stone); text-decoration:none; font-weight:500; }
+  .nav-links a:hover { color:var(--ocean); }
+
+  .hero { background:linear-gradient(150deg,var(--ocean-dk) 0%,#2f7d4f 55%,#5cab6f 100%); padding:3.2rem 1.5rem 3.4rem; text-align:center; }
+  .hero-eyebrow { font-size:.7rem; font-weight:600; letter-spacing:.18em; text-transform:uppercase; color:rgba(219,238,226,.72); margin-bottom:.8rem; }
+  .hero h1 { font-family:var(--bengali); font-size:clamp(1.7rem,4.5vw,2.9rem); font-weight:600; color:#fff; line-height:1.25; margin-bottom:.5rem; }
+  .hero .hero-en { font-family:var(--serif); font-style:italic; font-size:1.05rem; color:rgba(255,255,255,.82); }
+
+  .container { max-width:720px; margin:0 auto; padding:2.2rem 1.5rem 3.5rem; }
+
+  .lang-toggle { display:flex; justify-content:center; gap:.5rem; margin-bottom:1.2rem; }
+  .lang-toggle button { font-family:var(--sans); font-size:.86rem; font-weight:600; padding:.5rem 1.3rem; border-radius:22px; border:1.5px solid rgba(47,125,79,.3); background:var(--white); color:var(--ocean); cursor:pointer; transition:all .15s; }
+  .lang-toggle button.active { background:var(--ocean); color:#fff; border-color:var(--ocean); }
+  .lang-toggle button:hover:not(.active) { background:var(--ocean-lt); }
+
+  .pdf-row { display:flex; justify-content:center; margin-bottom:2rem; }
+  .pdf-btn { display:inline-flex; align-items:center; gap:.45rem; font-family:var(--sans); font-size:.8rem; font-weight:500; color:var(--ocean-dk); text-decoration:none; background:var(--ocean-lt); border:1px solid rgba(47,125,79,.25); padding:.45rem 1rem; border-radius:20px; transition:background .15s; }
+  .pdf-btn:hover { background:#cfe6d7; }
+
+  .story { font-size:1.06rem; line-height:1.9; color:#2a3a44; }
+  .story p { margin-bottom:1.25rem; }
+  .story strong { color:var(--ocean-dk); font-weight:600; }
+  .story .story-hr { border:none; height:0; text-align:center; margin:2.2rem 0; }
+  .story .story-hr::before { content:'\2726 \2726 \2726'; color:rgba(47,125,79,.4); font-size:.7rem; letter-spacing:.5em; }
+  #story-bn { font-family:var(--bengali); }
+  #story-bn p { line-height:2.05; }
+  #story-en { display:none; }
+
+  footer { text-align:center; padding:2.5rem 1.5rem; font-size:.8rem; color:var(--stone); border-top:1px solid rgba(31,77,51,.1); background:var(--white); line-height:1.8; }
+  footer a { color:var(--ocean); text-decoration:none; }
+
+  /* Password gate */
+  #gate { position:fixed; inset:0; z-index:1000; background:linear-gradient(150deg,var(--ocean-dk) 0%,#2f7d4f 55%,#5cab6f 100%); display:flex; align-items:center; justify-content:center; padding:1.5rem; }
+  #gate.hidden { display:none; }
+  .gate-card { background:var(--white); border-radius:16px; box-shadow:0 20px 60px rgba(0,0,0,.3); padding:2.4rem 2.2rem; max-width:360px; width:100%; text-align:center; }
+  .gate-icon { font-size:2.4rem; margin-bottom:.6rem; }
+  .gate-title { font-family:var(--serif); font-size:1.5rem; color:var(--ocean-dk); margin-bottom:.4rem; }
+  .gate-sub { font-size:.85rem; color:var(--stone); line-height:1.5; margin-bottom:1.4rem; }
+  .gate-form { display:flex; gap:.5rem; }
+  .gate-form input { flex:1; padding:.6rem .9rem; border:1px solid rgba(47,125,79,.25); border-radius:8px; font-size:.95rem; font-family:var(--sans); }
+  .gate-form button { background:var(--ocean); color:#fff; border:none; padding:.6rem 1.2rem; border-radius:8px; font-size:.9rem; font-weight:500; cursor:pointer; font-family:var(--sans); }
+  .gate-wrong { font-size:.78rem; color:#c0392b; margin-top:.8rem; min-height:1rem; visibility:hidden; }
+  .gate-wrong.show { visibility:visible; }
+</style>
+
+<!-- Microsoft Clarity -->
+<script type="text/javascript">(function(c,l,a,r,i,t,y){c[a]=c[a]||function(){(c[a].q=c[a].q||[]).push(arguments)};t=l.createElement(r);t.async=1;t.src="https://www.clarity.ms/tag/"+i;y=l.getElementsByTagName(r)[0];y.parentNode.insertBefore(t,y)})(window,document,"clarity","script","xcll8onspw");</script>
+<!-- Google Analytics -->
+<script async src="https://www.googletagmanager.com/gtag/js?id=G-VH9D51QJJS"></script>
+<script>window.dataLayer=window.dataLayer||[];function gtag(){dataLayer.push(arguments);}gtag('js',new Date());gtag('config','G-VH9D51QJJS');</script>
+</head>
+<body>
+
+<div id="gate">
+  <div class="gate-card">
+    <div class="gate-icon">🔒</div>
+    <div class="gate-title">Lake Compounce Story</div>
+    <div class="gate-sub">This page is private. Enter the password to read the story.</div>
+    <div class="gate-form">
+      <input type="password" id="gate-pw" placeholder="Password" autocomplete="off">
+      <button type="button" id="gate-btn">Unlock</button>
+    </div>
+    <div class="gate-wrong" id="gate-wrong">Incorrect password. Try again.</div>
+  </div>
+</div>
+
+<nav>
+  <a class="nav-brand" href="../index.html">✦ Travelomania</a>
+  <div class="nav-links">
+    <a href="../index.html">← Back to Lake Compounce</a>
+  </div>
+</nav>
+
+<div class="hero">
+  <p class="hero-eyebrow">Lake Compounce · Sep 5–6, 2026 · Trip Story</p>
+  <h1>রাত তিনটের ভালুক</h1>
+  <div class="hero-en">The 3 AM Bear · One night, seventeen of us, at Lake Compounce</div>
+</div>
+
+<div class="container">
+  <div class="lang-toggle">
+    <button id="btn-bn" class="active" onclick="setLang('bn')">বাংলা</button>
+    <button id="btn-en" onclick="setLang('en')">English</button>
+  </div>
+  <div class="pdf-row">
+    <a class="pdf-btn" id="pdf-link" href="lake-compounce-story-bn.pdf" target="_blank" rel="noopener">⬇ বাংলা গল্পটি PDF হিসেবে ডাউনলোড করুন</a>
+  </div>
+
+  <article id="story-bn" class="story">
+      <p>রাত তখন প্রায় তিনটে।</p>
+      <p>Connecticut-এর জঙ্গলের মধ্যে আমাদের tent। বাইরে টিপটিপ করে বৃষ্টি পড়ছে। চারদিক নিস্তব্ধ - অন্তত আমি তাই ভেবেছিলাম।</p>
+      <p>গভীর ঘুমের মধ্যে হঠাৎ মোনালিসার ধাক্কায় চোখ খুলল।</p>
+      <p>“এই, ওঠো তো... tent-এর পাশে কিছু একটা আছে মনে হচ্ছে।”</p>
+      <p>আধঘুমে প্রথমে কথাটার গুরুত্ব ঠিক বুঝতে পারিনি। তারপর কান পাতলাম।</p>
+      <p>সত্যিই তো! একটা শব্দ হচ্ছে।</p>
+      <p>আর camping করতে এসে রাত তিনটেয় tent-এর বাইরে অজানা শব্দ শুনলে মানুষের মাথায় যে সব সময় রবীন্দ্রসঙ্গীত আসে, তা নয়।</p>
+      <p>আমার মাথায় প্রথম যে শব্দটা এল - Bear!</p>
+      <p>Camping-এ আসার আগে ভালুক নিয়ে যত গল্প শুনেছি, যত সাবধানবাণী কানে এসেছে, সব যেন রাত তিনটেয় একসঙ্গে মনে পড়ে গেল।</p>
+      <p>কিছুক্ষণ চুপচাপ শুয়ে শব্দটা বোঝার চেষ্টা করলাম। কিন্তু ব্যাপারটা একটু অদ্ভুত। শব্দটা বেশ rhythmic। একই ছন্দে আসছে। থামছে। আবার শুরু হচ্ছে।</p>
+      <p>মনে হল - এত ছন্দজ্ঞানসম্পন্ন ভালুক Connecticut-এর জঙ্গলে আছে নাকি?</p>
+      <p>সন্দেহটা অন্য দিকে ঘুরল।</p>
+      <p>শেষ পর্যন্ত পাশের tent-এ থাকা তন্ময়কে ফোন করলাম।</p>
+      <p>“একবার দেখ তো, আমার tent-এর পাশে কিছু দেখতে পাচ্ছিস?”</p>
+      <p>তন্ময়ও শব্দটা শুনল। তারপর রহস্যের সমাধান হতে বিশেষ সময় লাগল না।</p>
+      <p>Bear নয়।</p>
+      <p>সৌরভ।</p>
+      <p>আরও নির্দিষ্ট করে বললে - সৌরভের নাকডাকা।</p>
+      <p>নিশ্চিন্ত হয়ে আবার শুয়ে পড়লাম। মনে মনে ঠিক করলাম, সকালবেলা সৌরভকে এই গল্পটা শোনাতেই হবে।</p>
+      <p>কিন্তু প্রশ্ন হল, রাত তিনটেয় Connecticut-এর একটা campground-এ আমরা এলাম কী করে?</p>
+      <p>তার উত্তর খুঁজতে হলে কয়েক সপ্তাহ পিছিয়ে যেতে হবে।</p>
+      <p>অভয় আর কাজলের বাড়িতে।</p>
+      <p>গুব্বুর জন্মদিনে।</p>
+      <hr class="story-hr">
+      <p>অভয়-কাজলের ছেলে গুব্বুর জন্মদিনে আমরা Connecticut-এ ওদের বাড়িতে গিয়েছিলাম। খাওয়াদাওয়া আর আড্ডার মধ্যে যথারীতি কোথাও বেড়াতে যাওয়ার প্রসঙ্গ উঠল। তখনই অভয় Lake Compounce-এর কথা বলল। ওরা সেখানে camping করে এসেছে।</p>
+      <p>জায়গাটা আমাদের বাড়ি থেকে মোটামুটি আড়াই ঘণ্টার পথ।</p>
+      <p>আমার কানে দুটো শব্দ বিশেষ ভাবে আটকে গেল - Connecticut আর camping।</p>
+      <p>এতদিন আমাদের camping মূলত New York State-এর মধ্যেই সীমাবদ্ধ ছিল। কখনও state park, কখনও private campground, কখনও tent, কখনও cabin বা yurt। কিন্তু New York State-এর বাইরে গিয়ে camping করা হয়নি।</p>
+      <p>অভয়ের মুখে Lake Compounce-এর কথা শুনে তাই মনে হল - এটা করা যেতেই পারে।</p>
+      <p>আমার আবার একটা স্বভাব আছে। কোথাও বেড়াতে যাওয়ার পোকা একবার মাথায় ঢুকলে ব্যাপারটা যতক্ষণ না “হ্যাঁ, যাচ্ছি” অথবা “না, এবার হচ্ছে না” - এই দুইয়ের কোনও একটায় পৌঁছচ্ছে, ততক্ষণ মাথার ভিতর তার গবেষণা চলতেই থাকে।</p>
+      <p>বাড়ি ফিরে Lake Compounce নিয়েও সেটাই হল।</p>
+      <p>কত দূর, কী ধরনের campsite, কী সুবিধা আছে, কত খরচ, কী ভাবে যাওয়া যায় - একের পর এক খোঁজ শুরু হল।</p>
+      <p>সব দেখে মনে হল - হ্যাঁ, এবার যাওয়া যায়।</p>
+      <p>এবার খবর গেল আমাদের নিয়মিত ভ্রমণসঙ্গীদের কাছে - গৌতম-পায়েল আর তন্ময়-তনুদের পরিবারে।</p>
+      <p>ঘোরাঘুরির ব্যাপারে আমাদের কাউকে খুব বেশি উৎসাহ দিতে হয় না। কখনও আমি নতুন জায়গা খুঁজে বার করি, কখনও ওরা। আর কেউ যদি ভাল কোনও plan নিয়ে আসে, বাকিদের “না” বলার ইতিহাস খুব একটা নেই।</p>
+      <p>এই স্বল্প গ্রীষ্মের outdoor season-টুকু যতটা সম্ভব কাজে লাগানো যায় - এই ভাবনাটাও ছিল।</p>
+      <p>অতএব plan পাশ।</p>
+      <p>Lake Compounce-এ ফোন করলাম। এক একটা campsite-এ ছ’জন করে থাকতে পারে। হিসেব করে তিনটে পাশাপাশি site বুক করলাম। ফোনের ওপারে যিনি সাহায্য করেছিলেন, তিনি অত্যন্ত অমায়িক। আমার একটাই অনুরোধ ছিল - একটু নিরিবিলি জায়গা চাই, যাতে সতেরো জনের দল নিয়ে গিয়ে অন্য কারও ঘাড়ের উপর সংসার না পাততে হয়।</p>
+      <p>সেটাও হয়ে গেল।</p>
+      <p>সৌরভ-মীনাক্ষীরাও যোগ দিল।</p>
+      <p>সব মিলিয়ে আমাদের দল দাঁড়াল সতেরো জন।</p>
+      <p>তিনটে site-এ সর্বাধিক আঠারো জন।</p>
+      <p>অর্থাৎ technically একজনের জায়গা তখনও খালি।</p>
+      <p>যদিও আমাদের সঙ্গে আরও একজন ছিল।</p>
+      <p>তার নাম - বিগ বস।</p>
+      <p>বিগ বস মানুষ নয়। ছোট্ট একটি কাঠবিড়ালি। কোনও একদিন পথ ভুলে সৌরভ-মীনাক্ষীর apartment-এ এসে হাজির হয়েছিল। তারপর সম্ভবত চারদিক বিচার করে সিদ্ধান্ত নিয়েছে - এই বাড়ির hospitality মন্দ নয়, আর যাওয়ার দরকার কী!</p>
+      <p>তাই সে-ও এখন প্রায় পরিবারের সদস্য।</p>
+      <p>সতেরো জন মানুষ আর এক বিগ বসকে নিয়ে আমাদের camping party তৈরি।</p>
+      <hr class="story-hr">
+      <p>এই camping-টা আমার জন্য আর একটা কারণে বিশেষ। এই প্রথম camping-এর জন্য আমি নিজের tent কিনলাম।</p>
+      <p>আগে একবার tent camping করতে গিয়ে বন্ধু পঙ্কজের tent ধার নিয়েছিলাম। তখনও বুঝতে পারিনি camping ব্যাপারটা আমার জীবনে স্থায়ী জায়গা করে নেবে কি না। এবার আর সেই সংশয় নেই।</p>
+      <p>তার উপর সঙ্গে বাবা-মা আর শাশুড়ি। একটু আরামদায়ক ব্যবস্থা দরকার।</p>
+      <p>তাই কিনে ফেললাম একটা 8-person tent।</p>
+      <p>Air bed, pump ইত্যাদি আগে থেকেই ছিল। কিন্তু ছ’জনকে এক tent-এ রাখার দরকারই বা কী? আবার ফোন গেল সেই পুরনো ভরসা - পঙ্কজের কাছে।</p>
+      <p>পঙ্কজকে tent চাইলে শুধু tent পাওয়া যায় না। Tent-এর সঙ্গে air mattress, lantern, torch, mosquito-repellent device - একটার পর একটা জিনিস বেরোতে থাকে।</p>
+      <p>মনে হল, মানুষটার বাড়িতে ছোটখাটো camping warehouse লুকোনো আছে।</p>
+      <p>Gear sorted।</p>
+      <p>এবার আরও গুরুতর planning - খাব কী?</p>
+      <p>আমাদের camping-এ খাবার কোনও side activity নয়। বিশেষ করে গৌতম সঙ্গে থাকলে তো নয়ই।</p>
+      <p>ঠিক হল পৌঁছনোর আগে lunch সেরে নেব। Campsite-এ গিয়ে চা, সঙ্গে হালকা snacks। বিকেল থেকে chicken আর vegetables grill হবে। রাতের main course - মাটন, ভাত আর garlic naan।</p>
+      <p>পরদিন সকালে আবার fire pit জ্বালিয়ে চা। সঙ্গে croissant, boiled egg আর কলা।</p>
+      <p>এক রাতের booking। Menu দেখে অবশ্য সেটা বোঝার উপায় নেই।</p>
+      <p>আগের দিন grocery shopping সেরে tent, mattress, cooler, খাবারদাবার - সব প্রস্তুত। এবার শুধু রওনা দেওয়া বাকি।</p>
+      <hr class="story-hr">
+      <p>শনিবার সকালটা সুন্দর। কখনও ঝলমলে রোদ, কখনও মেঘ এসে সূর্যকে আড়াল করছে। বাড়ি থেকে বেরোলাম সকাল দশটা কুড়ির কাছাকাছি। Drive মোটামুটি আড়াই ঘণ্টা।</p>
+      <p>একটাই চিন্তা - weather forecast বলছে সন্ধের দিকে বৃষ্টি হতে পারে।</p>
+      <p>Camping-এ বৃষ্টি শুনতে খুব romantic। Tent-এর গায়ে টুপটাপ শব্দ, গাছের পাতায় জল, গরম চায়ের কাপ - ভাবতে দারুণ।</p>
+      <p>কিন্তু একই বৃষ্টি যদি tent খাটানোর সময় নামে, কিংবা fire pit ভাসিয়ে দেয়, তখন romanticism-এর পরিমাণ দ্রুত কমে যায়।</p>
+      <p>তাই আকাশের দিকে মাঝে মাঝেই নজর যাচ্ছিল।</p>
+      <p>Campsite থেকে কয়েক মাইল দূরে থাকতে সবার lunch-এর order জেনে নিলাম। পথে খাবার তুলে নেওয়া হল, সঙ্গে শেষ মুহূর্তের কিছু drinks আর প্রয়োজনীয় জিনিস।</p>
+      <p>একটা gas cylinder নেওয়ার কথাও ছিল। বড় cooking setup নিয়ে গিয়েছিলাম, কিন্তু শেষ পর্যন্ত ঠিক করলাম আলাদা করে gas না কিনে campground-এর fire setup-এই রান্না হবে।</p>
+      <p>অর্থাৎ আজকের dinner সত্যিকারের camping dinner।</p>
+      <p>দুপুর দুটো নাগাদ পৌঁছলাম।</p>
+      <p>আর campground দেখে প্রথমেই মন ভাল হয়ে গেল।</p>
+      <p>ছিমছাম, সবুজ, বেশ private একটা পরিবেশ। কাছেই Lake Compounce-এর বিখ্যাত amusement park। প্রথমে ভেবেছিলাম সেখানে যাব, কিন্তু পরে plan বাতিল করেছিলাম।</p>
+      <p>এক রাতের trip-এ সব কিছু করতে গেলে শেষ পর্যন্ত কোনও কিছুই মন দিয়ে করা হয় না। তাই ঠিক করেছিলাম - এবার শুধু camping।</p>
+      <hr class="story-hr">
+      <p>Campsite-এ পৌঁছেই প্রথম কাজ হওয়ার কথা ছিল tent খাটানো।</p>
+      <p>কিন্তু দুপুর দুটোয় পেট সেই গণতান্ত্রিক সিদ্ধান্ত মানতে রাজি হল না।</p>
+      <p>আগে lunch।</p>
+      <p>খিদে মিটতেই শুরু হল আসল কাজ। Ground sheet, tent, poles, stakes, air mattress, canopy - একসঙ্গে সবাই মিলে ছোট্ট একটা camp তৈরি করতে লাগলাম।</p>
+      <p>কেউ নিজের tent খাটাচ্ছে, কেউ অন্যেরটা ধরে সাহায্য করছে। কেউ canopy নিয়ে ব্যস্ত, কেউ গাড়ি থেকে মাল নামাচ্ছে।</p>
+      <p>এমন কিছু কাজ আছে যেখানে শরীর খাটে, কিন্তু সেই খাটুনির মধ্যেই একটা তৃপ্তি থাকে। Camping setup ঠিক তেমন।</p>
+      <p>একসময় তিনটে ফাঁকা campsite বদলে গেল আমাদের ছোট্ট পাড়ায়।</p>
+      <p>Tent দাঁড়িয়ে গেছে। Canopy তৈরি। Chairs বেরিয়ে এসেছে। Cooler নিজের জায়গায়।</p>
+      <p>আর সেই সময় মীনাক্ষী গরম জল নিয়ে এসে চা বানিয়ে দিল।</p>
+      <p>প্রথম কাপ গরম চা হাতে নিয়ে মনে হল - হ্যাঁ, এবার camping সত্যিই শুরু।</p>
+      <hr class="story-hr">
+      <p>চায়ের পর শুরু হল রাতের খাবারের প্রস্তুতি। Chicken marinate হল। Vegetables তৈরি হল। মাটনের প্রস্তুতিও শুরু।</p>
+      <p>এর মধ্যে দলের কয়েকজন fishing করতে বেরিয়ে গেল। Campground-এর বিকেলটা ধীরে ধীরে সন্ধের দিকে যাচ্ছে।</p>
+      <p>কেউ রান্না করছে, কেউ fire pit সামলাচ্ছে, কেউ গল্প করছে, কেউ ভুলে যাওয়া জিনিস আনতে কাছের দোকানে যাচ্ছে।</p>
+      <p>এই বিশৃঙ্খলার মধ্যেই camping-এর একটা নিজস্ব rhythm তৈরি হয়ে যায়।</p>
+      <p>কেউ কাউকে formal ভাবে কাজ ভাগ করে দেয়নি। তবু সব কাজ কোনও না কোনও ভাবে হয়ে যাচ্ছে।</p>
+      <p>সন্ধে নামল। আগুন জ্বলে উঠল। ভাত তৈরি হয়ে গেল। Chicken grill শুরু হল। Fire pit-এ অবশ্য chicken একটু সময় নিচ্ছিল। এদিকে অন্য দিকে মাটন রান্না হচ্ছে।</p>
+      <p>আর সেখানেই ঘটল সেই সন্ধের বড় আবিষ্কার।</p>
+      <p>সৌরভের এতদিনের এই প্রতিভা আমাদের কাছে লুকোনোই ছিল। আজ সেটাই প্রকাশ পেল - আর মাটন খেয়েই আমি বুঝলাম, সামনে থেকে ওকে এই কাজে আরও ডাকতে হবে।</p>
+      <p>সকলেরই মাটন খুব পছন্দ হল। সঙ্গে সঙ্গে ভবিষ্যতের picnic, camping, get-together - যেখানেই মাটন হবে, সৌরভের দিকে প্রত্যাশার চোখে তাকানোর ব্যবস্থা হয়ে গেল।</p>
+      <p>বড়দের খাওয়ানো হল, ছোটরা খেল, তারপর আমরাও খেলাম। ভাত, মাটন, garlic naan, grilled chicken - সারাদিনের পরিশ্রমের পর fire pit-এর পাশে সেই dinner-এর স্বাদ আলাদা।</p>
+      <p>খাওয়াদাওয়া শেষ হতে হতে প্রায় সাড়ে দশটা।</p>
+      <p>কিন্তু রাত তখনও শেষ নয়।</p>
+      <hr class="story-hr">
+      <p>বয়স্করা ধীরে ধীরে গুছিয়ে নিলেন। আর আমরা কয়েকজন fire pit-এর চারপাশে বসে রইলাম।</p>
+      <p>Camping-এর সম্ভবত আমার সবচেয়ে প্রিয় অংশ এটাই। কোথাও যাওয়ার তাড়া নেই। কিছু “দেখতেই হবে” নেই। কোনও itinerary নেই। শুধু আগুন, চারপাশে অন্ধকার, মাঝে মাঝে কাঠ ফেটে ওঠার শব্দ, আর গল্প।</p>
+      <p>কথা কোথা থেকে কোথায় যায় তার কোনও হিসেব থাকে না। মাঝেমধ্যে কেউ আগুনে আর একটা কাঠ দেয়। কেউ চেয়ারে হেলান দিয়ে বসে। কেউ হেসে ওঠে।</p>
+      <p>এদিকে আকাশও নিজের উপস্থিতি জানান দিতে শুরু করেছে। টিপটিপ করে বৃষ্টি নামল। প্রথমে এত সামান্য যে fire pit ছেড়ে ওঠার কোনও কারণ নেই।</p>
+      <p>রাত সাড়ে বারোটা-একটা নাগাদ আমরাও যে যার tent-এর দিকে চলে গেলাম।</p>
+      <p>বাইরে বৃষ্টি, আর আমরা comforter আর air mattress নিয়ে tent-এর ভিতর শুয়ে পড়লাম। সেই বৃষ্টির শব্দের মধ্যে এক অদ্ভুত শান্তি ছিল।</p>
+      <p>তারপর রাত তিনটে। মোনালিসার ধাক্কা। অজানা শব্দ। Bear-এর আশঙ্কা। তন্ময়কে ফোন। এবং শেষ পর্যন্ত - সৌরভের সেই ঐতিহাসিক নাকডাকা।</p>
+      <hr class="story-hr">
+      <p>ভোরের দিকে আবার ঘুমিয়ে পড়েছিলাম। সকাল প্রায় ছ’টা চল্লিশে প্রকৃতির ডাক আর উপেক্ষা করা গেল না। উঠে মাকে নিয়ে bathroom-এর দিকে গেলাম।</p>
+      <p>বেরিয়েই দেখি সৌরভ ইতিমধ্যে জেগে বসে আছে। ওকে দেখেই আমার হাসি পাচ্ছিল। রাত তিনটের “bear” দিব্যি পাশেই বসে আছে!</p>
+      <p>সকালটাও সুন্দর, তবে অন্য রকম। রাতভর টিপটিপ বৃষ্টি হয়েছে। আকাশে ঘন কালো মেঘ। মাঝে মাঝে বৃষ্টি একটু জোরে পড়ছে। Canopy-র নীচে আমরা কয়েকজন বসে আছি, আর বাকিদের কেউ tent-এর ভিতরে ঘুমোচ্ছে, কেউ জেগে শুয়ে বৃষ্টির শব্দ শুনছে।</p>
+      <p>সেই সময় শুরু হল আমার বাবা আর সৌরভের ইতিহাস আলোচনা।</p>
+      <p>একটা বিষয় থেকে আর একটা বিষয়। আধুনিক যুদ্ধ থেকে আমেরিকার ইতিহাস। সেখান থেকে George Washington। Washington থেকে আরও পিছিয়ে Columbus। Columbus থেকে Native Americans।</p>
+      <p>কিছুক্ষণের মধ্যে মনে হল, আমরা Connecticut-এর একটা campground-এ বসে নেই - গত কয়েকশো বছরের বিশ্ব-ইতিহাসে time travel করছি।</p>
+      <p>বাইরে বৃষ্টি। সামনে ভেজা গাছপালা। Canopy-র ছাদে জলের শব্দ। আর তার নীচে গরম চায়ের অপেক্ষায় বিশ্ব-ইতিহাসের বিশ্লেষণ।</p>
+      <p>মুহূর্তটা অদ্ভুত সুন্দর ছিল। কিছু কিছু সময় camera-য় ঠিক ধরা যায় না। সেগুলো শুধু মনে জমা হয়।</p>
+      <p>বৃষ্টি একটু কমতেই আগের রাত থেকে বাঁচিয়ে রাখা শুকনো কাঠ দিয়ে আবার fire pit জ্বালানো হল। আগুন প্রথমে একটু ইতস্তত করল। তারপর ধীরে ধীরে ধরে গেল।</p>
+      <p>তার উপর চায়ের জল বসল। আর একটু পরেই বৃষ্টিভেজা Connecticut-এর সকালে হাতে এল গরম চা।</p>
+      <p>তার সঙ্গে croissant, boiled egg, কলা। খুব সাধারণ breakfast। কিন্তু জঙ্গলের মধ্যে আগুন জ্বালিয়ে বানানো চায়ের পাশে বসে খেলে সাধারণ জিনিসও আর সাধারণ থাকে না।</p>
+      <hr class="story-hr">
+      <p>Breakfast শেষ হতেই ঘড়ির দিকে তাকাতে হল। এগারোটার মধ্যে campsite ছাড়ার কথা। এবার শুরু হল reverse countdown।</p>
+      <p>Air mattress থেকে হাওয়া বার হচ্ছে। Tent-এর ভিতরের ছোট ছোট জিনিস গাড়িতে যাচ্ছে। Cooler গুছছে। Chairs fold হচ্ছে।</p>
+      <p>কাল যে কাজগুলো করতে এত আনন্দ হচ্ছিল, আজ সেগুলোর ঠিক উল্টো কাজ। Tent খাটানোর মধ্যে excitement আছে। Tent গোটানোর মধ্যে একটু মনখারাপ।</p>
+      <p>সবাইয়ের মুখেই প্রায় একই কথা - “আর একটা দিন থাকলে বেশ হত।”</p>
+      <p>সত্যিই হত। কিন্তু আমাদের booking তো এক রাতেরই। আর সেই এক রাতটাই হয়তো একটা শুরুর জন্য যথেষ্ট।</p>
+      <p>প্রথম বার নিজের gear নিয়ে এত বড় দল করে camping। কী দরকার, কী দরকার নেই, কী ভাবে setup করলে সুবিধা, রান্না কী ভাবে করা যায়, বৃষ্টির মধ্যে কী ভাবে সামলাতে হয় - এক রাতেই অনেক কিছু শিখে গেলাম।</p>
+      <p>Camping নিয়ে আমাদের আত্মবিশ্বাসও বাড়ল। পরের বার হয়তো আরও দূরে, হয়তো দু’রাত, হয়তো আরও নতুন কোনও জায়গা।</p>
+      <p>সব গুছিয়ে গাড়িতে তুলতে তুলতে প্রায় দুপুর। বৃষ্টি তখনও কখনও আসছে, কখনও থামছে। একসময় বেশ জোরেও নামল।</p>
+      <p>তবু শেষ পর্যন্ত তিনটে campsite আবার আগের মতো প্রায় ফাঁকা হয়ে গেল। মাত্র এক রাতের জন্য সেখানে আমাদের ছোট্ট একটা পাড়া তৈরি হয়েছিল। এবার তার চিহ্ন গুটিয়ে নিয়ে আমরা বেরিয়ে পড়লাম।</p>
+      <hr class="story-hr">
+      <p>এতক্ষণে দুপুর হয়ে গেছে। আড়াই ঘণ্টা drive করে বাড়ি ফেরার আগে ঠিক হল, সবাই একসঙ্গে lunch করে নেওয়া যাক।</p>
+      <p>গেলাম Sabaidee Thai Restaurant-এ।</p>
+      <p>সতেরো জনের দল আবার একসঙ্গে টেবিলে। Camping শেষ হয়ে গেছে ঠিকই, কিন্তু trip তখনও শেষ হয়নি।</p>
+      <p>খাওয়া হল, গল্প হল, আগের রাতের ঘটনা নিয়ে হাসাহাসি হল। নিশ্চয়ই সৌরভও বুঝে গিয়েছিল যে তার মাটন এবং তার নাকডাকা - দুটোই এই camping-এর ইতিহাসে স্থায়ী জায়গা করে নিয়েছে।</p>
+      <p>প্রায় তিনটে নাগাদ এবার সত্যিই বাড়ির পথে রওনা দিলাম। ফেরার সময় মোনালিসা গাড়ি চালাল। বিকেল পাঁচটা নাগাদ বাড়ি।</p>
+      <hr class="story-hr">
+      <p>এক রাতের camping শেষ।</p>
+      <p>কিন্তু সঙ্গে কী নিয়ে ফিরলাম?</p>
+      <p>হিসেব করলে trip-টা খুব ছোট। এক রাত। দু’দিনও পুরো নয়। আড়াই ঘণ্টার drive। তিনটে campsite। সতেরো জন মানুষ। আর একজন বিগ বস - যে অবশ্য নিজেকে শুধু কাঠবিড়ালি বলে পরিচয় দিতে রাজি নয়।</p>
+      <p>কিন্তু ভ্রমণের দৈর্ঘ্য সব সময় ঘড়ি দিয়ে মাপা যায় না। মাপতে হয় কতগুলো মুহূর্ত সঙ্গে নিয়ে ফিরলাম, সেটা দিয়ে।</p>
+      <p>একসঙ্গে tent খাটানোর মুহূর্ত। মীনাক্ষীর বানানো গরম চা। Fishing করতে বেরিয়ে যাওয়া ছেলেমেয়েরা। Fire pit-এর ধারে বসে গল্প। সৌরভের অপ্রত্যাশিত অসাধারণ মাটন। রাত তিনটেয় bear ভেবে চমকে ওঠা। তারপর জানা - bear দিব্যি পাশের tent-এ ঘুমিয়ে নাক ডাকছে।</p>
+      <p>বৃষ্টিভেজা সকালে canopy-র নীচে বসে আমার বাবা আর সৌরভের বিশ্ব-ইতিহাস ভ্রমণ। আগুন জ্বালিয়ে সকালের চা। আর শেষে tent গোটাতে গোটাতে সবার একই আফসোস - আর একটা দিন থাকলে ভাল হত।</p>
+      <p>আমার বাবা-মা, আমার শাশুড়ি, তনুর বাবা-মা - তাঁরাও ছিলেন আমাদের সঙ্গে। তাঁরা যখন ফিরে যাবেন, এই ছোট্ট camping-এর গল্পও তাঁদের সঙ্গে যাবে। হয়তো কারও কাছে বলবেন, Connecticut-এর জঙ্গলে এক রাত tent-এ ছিলেন। বৃষ্টির মধ্যে চা খেয়েছেন। আগুনে রান্না করা মাটন খেয়েছেন। হয়তো রাত তিনটের bear-এর গল্পটাও বলবেন।</p>
+      <p>এই ভ্রমণকাহিনিটা স্থান পাবে আমার নিজের ট্রাভেল ব্লগে ও ট্রাভেল ওয়েবসাইটে - আরও কিছু পুরনো আর নতুন ভ্রমণের গল্পের পাশে।</p>
+      <p>বোধহয় জীবন শেষ পর্যন্ত এমনই। বড় বড় ঘটনার জন্য অপেক্ষা করতে করতে জীবন কাটিয়ে দেওয়ার চেয়ে ছোট ছোট ভাল লাগাগুলোকে চিনে নেওয়াই বেশি জরুরি।</p>
+      <p>এক কাপ গরম চা। একটা fire pit। বৃষ্টির শব্দ। বন্ধুদের হাসি। একসঙ্গে খাওয়া। বাবা-মায়ের সঙ্গে কাটানো একটা সকাল। আর একটা গল্প, যেটা বহু বছর পরেও শুনলে সবাই হেসে উঠবে।</p>
+      <p>ছবিগুলো কোনও একদিন পুরনো হবে। Tent আবার অন্য কোনও campground-এ খাটবে। Fire pit-এ নতুন করে আগুন জ্বলবে। আমার মাথায় আবার নতুন কোনও জায়গায় যাওয়ার পোকা ঢুকবে - সেটা প্রায় নিশ্চিত।</p>
+      <p>কিন্তু Lake Compounce-এর এই এক রাত আমাদের camping-এর গল্পে আলাদা হয়ে থাকবে।</p>
+      <p>কারণ এটা শুধু একটা trip ছিল না।</p>
+      <p>এটা ছিল নতুন একটা আত্মবিশ্বাসের শুরু - হ্যাঁ, আমরা পারি। নিজেদের gear নিয়ে, এতগুলো মানুষকে সঙ্গে নিয়ে, রাজ্যের বাইরে গিয়েও দিব্যি camping করা যায়।</p>
+      <p>আর ভবিষ্যতে যখন আবার কোনও অচেনা campground-এর দিকে গাড়ি ছুটবে, তখন হয়তো এই রাতটার কথা মনে পড়বে।</p>
+      <p>Connecticut-এর বৃষ্টি। আগুনের পাশে আড্ডা। সৌরভের মাটন। বিগ বস। আর রাত তিনটের সেই ভয়ঙ্কর ভালুক - যে শেষ পর্যন্ত নাক ডেকেই আমাদের সবচেয়ে বেশি হাসিয়েছিল।</p>
+  </article>
+
+  <article id="story-en" class="story">
+      <p>It was almost three in the morning.</p>
+      <p>Our tent stood in the middle of a Connecticut forest. Outside, a light rain was pattering down. Everything was still — or so I thought.</p>
+      <p>Deep in sleep, I was suddenly woken by a nudge from Monalisa.</p>
+      <p>“Hey, wake up… I think there's something right beside the tent.”</p>
+      <p>Half asleep, I didn't quite grasp what she meant at first. Then I listened.</p>
+      <p>She was right! There was a sound.</p>
+      <p>And when you're out camping and you hear an unknown sound outside your tent at three in the morning, Rabindra Sangeet is not exactly the first thing that comes to mind.</p>
+      <p>The first word that flashed through my head was — Bear!</p>
+      <p>Every bear story I'd ever heard before this camping trip, every warning that had ever reached my ears, all came rushing back at once at three in the morning.</p>
+      <p>I lay quietly for a while, trying to make sense of the sound. But there was something odd about it. It was quite rhythmic. It came in the same beat. Paused. Then started again.</p>
+      <p>I thought — is there really a bear this musically gifted in the forests of Connecticut?</p>
+      <p>My suspicion turned in another direction.</p>
+      <p>Finally I called Tanmay, who was in the next tent.</p>
+      <p>“Can you take a look — do you see anything beside my tent?”</p>
+      <p>Tanmay heard the sound too. And it didn't take long to solve the mystery.</p>
+      <p>Not a bear.</p>
+      <p>Saurav.</p>
+      <p>To be more precise — Saurav's snoring.</p>
+      <p>Reassured, I lay back down. And I decided, then and there, that I absolutely had to tell Saurav this story in the morning.</p>
+      <p>But the question is — how did we end up at a campground in Connecticut at three in the morning?</p>
+      <p>To find the answer, we have to go back a few weeks.</p>
+      <p>To Abhay and Kajol's house.</p>
+      <p>To Gubbu's birthday.</p>
+      <hr class="story-hr">
+      <p>We had gone to Abhay and Kajol's home in Connecticut for their son Gubbu's birthday. Amid the food and the adda, the subject of going somewhere on a trip came up, as it usually does. That's when Abhay mentioned Lake Compounce. They had been camping there.</p>
+      <p>The place was roughly two and a half hours from our house.</p>
+      <p>Two words in particular stuck in my ears — Connecticut and camping.</p>
+      <p>Until now, our camping had mostly stayed within New York State. Sometimes a state park, sometimes a private campground, sometimes a tent, sometimes a cabin or a yurt. But we had never gone camping outside New York State.</p>
+      <p>So hearing Abhay talk about Lake Compounce, I thought — this is definitely doable.</p>
+      <p>I have a certain habit. Once the travel bug for a place gets into my head, the research inside my mind keeps running until it reaches one of two conclusions — “Yes, we're going” or “No, not this time.”</p>
+      <p>Back home, the same thing happened with Lake Compounce.</p>
+      <p>How far, what kind of campsite, what amenities, how much it costs, how to get there — one search led to another.</p>
+      <p>After looking into everything, I felt — yes, we can do this.</p>
+      <p>Then word went out to our regular travel companions — Goutam-Payel and Tanmay-Tanu's families.</p>
+      <p>None of us needs much convincing when it comes to travel. Sometimes I find a new place, sometimes they do. And if someone brings a good plan, the rest of us don't have much of a history of saying “no.”</p>
+      <p>There was also the thought of making the most of this short summer outdoor season.</p>
+      <p>So the plan was approved.</p>
+      <p>I called Lake Compounce. Each campsite could hold six people. Doing the math, I booked three sites side by side. The person who helped me on the phone was extremely gracious. I had just one request — somewhere a little secluded, so that a group of seventeen wouldn't be setting up house right on top of anyone else.</p>
+      <p>That worked out too.</p>
+      <p>Saurav and Meenakshi joined in as well.</p>
+      <p>All told, our group came to seventeen people.</p>
+      <p>Three sites, a maximum of eighteen.</p>
+      <p>Which meant, technically, there was still room for one more.</p>
+      <p>Though we did have one more with us.</p>
+      <p>His name — Big Boss.</p>
+      <p>Big Boss is not a person. He's a little squirrel. One day he lost his way and turned up at Saurav and Meenakshi's apartment. Then, having presumably weighed his options, he decided — the hospitality in this house isn't bad, so why leave!</p>
+      <p>So he too is now practically a member of the family.</p>
+      <p>Seventeen people and one Big Boss — our camping party was ready.</p>
+      <hr class="story-hr">
+      <p>This camping trip was special to me for another reason too. For the first time, I bought my own tent for camping.</p>
+      <p>Once before, I'd borrowed my friend Pankaj's tent for a tent-camping trip. Back then I still wasn't sure whether camping would earn a permanent place in my life. This time there was no such doubt.</p>
+      <p>On top of that, my parents and mother-in-law were coming along. We needed something a little more comfortable.</p>
+      <p>So I went and bought an 8-person tent.</p>
+      <p>Air bed, pump and so on I already had. But why cram six people into one tent? So a call went out once again to that old reliable — Pankaj.</p>
+      <p>When you ask Pankaj for a tent, you don't just get a tent. Along with the tent come an air mattress, a lantern, a torch, a mosquito-repellent device — one thing after another keeps coming out.</p>
+      <p>I began to suspect the man has a small camping warehouse hidden in his house.</p>
+      <p>Gear sorted.</p>
+      <p>Now for the more serious planning — what would we eat?</p>
+      <p>On our camping trips, food is never a side activity. Especially not when Goutam is along.</p>
+      <p>It was decided that we'd have lunch before arriving. Tea at the campsite, with some light snacks. From the afternoon, chicken and vegetables on the grill. The night's main course — mutton, rice, and garlic naan.</p>
+      <p>The next morning, tea again over the fire pit. Along with croissants, boiled eggs, and bananas.</p>
+      <p>A one-night booking. You'd never guess it from the menu, though.</p>
+      <p>The day before, grocery shopping done, tent, mattress, cooler, food — everything ready. All that was left was to set off.</p>
+      <hr class="story-hr">
+      <p>Saturday morning was lovely. Now bright sunshine, now a cloud slipping in to hide the sun. We left home around ten twenty in the morning. The drive was roughly two and a half hours.</p>
+      <p>There was just one worry — the weather forecast said it might rain toward evening.</p>
+      <p>Rain while camping sounds very romantic. The patter on the tent, water on the leaves, a cup of hot tea — lovely to imagine.</p>
+      <p>But if that same rain comes down while you're pitching the tent, or floods the fire pit, the amount of romanticism drops fast.</p>
+      <p>So my eyes kept drifting up to the sky.</p>
+      <p>A few miles out from the campsite, I took everyone's lunch orders. We picked up the food on the way, along with some last-minute drinks and necessities.</p>
+      <p>There had also been talk of picking up a gas cylinder. We'd brought a big cooking setup, but in the end I decided not to buy separate gas — we'd cook on the campground's fire setup instead.</p>
+      <p>Which meant tonight's dinner would be a true camping dinner.</p>
+      <p>We arrived around two in the afternoon.</p>
+      <p>And the moment I saw the campground, my mood lifted.</p>
+      <p>Neat, green, a nicely private setting. Nearby was Lake Compounce's famous amusement park. At first I'd thought we'd go there, but later I dropped the plan.</p>
+      <p>On a one-night trip, if you try to do everything, you end up doing nothing properly. So I'd decided — this time, just camping.</p>
+      <hr class="story-hr">
+      <p>The first task on reaching the campsite was supposed to be pitching the tents.</p>
+      <p>But at two in the afternoon, our stomachs refused to go along with that democratic decision.</p>
+      <p>Lunch first.</p>
+      <p>Once the hunger was dealt with, the real work began. Ground sheet, tent, poles, stakes, air mattress, canopy — all of us together set about building a little camp.</p>
+      <p>Someone pitching their own tent, someone else holding a pole to help. Someone busy with the canopy, someone unloading gear from the car.</p>
+      <p>There are some kinds of work where the body labors, and yet there's a satisfaction within that labor. Setting up camp is exactly like that.</p>
+      <p>At some point three empty campsites turned into our own little neighborhood.</p>
+      <p>The tents were up. The canopy ready. Chairs out. Cooler in its place.</p>
+      <p>And just then Meenakshi came over with hot water and made tea.</p>
+      <p>Holding that first cup of hot tea, I thought — yes, now camping has truly begun.</p>
+      <hr class="story-hr">
+      <p>After tea, preparations for dinner began. Chicken was marinated. Vegetables prepped. The mutton preparation started too.</p>
+      <p>Meanwhile a few of the group headed off to go fishing. The campground afternoon was slowly drifting toward evening.</p>
+      <p>Someone cooking, someone tending the fire pit, someone chatting, someone running to the nearby store for a forgotten item.</p>
+      <p>It's within this very chaos that camping develops its own rhythm.</p>
+      <p>Nobody had formally divided up the tasks. And yet everything was somehow getting done.</p>
+      <p>Evening fell. The fire came alive. The rice was ready. The chicken grill started. The chicken was taking its time on the fire pit, though. Over on the other side, the mutton was cooking.</p>
+      <p>And that's where the big discovery of the evening happened.</p>
+      <p>This talent of Saurav's had stayed hidden from us all this time. Today it came out — and one bite of the mutton told me we'd have to call on him for this job far more often.</p>
+      <p>Everyone loved the mutton. And right away, for every future picnic, camping trip, and get-together where mutton is involved, an arrangement was made to look hopefully in Saurav's direction.</p>
+      <p>The elders were fed, the children ate, and then we ate too. Rice, mutton, garlic naan, grilled chicken — after a whole day's labor, dinner beside the fire pit tastes different.</p>
+      <p>By the time we finished eating it was nearly half past ten.</p>
+      <p>But the night wasn't over yet.</p>
+      <hr class="story-hr">
+      <p>The elders slowly settled in for the night. And a few of us stayed sitting around the fire pit.</p>
+      <p>This is probably my favorite part of camping. No rush to be anywhere. Nothing that “must be seen.” No itinerary. Just the fire, the darkness all around, the occasional crack of splitting wood, and conversation.</p>
+      <p>There's no accounting for where the talk wanders. Every so often someone adds another log to the fire. Someone leans back in a chair. Someone bursts out laughing.</p>
+      <p>Meanwhile the sky, too, began to announce its presence. A light rain came down. So slight at first that there was no reason to get up from the fire pit.</p>
+      <p>Around half past twelve or one, we too drifted off toward our tents.</p>
+      <p>Rain outside, and we lay down inside the tent with a comforter and air mattress. There was a strange peace within the sound of that rain.</p>
+      <p>Then, three in the morning. Monalisa's nudge. The unknown sound. The fear of a bear. The call to Tanmay. And finally — Saurav's historic snoring.</p>
+      <hr class="story-hr">
+      <p>Toward dawn I fell asleep again. Around six forty in the morning, nature's call could no longer be ignored. I got up and took my mother toward the bathroom.</p>
+      <p>Stepping out, I saw Saurav already up and sitting. Seeing him made me want to laugh. The three-a.m. “bear” was sitting right there beside me!</p>
+      <p>The morning was lovely too, but in a different way. It had drizzled all night. The sky was full of thick dark clouds. Now and then the rain came down a little harder. A few of us sat under the canopy, while of the others some slept inside the tents, some lay awake listening to the rain.</p>
+      <p>That's when the history discussion between my father and Saurav began.</p>
+      <p>From one topic to another. From modern warfare to American history. From there to George Washington. From Washington further back to Columbus. From Columbus to the Native Americans.</p>
+      <p>Within a little while it felt as though we weren't sitting at a campground in Connecticut — we were time-traveling through several hundred years of world history.</p>
+      <p>Rain outside. Wet greenery in front. The sound of water on the canopy roof. And beneath it, an analysis of world history while waiting for hot tea.</p>
+      <p>The moment was strangely beautiful. Some moments can't quite be caught on camera. They only get stored in the mind.</p>
+      <p>As soon as the rain let up a little, the fire pit was lit again with dry wood saved from the night before. The fire hesitated at first. Then, slowly, it caught.</p>
+      <p>The tea water went on top of it. And a little later, on that rain-soaked Connecticut morning, hot tea arrived in our hands.</p>
+      <p>Along with croissants, boiled eggs, bananas. A very ordinary breakfast. But eaten beside tea brewed over a fire in the middle of the forest, even ordinary things stop being ordinary.</p>
+      <hr class="story-hr">
+      <p>As soon as breakfast was over, we had to glance at the clock. We were supposed to leave the campsite by eleven. Now the reverse countdown began.</p>
+      <p>Air hissing out of the mattresses. The little things from inside the tent going into the car. The cooler being packed up. Chairs being folded.</p>
+      <p>The tasks that had been such fun yesterday were exactly reversed today. There's excitement in pitching a tent. There's a little sadness in folding one up.</p>
+      <p>Nearly everyone said the same thing — “It would have been nice to stay one more day.”</p>
+      <p>It really would have. But our booking was for just one night. And that one night was perhaps enough for a beginning.</p>
+      <p>Our first time camping with such a large group using our own gear. What you need, what you don't, how best to set up, how to cook, how to manage in the rain — we learned a lot in a single night.</p>
+      <p>Our confidence about camping grew too. Next time maybe farther away, maybe two nights, maybe somewhere new.</p>
+      <p>By the time everything was packed and loaded into the cars it was nearly noon. The rain was still coming and going. At one point it came down quite hard.</p>
+      <p>But in the end, the three campsites became almost empty again, just as before. For just one night, our own little neighborhood had stood there. Now, gathering up its traces, we set off.</p>
+      <hr class="story-hr">
+      <p>By now it was afternoon. Before the two-and-a-half-hour drive home, it was decided that we'd all have lunch together.</p>
+      <p>We went to Sabaidee Thai Restaurant.</p>
+      <p>The group of seventeen, together at the table once again. The camping was over, true, but the trip wasn't over yet.</p>
+      <p>We ate, we talked, we laughed about the previous night's events. Saurav had surely understood by now that both his mutton and his snoring had earned a permanent place in the history of this camping trip.</p>
+      <p>Around three, we finally set off homeward for real. Monalisa drove on the way back. Home by around five in the evening.</p>
+      <hr class="story-hr">
+      <p>One night of camping, over.</p>
+      <p>But what did we bring back with us?</p>
+      <p>On paper, the trip was very short. One night. Not even a full two days. A two-and-a-half-hour drive. Three campsites. Seventeen people. And one Big Boss — who, admittedly, refuses to introduce himself as merely a squirrel.</p>
+      <p>But the length of a journey can't always be measured by the clock. It has to be measured by how many moments you bring back with you.</p>
+      <p>The moment of pitching the tents together. The hot tea Meenakshi made. The kids who went off fishing. Stories around the fire pit. Saurav's unexpectedly extraordinary mutton. Startling awake at three in the morning thinking it was a bear. Then learning — the bear was fast asleep in the next tent, snoring away.</p>
+      <p>On a rain-soaked morning, my father and Saurav's tour through world history under the canopy. Morning tea over a freshly lit fire. And at the end, the same regret from everyone as we folded up the tents — it would have been nice to stay one more day.</p>
+      <p>My parents, my mother-in-law, Tanu's parents — they were with us too. When they go back, the story of this little camping trip will travel with them. Perhaps they'll tell someone how they spent a night in a tent in a Connecticut forest. Drank tea in the rain. Ate mutton cooked over a fire. Perhaps they'll even tell the story of the three-a.m. bear.</p>
+      <p>This travelogue will find its place on my own travel blog and travel website — alongside a few other stories, old and new.</p>
+      <p>Perhaps that's what life comes down to in the end. Rather than spending it waiting for the big events, it's more important to recognize the small joys.</p>
+      <p>A cup of hot tea. A fire pit. The sound of rain. The laughter of friends. Eating together. A morning spent with your parents. And a story that, even many years later, will still make everyone laugh.</p>
+      <p>The photos will grow old one day. The tent will be pitched at some other campground. A new fire will burn in the fire pit. The bug to go somewhere new will get into my head again — that's almost certain.</p>
+      <p>But this one night at Lake Compounce will stand apart in our camping story.</p>
+      <p>Because it wasn't just a trip.</p>
+      <p>It was the beginning of a new confidence — yes, we can do this. With our own gear, with this many people along, we can happily camp even beyond state lines.</p>
+      <p>And in the future, when the car races off toward some unfamiliar campground again, perhaps this night will come to mind.</p>
+      <p>Connecticut's rain. The adda beside the fire. Saurav's mutton. Big Boss. And that terrifying three-a.m. bear — who, in the end, made us laugh the hardest of all, simply by snoring.</p>
+  </article>
+</div>
+
+<footer>
+  <p>
+    Travelomania &nbsp;·&nbsp; Made with <span style="color:#e05a5a">♥</span> by Dipankar
+    &nbsp;·&nbsp; <a href="../index.html">Lake Compounce</a>
+    &nbsp;·&nbsp; <a href="../../index.html">All Trips</a>
+  </p>
+</footer>
+
+<script>
+  function setLang(l){
+    var bn = l === 'bn';
+    document.getElementById('story-bn').style.display = bn ? 'block' : 'none';
+    document.getElementById('story-en').style.display = bn ? 'none' : 'block';
+    document.getElementById('btn-bn').classList.toggle('active', bn);
+    document.getElementById('btn-en').classList.toggle('active', !bn);
+    var pdf = document.getElementById('pdf-link');
+    if (pdf) {
+      pdf.textContent = bn ? '⬇ বাংলা গল্পটি PDF হিসেবে ডাউনলোড করুন' : '⬇ Download the story (PDF)';
+      pdf.setAttribute('href', bn ? 'lake-compounce-story-bn.pdf' : 'lake-compounce-story-en.pdf');
+    }
+    try { localStorage.setItem('lake-compounce-story-lang', l); } catch(e) {}
+    window.scrollTo({ top: 0 });
+  }
+  (function(){
+    var saved = 'bn';
+    try { saved = localStorage.getItem('lake-compounce-story-lang') || 'bn'; } catch(e) {}
+    setLang(saved);
+  })();
+
+  // Password gate (shares session with the Lake Compounce page)
+  (function () {
+    var GATE_PW = 'x', GATE_KEY = 'lake-compounce-unlocked';
+    var gate = document.getElementById('gate'), input = document.getElementById('gate-pw'),
+        btn = document.getElementById('gate-btn'), wrong = document.getElementById('gate-wrong');
+    function openGate(){ gate.classList.add('hidden'); document.body.style.overflow=''; }
+    function check(){ if(input.value.trim()===GATE_PW){ try{sessionStorage.setItem(GATE_KEY,'1');}catch(e){} openGate(); } else { wrong.classList.add('show'); input.value=''; input.focus(); } }
+    btn.addEventListener('click', check);
+    input.addEventListener('keydown', function(e){ if(e.key==='Enter'){ e.preventDefault(); check(); } });
+    var unlocked=false; try{ unlocked = sessionStorage.getItem(GATE_KEY)==='1'; }catch(e){}
+    if(unlocked){ openGate(); } else { document.body.style.overflow='hidden'; input.focus(); }
+  })();
+</script>
+
+</body>
+</html>

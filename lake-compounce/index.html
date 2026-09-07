@@ -6,7 +6,7 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>Lake Compounce · Travelomania</title>
 <link rel="preconnect" href="https://fonts.googleapis.com">
-<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,700;1,400&family=Inter:wght@300;400;500;600&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,700;1,400&family=Inter:wght@300;400;500;600&family=Noto+Serif+Bengali:wght@400;500;600&display=swap" rel="stylesheet">
 <style>
   *, *::before, *::after { box-sizing:border-box; margin:0; padding:0; }
   :root {
@@ -16,6 +16,7 @@
     --saffron:#e07b1a; --saffron-lt:#fdeede;
     --serif:'Playfair Display',Georgia,serif;
     --sans:'Inter',system-ui,sans-serif;
+    --bengali:'Noto Serif Bengali','Inter',system-ui,sans-serif;
     --radius:10px; --shadow:0 2px 16px rgba(31,77,51,.10);
   }
   html { scroll-behavior:smooth; }
@@ -122,6 +123,15 @@
   .sb-sub { font-size:.8rem; color:var(--stone); margin-top:.15rem; }
   .sb-arrow { flex-shrink:0; background:var(--ocean); color:#fff; font-weight:600; font-size:.82rem; padding:.5rem 1rem; border-radius:7px; white-space:nowrap; }
 
+  /* Trip story band */
+  .story-band { display:flex; align-items:center; gap:1.2rem; flex-wrap:wrap; background:linear-gradient(135deg,var(--ocean-dk),var(--ocean)); border-radius:var(--radius); padding:1.5rem 1.7rem; color:#fff; text-decoration:none; box-shadow:var(--shadow); transition:box-shadow .2s; }
+  .story-band:hover { box-shadow:0 6px 26px rgba(31,77,51,.3); }
+  .story-band .stb-icon { font-size:2.2rem; }
+  .story-band .stb-text { flex:1; min-width:200px; }
+  .story-band .stb-title { font-family:var(--bengali); font-size:1.25rem; margin-bottom:.25rem; }
+  .story-band .stb-sub { font-size:.85rem; opacity:.9; line-height:1.5; }
+  .story-band .stb-btn { background:#fff; color:var(--ocean-dk); font-weight:600; font-size:.88rem; padding:.6rem 1.25rem; border-radius:8px; white-space:nowrap; }
+
   /* Photos band */
   .photos-band { display:flex; align-items:center; gap:1.2rem; flex-wrap:wrap; background:linear-gradient(135deg,var(--ocean-dk),var(--ocean)); border-radius:var(--radius); padding:1.6rem 1.8rem; color:#fff; }
   .photos-band .pb-icon { font-size:2.4rem; }
@@ -187,6 +197,7 @@
   <a class="nav-brand" href="../index.html">✦ Travelomania</a>
   <div class="nav-links">
     <a href="../index.html">← All Trips</a>
+    <a href="story/index.html">Story</a>
     <a href="#park">The Park</a>
     <a href="#itinerary">Itinerary</a>
     <a href="#crew">Crew</a>
@@ -211,16 +222,16 @@
   </svg>
 </div>
 
-<!-- Top: planning sheet + weather -->
+<!-- Top: trip story + weather -->
 <section style="padding:2rem 0 0;">
   <div class="container">
-    <a class="sheet-band" href="https://docs.google.com/spreadsheets/d/1-oxBH3pSHTEWPQY34mmFaO3l6SoxNW3IqlRcpGXsiw4/edit?gid=0#gid=0" target="_blank" rel="noopener">
-      <span class="sb-icon">📋</span>
-      <span class="sb-text">
-        <span class="sb-title">Trip Planning Sheet</span>
-        <span class="sb-sub">Sign-ups, camping gear, food &amp; assignments — open in Google Sheets</span>
+    <a class="story-band" href="story/index.html">
+      <span class="stb-icon">📖</span>
+      <span class="stb-text">
+        <span class="stb-title">রাত তিনটের ভালুক — the trip story</span>
+        <span class="stb-sub">Our one night camping at Lake Compounce — the 3 AM bear, Saurav's mutton &amp; a rainy morning. Read it in বাংলা or English.</span>
       </span>
-      <span class="sb-arrow">Open ↗</span>
+      <span class="stb-btn">Read the story ↗</span>
     </a>
     <div class="wx-ticker" style="margin-top:1rem;">
       <div class="wx-loc">🌤️ Bristol, CT · Sep 5–6</div>
@@ -428,6 +439,24 @@
       </div>
       <a class="pb-btn" href="https://photos.app.goo.gl/24fVDmyfazsP3c7k8" target="_blank" rel="noopener">Open album ↗</a>
     </div>
+  </div>
+</section>
+
+<hr class="section-divider">
+
+<!-- Planning sheet -->
+<section id="planning">
+  <div class="container">
+    <p class="section-label">Before You Go</p>
+    <h2 class="section-title">Trip Planning Sheet</h2>
+    <a class="sheet-band" href="https://docs.google.com/spreadsheets/d/1-oxBH3pSHTEWPQY34mmFaO3l6SoxNW3IqlRcpGXsiw4/edit?gid=0#gid=0" target="_blank" rel="noopener">
+      <span class="sb-icon">📋</span>
+      <span class="sb-text">
+        <span class="sb-title">Trip Planning Sheet</span>
+        <span class="sb-sub">Sign-ups, camping gear, food &amp; assignments — open in Google Sheets</span>
+      </span>
+      <span class="sb-arrow">Open ↗</span>
+    </a>
   </div>
 </section>
 
