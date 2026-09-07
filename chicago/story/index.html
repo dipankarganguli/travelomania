@@ -33,10 +33,15 @@
 
   .container { max-width:720px; margin:0 auto; padding:2.2rem 1.5rem 3.5rem; }
 
-  .lang-toggle { display:flex; justify-content:center; gap:.5rem; margin-bottom:2rem; }
+  .lang-toggle { display:flex; justify-content:center; gap:.5rem; margin-bottom:1.2rem; }
   .lang-toggle button { font-family:var(--sans); font-size:.86rem; font-weight:600; padding:.5rem 1.3rem; border-radius:22px; border:1.5px solid rgba(26,107,138,.3); background:var(--white); color:var(--ocean); cursor:pointer; transition:all .15s; }
   .lang-toggle button.active { background:var(--ocean); color:#fff; border-color:var(--ocean); }
   .lang-toggle button:hover:not(.active) { background:var(--ocean-lt); }
+
+  .share-row { display:flex; justify-content:center; margin-bottom:2rem; }
+  .share-btn { display:inline-flex; align-items:center; gap:.45rem; font-family:var(--sans); font-size:.8rem; font-weight:600; color:#fff; background:var(--ocean); border:1px solid var(--ocean); padding:.45rem 1rem; border-radius:20px; cursor:pointer; transition:background .15s; }
+  .share-btn:hover { background:var(--ocean-dk); }
+  .share-btn.copied { background:var(--ocean-dk); }
 
   .story { font-size:1.06rem; line-height:1.9; color:#2a3a44; }
   .story p { margin-bottom:1.25rem; }
@@ -46,6 +51,11 @@
   #story-bn { font-family:var(--bengali); }
   #story-bn p { line-height:2.05; }
   #story-en { display:none; }
+
+  .story figure.story-fig { margin:2.2rem 0; }
+  .story figure.story-fig img { width:100%; height:auto; display:block; border-radius:var(--radius); box-shadow:var(--shadow); }
+  .story figure.story-fig figcaption { font-family:var(--sans); font-size:.82rem; color:var(--stone); text-align:center; margin-top:.6rem; font-style:italic; line-height:1.5; }
+  #story-bn figure.story-fig figcaption { font-family:var(--bengali); font-style:normal; }
 
   footer { text-align:center; padding:2.5rem 1.5rem; font-size:.8rem; color:var(--stone); border-top:1px solid rgba(26,107,138,.1); background:var(--white); line-height:1.8; }
   footer a { color:var(--ocean); text-decoration:none; }
@@ -96,6 +106,9 @@
   <div class="lang-toggle">
     <button id="btn-bn" class="active" onclick="setLang('bn')">বাংলা</button>
     <button id="btn-en" onclick="setLang('en')">English</button>
+  </div>
+  <div class="share-row">
+    <button class="share-btn" id="share-btn" type="button">🔗 <span id="share-label">শেয়ার করুন</span></button>
   </div>
 
   <article id="story-bn" class="story">
@@ -164,6 +177,10 @@
       <p>Millennium Park-এ প্রথম গন্তব্য অবশ্যই বিখ্যাত <strong>Cloud Gate</strong>, যাকে সবাই বলে <strong>The Bean</strong>।</p>
       <p>শিকাগোয় এসে The Bean-এর সামনে ছবি না তুললে বোধহয় একটা অবশ্যকর্তব্য অসম্পূর্ণ থেকে যায়। পালিশ-করা ধাতব পৃষ্ঠে আকাশ, শহরের বহুতল আর সামনে দাঁড়ানো মানুষের বাঁকাচোরা প্রতিফলন—ছবিতে যতবারই দেখা থাক, সামনে দাঁড়িয়ে দেখার মজাই আলাদা।</p>
       <p>আমরাও ছবি তুললাম। তারপর একটু বসে বিশ্রাম, সঙ্গে টুকটাক খাওয়াদাওয়া।</p>
+      <figure class="story-fig">
+        <img src="the-bean.jpg" alt="Cloud Gate (The Bean), Millennium Park" loading="lazy" onerror="this.closest('figure').style.display='none'">
+        <figcaption>Cloud Gate — সবার প্রিয় “The Bean”, Millennium Park</figcaption>
+      </figure>
       <p>সেখান থেকে একটা bridge ধরে হাঁটতে হাঁটতে প্রথমে ঠিক করেছিলাম Buckingham Fountain পর্যন্ত যাব। কিছুটা যাওয়ার পর মনে হল, এই মুহূর্তে দূরত্বটা অযথা বেশি হয়ে যাচ্ছে। Fountain-টা আমাদের হোটেলের দিক থেকেই সুবিধাজনক। তাই পরিকল্পনা বদলে ফিরে এলাম Millennium Park-এর দিকে।</p>
       <p>এরপর Crown Fountain।</p>
       <p>ততক্ষণে সন্ধে নেমে এসেছে। ঘড়িতে প্রায় সাড়ে সাতটা। সারাদিন aquarium-এ হাঁটা, তারপর Millennium Park—পা এবার জানান দিতে শুরু করেছে যে তারও সহ্যের সীমা আছে।</p>
@@ -187,6 +204,10 @@
       <p>তিনতলা জুড়ে বিশাল সংগ্রহ। ডাইনোসরের জীবাশ্ম থেকে প্রাগৈতিহাসিক পৃথিবী, প্রাচীন সভ্যতা থেকে মানুষের বিবর্তন, আফ্রিকার হাতি থেকে পৃথিবীর নানা প্রান্তের অসংখ্য প্রাণীর taxidermy—কোনটা ছেড়ে কোনটা দেখব, সেটাই সমস্যা।</p>
       <p>তবে Field Museum-এ এসে প্রথম লক্ষ্য স্থির—<strong>SUE</strong>।</p>
       <p>পৃথিবীর সবচেয়ে বিখ্যাত Tyrannosaurus rex জীবাশ্মগুলোর একটি। জীবাশ্মটির আবিষ্কারক Sue Hendrickson-এর নামেই তার নাম SUE।</p>
+      <figure class="story-fig">
+        <img src="sue-field-museum.jpg" alt="SUE the T. rex at the Field Museum" loading="lazy" onerror="this.closest('figure').style.display='none'">
+        <figcaption>SUE — পৃথিবীর অন্যতম বিখ্যাত T. rex জীবাশ্ম, Field Museum</figcaption>
+      </figure>
       <p>আমাদের CityPASS-এর সঙ্গে একটা show এবং একটা বিশেষ exhibition দেখার সুযোগ ছিল। Show-এর সময় বেলা ১১টা ৫০ নাগাদ। হাতে মিনিট পঁয়তাল্লিশ আছে দেখে প্রথমে মনে হয়েছিল, অনেকটা দেখে ফেলব।</p>
       <p>সে ধারণা দ্রুত ভুল প্রমাণিত হল।</p>
       <p>SUE-কে ঘিরে অংশটাই এত বড় এবং আকর্ষণীয় যে দেখতে দেখতে সময় কোথা দিয়ে চলে যাচ্ছিল বুঝতে পারছিলাম না। শেষ পর্যন্ত মাঝপথেই দেখা বন্ধ করে প্রায় ছুটতে ছুটতে theater-এ ফিরতে হল।</p>
@@ -229,6 +250,10 @@
       <p>ছবি তুললাম।</p>
       <p>এবং আশ্চর্যের ব্যাপার—একবার নয়, <strong>দু’বার</strong> গেলাম!</p>
       <p>The Ledge-এ যাওয়ার জন্য বড় লাইন ছিল। আমাদের CityPASS-এর দ্রুত প্রবেশের সুবিধা থাকায় অপেক্ষাটা অনেক কমে গেল। দ্বিতীয়বারও গিয়ে বেশ কিছু দারুণ ছবি তুললাম।</p>
+      <figure class="story-fig">
+        <img src="willis-ledge.jpg" alt="The Ledge at Willis Tower Skydeck, 103rd floor" loading="lazy" onerror="this.closest('figure').style.display='none'">
+        <figcaption>The Ledge — Willis Tower-এর ১০৩ তলায় কাচের বাক্স</figcaption>
+      </figure>
       <p>উচ্চতায় ভয় পাওয়া মানুষটির পক্ষে ১০৩ তলার বাইরে কাচের বাক্সে দু’বার দাঁড়ানো—নিজের হিসাবে এটাও সেদিনের একটা ছোটখাটো বিজয়।</p>
       <p>Skydeck থেকে বেরোনোর পর এবার সত্যিই শক্তি প্রায় শেষ।</p>
       <p>বাস ধরে হোটেলের দিকে ফিরলাম। কিন্তু সেখানে অপেক্ষা করছিল নতুন সমস্যা—রাতের খাবার।</p>
@@ -261,6 +286,10 @@
       <p>আমরা অবশ্য প্রথমে গোটা building পেরিয়ে সোজা বাইরে চলে গেলাম।</p>
       <p>সামনে <strong>Lake Michigan</strong>।</p>
       <p>ঝকঝকে রোদ। মাথার উপর পরিষ্কার নীল আকাশ। তার নীচে যত দূর চোখ যায় নীল জল। পাশে বিশাল Ferris wheel, নানা ride, আর লেকের ধার দিয়ে প্রশস্ত হাঁটার পথ।</p>
+      <figure class="story-fig">
+        <img src="navy-pier.jpg" alt="Lake Michigan seen from Navy Pier" loading="lazy" onerror="this.closest('figure').style.display='none'">
+        <figcaption>Navy Pier থেকে Lake Michigan-এর অসীম নীল জল</figcaption>
+      </figure>
       <p>প্রথম দিনের সন্ধ্যার Navy Pier আর শেষ দিনের এই উজ্জ্বল সকালের Navy Pier যেন একই জায়গার দুটো সম্পূর্ণ আলাদা চেহারা।</p>
       <p>আমরা লেকের ধার ধরে হাঁটলাম। চারপাশে পর্যটকের ভিড়, সবাই ছবি তুলছে, কেউ বসে জল দেখছে, কেউ পরিবার নিয়ে ঘুরছে। কোনও তাড়া নেই, অথচ গোটা জায়গাটার মধ্যে একটা প্রাণবন্ত ছুটির মেজাজ।</p>
       <p>আমরাও ছবি তুললাম প্রচুর।</p>
@@ -402,6 +431,10 @@
       <p>Our first stop was the famous <strong>Cloud Gate</strong>, better known as <strong>The Bean</strong>.</p>
       <p>Going to Chicago without taking pictures at The Bean would somehow feel incomplete. Its polished surface reflects the skyline, the sky, the people around it, and everything seems to bend and curve across its surface.</p>
       <p>Of course, we took lots of pictures.</p>
+      <figure class="story-fig">
+        <img src="the-bean.jpg" alt="Cloud Gate (The Bean), Millennium Park" loading="lazy" onerror="this.closest('figure').style.display='none'">
+        <figcaption>Cloud Gate — “The Bean” at Millennium Park</figcaption>
+      </figure>
       <p>Then we sat for a while, had some snacks, and rested.</p>
       <p>We walked across a bridge and initially planned to continue toward Buckingham Fountain. After walking for a while, though, we decided it was getting too far. Since the fountain was much closer to our hotel, we turned back toward Millennium Park.</p>
       <p>We then spent some time at Crown Fountain.</p>
@@ -432,6 +465,10 @@
       <p>We immediately headed for one of its most famous attractions:</p>
       <p><strong>SUE.</strong></p>
       <p>SUE is one of the world's most famous Tyrannosaurus rex fossils, named after Sue Hendrickson, the person who discovered it in South Dakota.</p>
+      <figure class="story-fig">
+        <img src="sue-field-museum.jpg" alt="SUE the T. rex at the Field Museum" loading="lazy" onerror="this.closest('figure').style.display='none'">
+        <figcaption>SUE — one of the world's most famous T. rex fossils, Field Museum</figcaption>
+      </figure>
       <p>Our CityPASS included a show as well as a special exhibition. The show was scheduled for around 11:50 a.m., leaving us about 45 minutes to explore.</p>
       <p>We quickly learned that 45 minutes was nowhere near enough.</p>
       <p>The SUE exhibit was so large and interesting that we lost track of time. Eventually we had to pull ourselves away and practically rush back to the theater.</p>
@@ -481,6 +518,10 @@
       <p>We took pictures.</p>
       <p>And somehow, I went out there twice.</p>
       <p>There was a long line for The Ledge, but our CityPASS included expedited access, which helped. We got some fantastic photographs, and standing on a glass platform 103 floors above Chicago twice felt like a small personal victory.</p>
+      <figure class="story-fig">
+        <img src="willis-ledge.jpg" alt="The Ledge at Willis Tower Skydeck, 103rd floor" loading="lazy" onerror="this.closest('figure').style.display='none'">
+        <figcaption>The Ledge — the glass box on Willis Tower's 103rd floor</figcaption>
+      </figure>
       <p>After the Skydeck, we were truly exhausted.</p>
       <p>We caught a bus back toward the hotel.</p>
       <p>Then came the problem of dinner.</p>
@@ -524,6 +565,10 @@
       <p>Blue sky.</p>
       <p>Blue water stretching into the distance.</p>
       <p>There was the enormous Ferris wheel, various rides, and a long walkway beside the lake. People were taking pictures everywhere. Families were walking around. The whole place had a wonderful vacation atmosphere.</p>
+      <figure class="story-fig">
+        <img src="navy-pier.jpg" alt="Lake Michigan seen from Navy Pier" loading="lazy" onerror="this.closest('figure').style.display='none'">
+        <figcaption>Lake Michigan, seen from Navy Pier</figcaption>
+      </figure>
       <p>We spent about 30 to 45 minutes outside, taking pictures and simply enjoying the surroundings.</p>
       <p>Eventually the heat drove us back inside.</p>
       <p>We did some souvenir shopping and then stopped for lunch.</p>
@@ -614,6 +659,8 @@
     document.getElementById('story-en').style.display = bn ? 'none' : 'block';
     document.getElementById('btn-bn').classList.toggle('active', bn);
     document.getElementById('btn-en').classList.toggle('active', !bn);
+    var sl = document.getElementById('share-label');
+    if (sl && !sl.dataset.busy) sl.textContent = bn ? 'শেয়ার করুন' : 'Share';
     try { localStorage.setItem('chicago-story-lang', l); } catch(e) {}
     window.scrollTo({ top: 0 });
   }
@@ -621,6 +668,37 @@
     var saved = 'bn';
     try { saved = localStorage.getItem('chicago-story-lang') || 'bn'; } catch(e) {}
     setLang(saved);
+  })();
+
+  // Share the story — native share sheet (WhatsApp etc.) on phones, copy-link fallback elsewhere
+  (function () {
+    var btn = document.getElementById('share-btn');
+    if (!btn) return;
+    var label = document.getElementById('share-label');
+    function isBn(){ return document.getElementById('story-en').style.display === 'none'; }
+    function flash(msg){
+      label.dataset.busy = '1'; label.textContent = msg; btn.classList.add('copied');
+      setTimeout(function(){
+        delete label.dataset.busy; btn.classList.remove('copied');
+        label.textContent = isBn() ? 'শেয়ার করুন' : 'Share';
+      }, 1900);
+    }
+    btn.addEventListener('click', function () {
+      var bn = isBn();
+      var data = {
+        title: 'ছ’জনের চার দিন · Chicago',
+        text: bn ? 'ছ’জনের চার দিন — শিকাগোর পথে পথে' : 'Six of Us, Four Days, and Chicago',
+        url: location.href
+      };
+      if (navigator.share) {
+        navigator.share(data).catch(function(){});
+      } else if (navigator.clipboard && navigator.clipboard.writeText) {
+        navigator.clipboard.writeText(location.href).then(function(){ flash(bn ? 'লিঙ্ক কপি হয়েছে ✓' : 'Link copied ✓'); })
+          .catch(function(){ window.prompt(bn ? 'এই লিঙ্কটি কপি করুন:' : 'Copy this link:', location.href); });
+      } else {
+        window.prompt(bn ? 'এই লিঙ্কটি কপি করুন:' : 'Copy this link:', location.href);
+      }
+    });
   })();
 
   // Password gate (shares session with the Chicago page)

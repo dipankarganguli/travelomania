@@ -38,9 +38,12 @@
   .lang-toggle button.active { background:var(--ocean); color:#fff; border-color:var(--ocean); }
   .lang-toggle button:hover:not(.active) { background:var(--ocean-lt); }
 
-  .pdf-row { display:flex; justify-content:center; margin-bottom:2rem; }
+  .pdf-row { display:flex; justify-content:center; align-items:center; gap:.6rem; flex-wrap:wrap; margin-bottom:2rem; }
   .pdf-btn { display:inline-flex; align-items:center; gap:.45rem; font-family:var(--sans); font-size:.8rem; font-weight:500; color:var(--ocean-dk); text-decoration:none; background:var(--ocean-lt); border:1px solid rgba(47,125,79,.25); padding:.45rem 1rem; border-radius:20px; transition:background .15s; }
   .pdf-btn:hover { background:#cfe6d7; }
+  .share-btn { display:inline-flex; align-items:center; gap:.45rem; font-family:var(--sans); font-size:.8rem; font-weight:600; color:#fff; background:var(--ocean); border:1px solid var(--ocean); padding:.45rem 1rem; border-radius:20px; cursor:pointer; transition:background .15s; }
+  .share-btn:hover { background:var(--ocean-dk); }
+  .share-btn.copied { background:var(--ocean-dk); }
 
   .story { font-size:1.06rem; line-height:1.9; color:#2a3a44; }
   .story p { margin-bottom:1.25rem; }
@@ -109,6 +112,7 @@
   </div>
   <div class="pdf-row">
     <a class="pdf-btn" id="pdf-link" href="lake-compounce-story-bn.pdf" target="_blank" rel="noopener">⬇ বাংলা গল্পটি PDF হিসেবে ডাউনলোড করুন</a>
+    <button class="share-btn" id="share-btn" type="button">🔗 <span id="share-label">শেয়ার করুন</span></button>
   </div>
 
   <article id="story-bn" class="story">
@@ -444,6 +448,8 @@
       pdf.textContent = bn ? '⬇ বাংলা গল্পটি PDF হিসেবে ডাউনলোড করুন' : '⬇ Download the story (PDF)';
       pdf.setAttribute('href', bn ? 'lake-compounce-story-bn.pdf' : 'lake-compounce-story-en.pdf');
     }
+    var sl = document.getElementById('share-label');
+    if (sl && !sl.dataset.busy) sl.textContent = bn ? 'শেয়ার করুন' : 'Share';
     try { localStorage.setItem('lake-compounce-story-lang', l); } catch(e) {}
     window.scrollTo({ top: 0 });
   }
@@ -451,6 +457,37 @@
     var saved = 'bn';
     try { saved = localStorage.getItem('lake-compounce-story-lang') || 'bn'; } catch(e) {}
     setLang(saved);
+  })();
+
+  // Share the story — native share sheet (WhatsApp etc.) on phones, copy-link fallback elsewhere
+  (function () {
+    var btn = document.getElementById('share-btn');
+    if (!btn) return;
+    var label = document.getElementById('share-label');
+    function isBn(){ return document.getElementById('story-en').style.display === 'none'; }
+    function flash(msg){
+      label.dataset.busy = '1'; label.textContent = msg; btn.classList.add('copied');
+      setTimeout(function(){
+        delete label.dataset.busy; btn.classList.remove('copied');
+        label.textContent = isBn() ? 'শেয়ার করুন' : 'Share';
+      }, 1900);
+    }
+    btn.addEventListener('click', function () {
+      var bn = isBn();
+      var data = {
+        title: 'রাত তিনটের ভালুক · Lake Compounce',
+        text: bn ? 'রাত তিনটের ভালুক — লেক কম্পাউন্ডে সতেরো জনের এক রাত' : 'The 3 AM Bear — one night camping at Lake Compounce',
+        url: location.href
+      };
+      if (navigator.share) {
+        navigator.share(data).catch(function(){});
+      } else if (navigator.clipboard && navigator.clipboard.writeText) {
+        navigator.clipboard.writeText(location.href).then(function(){ flash(bn ? 'লিঙ্ক কপি হয়েছে ✓' : 'Link copied ✓'); })
+          .catch(function(){ window.prompt(bn ? 'এই লিঙ্কটি কপি করুন:' : 'Copy this link:', location.href); });
+      } else {
+        window.prompt(bn ? 'এই লিঙ্কটি কপি করুন:' : 'Copy this link:', location.href);
+      }
+    });
   })();
 
   // Password gate (shares session with the Lake Compounce page)
